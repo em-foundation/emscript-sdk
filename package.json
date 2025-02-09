@@ -11,7 +11,7 @@
     },
     "scripts": {
         "install": "npx emscript-cli --root . config",
-        "verify-build": "(cd workspace; npx emscript-cli build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts)",
-        "verify-load": "(cd workspace; npx emscript-cli build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts --load)"
+        "verify-build": "sh -c '(cd workspace; npx emscript-cli build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts)'",
+        "verify-load": "sh -c '(cd workspace; npx emscript-cli build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts --load)'"
     }
 }
