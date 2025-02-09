@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "moduleResolution": "node",
+        "target": "ESNext",
+        "lib": [
+            "ESNext"
+        ],
+        "outDir": "out",
+        "sourceMap": true,
+        "strict": true,
+        "strictPropertyInitialization": false,
+        "esModuleInterop": true
+    },
+    "include": [
+        "./workspace/em.core/em.lang/emscript.ts",
+        "./workspace/**/*.ts",
+        "./workspace/.emscript/*/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "junk"
+    ]
+}
