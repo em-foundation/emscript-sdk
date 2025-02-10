@@ -1,5 +1,5 @@
 /node_modules/
-/tools/*/
+/tools/
 /tsconfig.json
 /workspace/.emscript/
 /workspace/emscript-local.ini
