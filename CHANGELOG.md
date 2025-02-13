@@ -2,6 +2,9 @@
 
 ## VERSION-26.0.2
 * build using github actions
+* new `emscript load` sub-command
+* new VS Code `Build and Load Program` context menu item
+* new VS Code `Build Meta Program only` context menu item 
 
 ## VERSION-26.0.1
 
