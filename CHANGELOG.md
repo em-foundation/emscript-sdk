@@ -1,7 +1,7 @@
 # EM&bull;Script SDK v26
 
 ## VERSION-26.0.2
-* WIP:  working on using github actions
+* build using github actions
 
 ## VERSION-26.0.1
 
