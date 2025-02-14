@@ -505,7 +505,7 @@ namespace em {
     const __TRAITS__ = null
     // #region
 
-    export type arg_t = bool_t | i8 | i16 | i32 | u8 | u16 | u32 | ptr_t<any> | text_t
+    export type arg_t = bool_t | i8 | i16 | i32 | text_t | u8 | u16 | u32 | cb_t<any> | ptr_t<any> | ref_t<any>
 
     export interface cb_t<A extends any[] = []> {
         (...args: A): void

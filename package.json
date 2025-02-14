@@ -5,7 +5,7 @@
         "emscript": "./bin/main.js"
     },
     "dependencies": {
-        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.0.2.202502131102.tgz",
+        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.0.2.202502141038.tgz",
         "segger-arm": "https://github.com/em-foundation/npm-packages/releases/download/resources/segger-arm-8.22.1.tgz",
         "ti-uniflash": "https://github.com/em-foundation/npm-packages/releases/download/resources/ti-uniflash-8.7.0.tgz"
     },
