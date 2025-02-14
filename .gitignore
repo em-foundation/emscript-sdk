@@ -1,0 +1,8 @@
+/node_modules/
+/tools/
+/tsconfig.json
+/workspace/.emscript/
+/workspace/emscript-local.ini
+/.history/
+/.vscode/
+**/.junk/
