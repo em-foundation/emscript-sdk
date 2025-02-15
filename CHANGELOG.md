@@ -1,5 +1,7 @@
 # EM&bull;Script SDK v26
 
+## VERSION-26.0.3
+
 ## VERSION-26.0.2
 * build using github actions
 * build emscript (minified main.js)

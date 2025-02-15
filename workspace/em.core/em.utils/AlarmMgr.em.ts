@@ -34,25 +34,42 @@ export namespace em$meta {
 
 var cur_alarm = <Obj>$null
 
+/**
+    Dispatch: Go through the alarms array to: 
+      post any ringing
+      deactivate any posted (rung)
+      enable next to ring (if any)
+    
+    Each alarm in the array is in one of three states (controlled by dt_secs)
+      Inactive -- i.e. dt_secs == 0
+      Ringing -- i.e. dt_secs > 0 && dt_secs <= delta
+      Waiting -- i.e. dt_secs > 0 && dt_secs > delta
+    For each inactive alarm, do nothing
+    For each ringing alarm, post that fiber, state change to inactive -- i.e. dt_secs = 0
+    For each waiting alarm, find the next one to ring -- i.e. nxt_alarm = smallest dt_secs
+    It doesn't matter which if there is a tie -- i.e. more than one waiting for the same dt_secs
+    Re-enable wakeupTimer if, there is a next alarm -- i.e. nxt_alarm != null
+*/
 function dispatch(delta: Secs24p8) {
     WakeupTimer.$$.disable()
     let nxt_alarm = <Obj>$null
     let max_dt_secs = ~(<Secs24p8>0)
     for (let i = 0; i < AlarmFac.$len; i++) {
         let a = $ref(AlarmFac[i])
-        if (a.$$._dt_secs == 0) continue // inactive
+        if (a.$$._dt_secs == 0) continue // inactive => nop
         a.$$._dt_secs -= (delta > a.$$._dt_secs) ? a.$$._dt_secs : delta
         if (a.$$._dt_secs == 0) {
-            a.$$._fiber.$$.post() // ring the alarm
-            continue // becomes inactive
+            a.$$._fiber.$$.post() // ringing => post then inactive
+            continue
         }
+        // waiting => find next
         if (a.$$._dt_secs <= max_dt_secs) {
             nxt_alarm = a
             max_dt_secs = a.$$._dt_secs
         }
     }
     cur_alarm = nxt_alarm
-    if (cur_alarm.$$._thresh) WakeupTimer.$$.enable(cur_alarm.$$._thresh, $cb(wakeupHandler))
+    if (cur_alarm) WakeupTimer.$$.enable(cur_alarm.$$._thresh, $cb(wakeupHandler))
 }
 
 function setup(alarm: Obj, delta: Secs24p8) {
@@ -66,8 +83,7 @@ function wakeupHandler() {
 }
 
 function Alarm__cancel(self: Obj) {
-    self.$$._thresh = 0
-    self.$$._dt_secs = 0
+    self.$$._dt_secs = 0 // make inactive
 }
 
 function Alarm__isActive(self: Obj): bool_t {
