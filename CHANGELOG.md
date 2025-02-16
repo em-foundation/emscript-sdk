@@ -1,6 +1,8 @@
 # EM&bull;Script SDK v26
 
 ## VERSION-26.1.0
+* Nit cleanup in alarm_mgr
+* Adjust package.json to install from registry or .tgz file (i.e. no cloning)
 
 ## VERSION-26.0.2
 * build using github actions
