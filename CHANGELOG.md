@@ -1,6 +1,6 @@
 # EM&bull;Script SDK v26
 
-## VERSION-26.1.0
+## VERSION-26.1.1
 * inagural public release
 * setup using `npm install @em-foundation/emscript-sdk`
 
