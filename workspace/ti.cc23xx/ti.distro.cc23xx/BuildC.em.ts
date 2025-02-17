@@ -50,6 +50,8 @@ export function em$generate() {
     out.addFrag(`
         |-> #!/bin/sh
         |-> 
+        |-> set -e
+        |-> 
         |-> TOOLS=${tools}/segger-arm
         |-> CC=$TOOLS/bin/segger-cc
         |-> LD=$TOOLS/gcc/arm-none-eabi/bin/ld
