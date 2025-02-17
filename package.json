@@ -21,14 +21,12 @@
         "emscript": "./bin/main.js"
     },
     "dependencies": {
-        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.1.0.202502171015.tgz",
+        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.1.0.202502171024.tgz",
         "segger-arm": "https://github.com/em-foundation/npm-packages/releases/download/resources/segger-arm-8.22.1.tgz",
         "ti-uniflash": "https://github.com/em-foundation/npm-packages/releases/download/resources/ti-uniflash-8.7.0.tgz"
     },
     "scripts": {
-        "copy-up": "if pwd | grep -q '/node_modules/emscript-sdk$'; then cp -r ./* ../../ && cd ../../; fi",
-        "configure": "npx emscript-cli --root=. config",
-        "postinstall": "npm run copy-up && npm run configure",
+        "postinstall": "if pwd | grep -q '/node_modules/emscript-sdk$'; then cp -r ./* ../../ && cd ../../; fi && npx emscript-cli --root=. config",
         "verify-build": "cd workspace; npx emscript-cli build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts",
         "verify-load": "cd workspace; npx emscript-cli build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts --load"
     }
