@@ -15,14 +15,21 @@
             "url": "https://openem.org"
         }
     ],
-    "keywords": ["openem", "em-foundation", "emscript", "em", "emfoundation", "embedded"],
+    "keywords": [
+        "openem",
+        "em-foundation",
+        "emscript",
+        "em",
+        "emfoundation",
+        "embedded"
+    ],
     "homepage": "https://www.openem.org",
-    "repository": "github:em-foundation/emscript-sdk",
-    "bin": {
-        "emscript": "./bin/main.js"
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/em-foundation/emscript-sdk.git"
     },
     "dependencies": {
-        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.1.0.202502171739.tgz",
+        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.1.0.202502171915.tgz",
         "segger-arm": "https://github.com/em-foundation/npm-packages/releases/download/resources/segger-arm-8.22.1.tgz",
         "ti-uniflash": "https://github.com/em-foundation/npm-packages/releases/download/resources/ti-uniflash-8.7.0.tgz"
     },
