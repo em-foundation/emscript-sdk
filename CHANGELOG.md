@@ -1,5 +1,9 @@
 # EM&bull;Script SDK v26
 
+## VERSION-26.1.2
+* Minor doc improvements
+* fixed `for of` iterator support for `$factory` objects;&thinsp; see `em.utils/AlarmMgr`
+
 ## VERSION-26.1.1
 * inagural public release
 * setup using `npm install @em-foundation/emscript-sdk`

@@ -189,7 +189,38 @@ namespace em {
         $frame(beg: i16, len: u16 = 0) { return frame$create<T>(this.elems, 0, beg, len) }
         $null(): ref_t<T> { return new em$oref<T>(this.elems, -1, this.cname) }
         $ptr(): ptr_t<T> { return new em$ptr<T>(this.elems) }
-
+        [Symbol.iterator](): Iterator<ref_t<T>> {  // TODO combine with ARRAY
+            let idx = 0
+            let items = this.elems
+            return {
+                next(): IteratorResult<ref_t<T>> {
+                    if (idx < items.length) {
+                        let cur = idx
+                        idx += 1
+                        return { value: new em$ptr<T>(items, cur), done: false }
+                    }
+                    else {
+                        return { value: undefined as any, done: true }
+                    }
+                }
+            }
+        }
+        // [Symbol.iterator](): Iterator<T> {  // TODO combine with ARRAY
+        //     let idx = 0
+        //     let items = this.elems
+        //     return {
+        //         next(): IteratorResult<T> {
+        //             if (idx < items.length) {
+        //                 let cur = idx
+        //                 idx += 1
+        //                 return { value: items[cur], done: false }
+        //             }
+        //             else {
+        //                 return { value: undefined as any, done: true }
+        //             }
+        //         }
+        //     }
+        // }
     }
 
     export type factory_t<T extends $struct> = em$factory<T>

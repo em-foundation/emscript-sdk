@@ -1,6 +1,6 @@
 {
     "name": "@em-foundation/emscript-sdk",
-    "version": "26.1.1",
+    "version": "26.1.2",
     "description": "Em-Foundation's EM&bull;Script software development kit.  See https://openem.org for details",
     "license": "MIT",
     "author": {
@@ -29,7 +29,7 @@
         "url": "git+https://github.com/em-foundation/emscript-sdk.git"
     },
     "dependencies": {
-        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.1.1.202502171929.tgz",
+        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.1.2.202502201036.tgz",
         "segger-arm": "https://github.com/em-foundation/npm-packages/releases/download/resources/segger-arm-8.22.1.tgz",
         "ti-uniflash": "https://github.com/em-foundation/npm-packages/releases/download/resources/ti-uniflash-8.7.0.tgz"
     },
