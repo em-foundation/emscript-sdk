@@ -124,6 +124,15 @@ namespace em {
         operator frame_t<T>() { return $frame(0, 0); }
         ref_t<T> $null() { return ref_t<T>(); }
         ptr_t<T> $ptr() { return ptr_t<T>(&$$[0]); }
+        struct Iterator {
+            T* ptr;
+            constexpr Iterator(T *ptr) : ptr(ptr) {}
+            ref_t<T> operator*() const { return ref_t<T>(ptr); }
+            Iterator &operator++() { ++ptr; return *this; }
+            bool operator!=(const Iterator &other) const { return ptr != other.ptr; }
+        };
+        constexpr Iterator begin() { return Iterator(&$$[0]); }
+        constexpr Iterator end() { return Iterator(&$$[$len]); }
     };
 
     struct text_t {
