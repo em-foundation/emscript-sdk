@@ -8,12 +8,12 @@ import * as TickerMgr from '@em.utils/TickerMgr.em'
 import * as TimeTypes from '@em.utils/TimeTypes.em'
 
 // app settings
-const sysLedPeriodMs = 1500
-const appLedPeriodMs = 2000
-const printPeriodMs = 5000
-const minPressTimeMs = 10
-const maxPressTimeMs = 2000
-const maxDividedBy = 8
+const sys_led_period_ms = 1500
+const app_led_period_ms = 2000
+const print_period_ms = 5000
+const min_press_time_ms = 10
+const max_press_time_ms = 2000
+const max_divided_by = 8
 
 // app resources
 const AppLed = $delegate(BoardC.AppLed)
@@ -24,16 +24,16 @@ const SysTicker = $config<TickerMgr.Obj>()
 const PrintTicker = $config<TickerMgr.Obj>()
 
 // initial state vector
-let dividedBy: u32 = 1
-let sysCount: u32 = 0
-let appCount: u32 = 0
-let lastAppCount: u32 = 0
-let lastSysCount: u32 = 0
-let printCount: u32 = 0
-let expectedAppCount: u32
-let expectedSysCount: u32
-let totalErrors: u32 = 0
-let printsAfterRateChange: u32 = 0
+var divided_by: u32 = 1
+var sys_count: u32 = 0
+var app_count: u32 = 0
+var last_app_count: u32 = 0
+var last_sys_count: u32 = 0
+var print_count: u32 = 0
+var expected_app_count: u32
+var expected_sys_count: u32
+var total_errors: u32 = 0
+var prints_after_rate_change: u32 = 0
 
 export namespace em$meta {
     export function em$construct() {
@@ -53,7 +53,7 @@ export function em$run() {
 }
 
 function appTickCb() {
-    appCount += 1
+    app_count += 1
     em.$['%%c']
     AppLed.$$.wink(10)
 }
@@ -64,63 +64,63 @@ function countError(count: u32, expectedCount: u32): bool_t {
 
 function onButtonPressed() {
     if (AppBut.$$.isPressed()) {
-        // a long press (press time > maxPressTimeMs)
+        // a long press (press time > max_press_time_ms)
         printf`Long button press: Stopping app/sys tickers\n`()
-        dividedBy = 0
+        divided_by = 0
         stopLedTickers()
-        lastAppCount = 0
-        lastSysCount = 0
+        last_app_count = 0
+        last_sys_count = 0
     } else {
-        // a short press (minPressTimeMs < press time < maxPressTimeMs)
-        dividedBy = (dividedBy >= maxDividedBy || dividedBy < 1) ? 1 : dividedBy * 2
-        printf`Short button press: Setting rate to %dx\n`(dividedBy)
+        // a short press (min_press_time_ms < press time < max_press_time_ms)
+        divided_by = (divided_by >= max_divided_by || divided_by < 1) ? 1 : divided_by * 2
+        printf`Short button press: Setting rate to %dx\n`(divided_by)
         startLedTickers()
         printStatus()
     }
-    printsAfterRateChange = 0
+    prints_after_rate_change = 0
 }
 
 function printStatus() {
     printf`Button effects:\n... short press (>%d ms): cycle through rates (1,2,4,8x)\n... long press (>%d s): stop led tickers\n`(
-        minPressTimeMs,
-        maxPressTimeMs/TimeTypes.millisecondsPerSecond
+        min_press_time_ms,
+        max_press_time_ms / TimeTypes.millisecondsPerSecond
     )
-    printf`Current rate %dx\n`(dividedBy)
-    printf`... should print every ~%ds\n`(printPeriodMs / TimeTypes.millisecondsPerSecond)
-    printf`... app ticks should be %d..%d\n`(expectedAppCount, expectedAppCount + 1)
-    printf`... sys ticks should be %d..%d\n`(expectedSysCount, expectedSysCount + 1)
+    printf`Current rate %dx\n`(divided_by)
+    printf`... should print every ~%ds\n`(print_period_ms / TimeTypes.millisecondsPerSecond)
+    printf`... app ticks should be %d..%d\n`(expected_app_count, expected_app_count + 1)
+    printf`... sys ticks should be %d..%d\n`(expected_sys_count, expected_sys_count + 1)
 }
 
 function printTickCb() {
-    printCount += 1
-    printsAfterRateChange++
-    const thisAppCount = appCount - lastAppCount
-    const thisSysCount = sysCount - lastSysCount
-    const thisAppError = countError(thisAppCount, expectedAppCount)
-    const thisSysError = countError(thisSysCount, expectedSysCount)
-    if (printsAfterRateChange > 2 && (thisAppError || thisSysError)) {
-        thisAppError && totalErrors++
-        thisSysError && totalErrors++
+    print_count += 1
+    prints_after_rate_change++
+    const this_app_count = app_count - last_app_count
+    const this_sys_count = sys_count - last_sys_count
+    const this_app_error = countError(this_app_count, expected_app_count)
+    const this_sys_error = countError(this_sys_count, expected_sys_count)
+    if (prints_after_rate_change > 2 && (this_app_error || this_sys_error)) {
+        this_app_error && total_errors++
+        this_sys_error && total_errors++
     }
     printTime(Common.Uptimer.$$.read())
     printf` Print tick {rate: %dx, ticks: {app: %d%s, sys: %d%s}, errors: %d}\n`(
-        dividedBy,
-        thisAppCount,
-        thisAppError ? t$`*` : t$``,
-        thisSysCount,
-        thisSysError ? t$`*` : t$``,
-        totalErrors
+        divided_by,
+        this_app_count,
+        this_app_error ? t$`*` : t$``,
+        this_sys_count,
+        this_sys_error ? t$`*` : t$``,
+        total_errors
     )
-    if (dividedBy > 0 && lastSysCount > 0 && lastSysCount == sysCount) {
+    if (divided_by > 0 && last_sys_count > 0 && last_sys_count == sys_count) {
         printf`No sys ticks detected since last print\n`()
         em.halt()
     }
-    if (dividedBy > 0 && lastAppCount > 0 && lastAppCount == appCount) {
+    if (divided_by > 0 && last_app_count > 0 && last_app_count == app_count) {
         printf`No app ticks detected since last print\n`()
         em.halt()
     }
-    lastAppCount = appCount
-    lastSysCount = sysCount
+    last_app_count = app_count
+    last_sys_count = sys_count
 }
 
 function printTime(rawTime: TimeTypes.RawTime) {
@@ -135,29 +135,29 @@ function printTime(rawTime: TimeTypes.RawTime) {
 }
 
 function startButton() {
-    AppBut.$$.onPressed($cb(onButtonPressed), minPressTimeMs, maxPressTimeMs)
+    AppBut.$$.onPressed($cb(onButtonPressed), min_press_time_ms, max_press_time_ms)
 }
 
 function startLedTickers() {
-    AppTicker.$$.$$.start(TimeTypes.Secs24p8_initMsecs(appLedPeriodMs) / dividedBy, $cb(appTickCb))
-    SysTicker.$$.$$.start(TimeTypes.Secs24p8_initMsecs(sysLedPeriodMs) / dividedBy, $cb(sysTickCb))
-    expectedAppCount = dividedBy * printPeriodMs / appLedPeriodMs
-    expectedSysCount = dividedBy * printPeriodMs / sysLedPeriodMs
+    AppTicker.$$.$$.start(TimeTypes.Secs24p8_initMsecs(app_led_period_ms) / divided_by, $cb(appTickCb))
+    SysTicker.$$.$$.start(TimeTypes.Secs24p8_initMsecs(sys_led_period_ms) / divided_by, $cb(sysTickCb))
+    expected_app_count = divided_by * print_period_ms / app_led_period_ms
+    expected_sys_count = divided_by * print_period_ms / sys_led_period_ms
 }
 
 function startPrintTicker() {
-    PrintTicker.$$.$$.start(TimeTypes.Secs24p8_initMsecs(printPeriodMs), $cb(printTickCb))
+    PrintTicker.$$.$$.start(TimeTypes.Secs24p8_initMsecs(print_period_ms), $cb(printTickCb))
 }
 
 function stopLedTickers() {
     AppTicker.$$.$$.stop()
     SysTicker.$$.$$.stop()
-    expectedAppCount = 0
-    expectedSysCount = 0
+    expected_app_count = 0
+    expected_sys_count = 0
 }
 
 function sysTickCb() {
-    sysCount += 1
+    sys_count += 1
     em.$['%%d']
     SysLed.$$.wink(10)
 }

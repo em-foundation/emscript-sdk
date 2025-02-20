@@ -2,6 +2,7 @@
 
 ## VERSION-26.1.2
 * Minor doc improvements
+* formatting changes on combo example
 * fixed `for of` iterator support for `$factory` objects;&thinsp; see `em.utils/AlarmMgr`
 
 ## VERSION-26.1.1
