@@ -1,5 +1,5 @@
 import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+export const $U = em.$declare('MODULE', WakeupTimerI)
 
 import * as Rtc from '@ti.mcu.cc23xx/Rtc.em'
 import * as WakeupTimerI from '@em.hal/WakeupTimerI.em'

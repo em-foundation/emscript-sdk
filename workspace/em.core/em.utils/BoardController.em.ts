@@ -6,7 +6,7 @@ import * as LedI from '@em.hal/LedI.em'
 
 export const Led = $proxy<LedI.$I>()
 
-const blinkRate = 50000
+const BLINK_RATE = 50000
 const EOT_BYTE = 0x04
 const SOT_BYTE = 0x03
 const SOT_COUNT = 13
@@ -17,11 +17,11 @@ export function em$reset(): void {
 
 export function em$ready(): void {
     Led.$$.off()
-    blink(2, blinkRate)
+    blink(2, BLINK_RATE)
     Common.ConsoleUart.$$.flush()
     Common.ConsoleUart.$$.put(0x00)
     Common.ConsoleUart.$$.put(0x00)
-    for (let i = 0; i < SOT_COUNT; i++) {
+    for (let i of $range(SOT_COUNT)) {
         Common.ConsoleUart.$$.put(SOT_BYTE)
     }
     Common.ConsoleUart.$$.flush()
@@ -29,7 +29,7 @@ export function em$ready(): void {
 
 export function em$fail(): void {
     Common.GlobalInterrupts.$$.disable()
-    while (true) blink(2, blinkRate)
+    while (true) blink(2, BLINK_RATE)
 }
 
 export function em$halt(): void {
@@ -40,7 +40,7 @@ export function em$halt(): void {
 }
 
 function blink(times: u8, usecs: u32): void {
-    for (let i = 0; i < times * 2; i++) {
+    for (let _ of $range(times * 2)) {
         Led.$$.toggle()
         Common.BusyWait.$$.wait(usecs)
     }

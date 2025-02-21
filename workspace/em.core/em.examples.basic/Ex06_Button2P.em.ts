@@ -8,7 +8,7 @@ import * as FiberMgr from '@em.utils/FiberMgr.em'
 export const AppButEdge = $delegate(BoardC.AppButEdge)
 export const AppLed = $delegate(BoardC.AppLed)
 
-let blinkF = $config<FiberMgr.Obj>()
+const blinkF = $config<FiberMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
@@ -28,7 +28,7 @@ export function em$run() {
 }
 
 function blinkFB(a: arg_t) {
-    em.$['%%d']
+    $['%%d']
     AppLed.$$.on()
     Common.BusyWait.$$.wait(5_000)
     AppLed.$$.off()
@@ -37,7 +37,7 @@ function blinkFB(a: arg_t) {
 
 
 function handler() {
-    em.$['%%c']
+    $['%%c']
     AppButEdge.$$.clearDetect()
     blinkF.$$.$$.post()
 }

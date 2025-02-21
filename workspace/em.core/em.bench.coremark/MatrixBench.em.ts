@@ -25,7 +25,7 @@ export namespace em$meta {
             j = i * i * 2 * 4
         }
         dimN.$$ = i - 1
-        for (let i = 0; i < dimN.$$ * dimN.$$; i++) {
+        for (let _ of $range(dimN.$$ * dimN.$$)) {
             matA.$add(0)
             matB.$add(0)
             matC.$add(0)
@@ -70,8 +70,8 @@ export function setup() {
     let sd = <matdat_t>s32
     if (sd == 0) sd = 1
     let order = <matdat_t>1
-    for (let i = 0; i < dimN.$$; i++) {
-        for (let j = 0; j < dimN.$$; j++) {
+    for (let i of $range(dimN.$$)) {
+        for (let j of $range(dimN.$$)) {
             sd = <matdat_t>((order * sd) % 65536)
             let val = <matdat_t>(sd + order)
             val = clip(val, false)
@@ -87,8 +87,8 @@ export function setup() {
 // private
 
 function addVal(val: matdat_t) {
-    for (let i = 0; i < dimN.$$; i++) {
-        for (let j = 0; j < dimN.$$; j++) {
+    for (let i of $range(dimN.$$)) {
+        for (let j of $range(dimN.$$)) {
             matA[i * dimN.$$ + j] += val
         }
     }
@@ -112,18 +112,18 @@ function enlarge(val: matdat_t): matdat_t {
 }
 
 function mulVal(val: matdat_t) {
-    for (let i = 0; i < dimN.$$; i++) {
-        for (let j = 0; j < dimN.$$; j++) {
+    for (let i of $range(dimN.$$)) {
+        for (let j of $range(dimN.$$)) {
             matC[i * dimN.$$ + j] = <matres_t>(matA[i * dimN.$$ + j]) * <matres_t>val
         }
     }
 }
 
 function mulMat() {
-    for (let i = 0; i < dimN.$$; i++) {
-        for (let j = 0; j < dimN.$$; j++) {
+    for (let i of $range(dimN.$$)) {
+        for (let j of $range(dimN.$$)) {
             matC[i * dimN.$$ + j] = 0
-            for (let k = 0; k < dimN.$$; k++) {
+            for (let k of $range(dimN.$$)) {
                 matC[i * dimN.$$ + j] += <matres_t>matA[i * dimN.$$ + k] * <matres_t>matB[k * dimN.$$ + j]
             }
         }
@@ -131,10 +131,10 @@ function mulMat() {
 }
 
 function mulMatBix() {
-    for (let i = 0; i < dimN.$$; i++) {
-        for (let j = 0; j < dimN.$$; j++) {
+    for (let i of $range(dimN.$$)) {
+        for (let j of $range(dimN.$$)) {
             matC[i * dimN.$$ + j] = 0
-            for (let k = 0; k < dimN.$$; k++) {
+            for (let k of $range(dimN.$$)) {
                 let tmp = <matres_t>matA[i * dimN.$$ + k] * <matres_t>matB[k * dimN.$$ + j]
                 matC[i * dimN.$$ + j] += bix(tmp, 2, 4) * bix(tmp, 5, 7)
             }
@@ -143,9 +143,9 @@ function mulMatBix() {
 }
 
 function mulVec() {
-    for (let i = 0; i < dimN.$$; i++) {
+    for (let i of $range(dimN.$$)) {
         matC[i] = 0
-        for (let j = 0; j < dimN.$$; j++) {
+        for (let j of $range(dimN.$$)) {
             matC[i] += <matres_t>matA[i * dimN.$$ + j] * <matres_t>matB[j]
         }
     }
@@ -153,9 +153,9 @@ function mulVec() {
 
 function prDat(lab: text_t, mat: frame_t<matdat_t>) {
     printf`\n%s:\n    `(lab)
-    for (let i = 0; i < dimN.$$; i++) {
+    for (let i of $range(dimN.$$)) {
         let sep = t$``
-        for (let j = 0; j < dimN.$$; j++) {
+        for (let j of $range(dimN.$$)) {
             printf`%s%d`(sep, mat[i * dimN.$$ + j])
             sep = t$`,`
         }
@@ -165,9 +165,9 @@ function prDat(lab: text_t, mat: frame_t<matdat_t>) {
 
 function prRes(lab: text_t) {
     printf`\n%s:\n    `(lab)
-    for (let i = 0; i < dimN.$$; i++) {
+    for (let i of $range(dimN.$$)) {
         let sep = t$``
-        for (let j = 0; j < dimN.$$; j++) {
+        for (let j of $range(dimN.$$)) {
             printf`%s%d`(sep, matC[i * dimN.$$ + j])
             sep = t$`,`
         }
@@ -181,8 +181,8 @@ function sumDat(clipval: matdat_t): matdat_t {
     let prev = <matres_t>0
     let tmp = <matres_t>0
     let ret = <matdat_t>0
-    for (let i = 0; i < dimN.$$; i++) {
-        for (let j = 0; j < dimN.$$; j++) {
+    for (let i of $range(dimN.$$)) {
+        for (let j of $range(dimN.$$)) {
             cur = matC[i * dimN.$$ + j]
             tmp += cur
             if (tmp > clipval) {

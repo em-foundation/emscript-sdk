@@ -46,7 +46,7 @@ function dispatch() {
 export function run() {
     Common.Idle.$$.wakeup()
     Common.GlobalInterrupts.$$.enable()
-    for (; ;) {
+    while (true) {
         Common.GlobalInterrupts.$$.disable()
         dispatch()
         Common.Idle.$$.exec()

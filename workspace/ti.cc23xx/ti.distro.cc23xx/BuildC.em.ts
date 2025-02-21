@@ -9,7 +9,7 @@ import * as REGS from '@ti.distro.cc23xx/REGS.em'
 import * as StartupC from '@ti.distro.cc23xx/StartupC.em'
 import * as TargC from '@em.lang/TargC.em'
 
-const nvic_intrs = [
+const NVIC_INTRS = [
     'CPUIRQ0',
     'CPUIRQ1',
     'CPUIRQ2',
@@ -39,13 +39,13 @@ export function em$configure() {
     $using(REGS)
     $using(StartupC)
     $using(TargC)
-    for (let name of nvic_intrs) IntrVec.em$meta.addIntr(name)
+    for (let name of NVIC_INTRS) IntrVec.em$meta.addIntr(name)
 }
 
 export function em$generate() {
-    const opt = $property('em.build.Optimize', 'Oz')
-    const tools = $property('em.build.ToolsHome', '')
-    const libflav = opt == 'Oz' ? 'small' : 'balanced'
+    let opt = $property('em.build.Optimize', 'Oz')
+    let tools = $property('em.build.ToolsHome', '')
+    let libflav = opt == 'Oz' ? 'small' : 'balanced'
     let out = $outfile('build.sh', 0o755)
     out.addFrag(`
         |-> #!/bin/sh

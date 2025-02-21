@@ -12,7 +12,7 @@ export const POCI = $proxy<GpioI.$I>()
 const SD_CMD = <u8>0xB9
 
 export function em$startup() {
-    em.$['%%c+']
+    $['%%c+']
     CS.$$.makeOutput()
     CLK.$$.makeOutput()
     PICO.$$.makeOutput()
@@ -26,7 +26,7 @@ export function em$startup() {
     BusyWait.wait(50)
     // shutdown command
     CS.$$.clear()
-    for (let i = 0; i < 8; i++) {
+    for (let i of $range(8)) {
         CLK.$$.clear()
         const bv = (SD_CMD >> (7 - i)) & 0x01
         if (bv == 0) {
@@ -45,5 +45,5 @@ export function em$startup() {
     CLK.$$.reset()
     PICO.$$.reset()
     POCI.$$.reset()
-    em.$['%%c-']
+    $['%%c-']
 }

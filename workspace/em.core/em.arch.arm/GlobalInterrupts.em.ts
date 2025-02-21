@@ -1,5 +1,5 @@
 import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+export const $U = em.$declare('MODULE', GlobalInterruptsI)
 
 import * as GlobalInterruptsI from '@em.hal/GlobalInterruptsI.em'
 import * as IntrVec from '@em.arch.arm/IntrVec.em'

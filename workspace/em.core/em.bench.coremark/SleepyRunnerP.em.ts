@@ -27,12 +27,12 @@ export function em$run() {
 }
 
 function tickCB() {
-    em.$['%%d+']
+    $['%%d+']
     const crc = CoreBench.run(0)
-    em.$['%%d-']
+    $['%%d-']
     printf`crc = %04x\n`(crc)
     count -= 1
     if (count > 0) return
     ticker.$$.$$.stop()
-    em.halt()
+    halt()
 }

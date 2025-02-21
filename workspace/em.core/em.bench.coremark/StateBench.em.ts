@@ -55,7 +55,7 @@ export namespace em$meta {
     }
 
     export function em$construct() {
-        for (let i = 0; i < memsize.$$; i++) membuf.$add(0)
+        for (let _ of $range(memsize.$$)) membuf.$add(0)
     }
 }
 
@@ -172,7 +172,7 @@ export function print() {
         if ((cnt++ % 8) == 0) {
             printf`\n    `()
         }
-        for (; ;) {
+        while (true) {
             let c = p.$$
             p.$inc()
             if (c == c$`,`) break
@@ -187,13 +187,13 @@ export function run(arg: i16): Utils.sum_t {
     if (arg < 0x22) arg = 0x22
     let finalCnt = StateCnt.$make()
     let transCnt = StateCnt.$make()
-    for (let i = 0; i < NUM_STATES; i++) finalCnt[i] = transCnt[i] = 0
+    for (let i of $range(NUM_STATES)) finalCnt[i] = transCnt[i] = 0
     scan(finalCnt, transCnt)
     scramble(Utils.getSeed(1), arg)
     scan(finalCnt, transCnt)
     scramble(Utils.getSeed(2), arg)
     let crc = Utils.getCrc(Utils.Kind.FINAL)
-    for (let i = 0; i < NUM_STATES; i++) {
+    for (let i of $range(NUM_STATES)) {
         crc = Crc.addU32(finalCnt[i], crc)
         crc = Crc.addU32(transCnt[i], crc)
     }
@@ -211,7 +211,7 @@ function scan(finalCnt: index_t<u32>, transCnt: index_t<u32>) {
 }
 
 function scramble(seed: Utils.seed_t, step: u32) {
-    for (let idx = 0; idx < memsize.$$; idx += step) {
+    for (let idx = 0; idx < memsize.$$; idx += step) { // TODO: use $range
         if (membuf[idx] != c$`,`) membuf[idx] ^= <u8>seed
     }
 }
@@ -224,7 +224,7 @@ export function setup() {
     let plen = 0
     while ((total + plen + 1) < (memsize.$$ - 1)) {
         if (plen) {
-            for (let i = 0; i < plen; i++) {
+            for (let i of $range(plen)) {
                 p.$$ = pat[i]
                 p.$inc()
             }

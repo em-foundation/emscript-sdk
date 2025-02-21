@@ -33,7 +33,7 @@ export namespace em$meta {
         curHead = ElemFac.$create()
         curHead.$$.data = DataFac.$create()
         let p = curHead
-        for (let i = 0; i < maxElems.$$ - 1; i++) {
+        for (let _ of $range(maxElems.$$ - 1)) {
             let q = p.$$.next = ElemFac.$create()
             q.$$.data = DataFac.$create()
             p = q
@@ -115,7 +115,7 @@ export function run(arg: i16): Utils.sum_t {
     let retval = <Crc.sum_t>0
     let data = Data.$make()
     data.idx = finderIdx
-    for (let i = 0; i < findCnt; i++) {
+    for (let i of $range(findCnt)) {
         data.val = <i16>(i & 0xff)
         let elem = find(list, $ref(data))
         list = reverse(list)
@@ -184,7 +184,7 @@ function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
     let insize = <i32>1
     let q: ref_t<Elem>
     let e: ref_t<Elem>
-    for (; ;) {
+    while (true) {
         let p = list
         let tail = list = ElemFac.$null()
         let nmerges = <i32>0  // count number of merges we do in this pass
@@ -193,7 +193,7 @@ function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
             // step `insize` places along from p
             q = p
             let psize = 0
-            for (let i = 0; i < insize; i++) {
+            for (let _ of $range(insize)) {
                 psize++
                 q = q.$$.next
                 if (!q) break

@@ -81,6 +81,25 @@ namespace em {
         void $inc() { p_ += 1; }
     };
 
+    template <typename T> struct range_t {
+        struct iterator {
+            T value, step;
+            T operator*() const { return value; }
+            iterator& operator++() { value += step; return *this; }
+            bool operator!=(const iterator& other) const { return step > 0 ? (value < other.value) : (value > other.value); }
+        };
+        T start, stop, step;
+        range_t(T stop, T start, T step) : start(start), stop(stop), step(step) {}
+        iterator begin() const { return { start, step }; }
+        iterator end() const { return { stop, step }; }
+    };
+
+    template <typename T>
+    range_t<T>$range(T stop, T start = 0, T step = 1) {
+        return range_t<T>(stop, start, step);
+    }
+
+
     template <typename T> struct ref_t {
         T* $$;
         constexpr ref_t(T* lval = null) : $$ (lval) {}
@@ -103,6 +122,15 @@ namespace em {
         inline const T &operator[](u16 index) const { return $$[index]; }
         const frame_t<T> $frame(i16 beg, u16 len = 0) const { return frame_t<T>::create($$, $len, beg, len); }
         operator frame_t<T>() const { return $frame(0, 0); }
+        struct Iterator {
+            const T *current;
+            constexpr Iterator(const T *ptr) : current(ptr) {}
+            T operator*() const { return *current; }
+            Iterator &operator++() { ++current; return *this; }
+            bool operator!=(const Iterator &other) const { return current != other.current; }
+        };
+        constexpr Iterator begin() const { return Iterator(&$$[0]); }
+        constexpr Iterator end() const { return Iterator(&$$[$len]); }
     };
 
     template <typename T, u16 N> struct table_rw {
@@ -154,6 +182,8 @@ namespace em {
 
     };
     text_t text(const char *str, u16 len) { return text_t(str, len); }
+
+
 
     template <typename T> using volatile_t = volatile T;
 

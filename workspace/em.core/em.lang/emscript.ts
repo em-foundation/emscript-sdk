@@ -463,11 +463,27 @@ namespace em {
         $add(e: T) { this.elems.push(e) }
         $frame(beg: i16, len: u16 = 0) { return frame$create<T>(this.elems, 0, beg, len) }
         $ptr(): ptr_t<T> { return new em$ptr<T>(this.elems) }
-
+        [Symbol.iterator](): Iterator<T> {  // TODO combine with ARRAY
+            let idx = 0
+            let items = this.elems
+            return {
+                next(): IteratorResult<T> {
+                    if (idx < items.length) {
+                        let cur = idx
+                        idx += 1
+                        return { value: items[cur], done: false }
+                    }
+                    else {
+                        return { value: undefined as any, done: true }
+                    }
+                }
+            }
+        }
     }
     export function $table<T>(access: TableAccess = 'rw'): table_t<T> {
         const handler = {
             get(targ: any, prop: string | symbol) {
+                if (typeof prop == 'symbol') return targ[prop]
                 const idx = Number(prop)
                 if (!isNaN(idx)) return targ.elems[idx]
                 switch (prop) {
@@ -600,7 +616,11 @@ namespace em {
     const __UNIT__ = null
     // #region
 
-    export function $declare(kind: UnitKind, path?: string): Unit {
+    export function $declare(kind: UnitKind, inherits?: { $U: Unit }): Unit {
+        return undefined as unknown as Unit
+    }
+
+    export function __$declare(path: string, kind: UnitKind): Unit {
         if (path === undefined) return new Unit('$$anon', kind)
         const uid = `${Path.basename(Path.dirname(path!))}/${Path.basename(path!, '.em.ts')}`
         const unit = new Unit(uid, kind)
@@ -608,8 +628,12 @@ namespace em {
         return unit
     }
 
+
     export function $clone<M extends { $clone(): any }>(mod: M): ReturnType<M['$clone']> {
         return mod.$clone()
+    }
+
+    export function $implements<I extends {$U: Unit}>(iunit: I) {
     }
 
     export function $using<U extends Object>(unit: U) {
@@ -655,6 +679,13 @@ namespace em {
         return val
     }
 
+    export function* $range(stop: number, start: number = 0, step: number = 1): Iterable<number> {
+        if (step > 0) {
+            for (let i = start; i < stop; i += step) yield i;
+        } else {
+            for (let i = start; i > stop; i += step) yield i;
+        }
+    }
 
     export function $sizeof<T>(required?: undefined) { return 0 }
 
@@ -864,14 +895,15 @@ declare global {
     type u32 = em.u32
     type text_t = em.text_t
     type volatile_t<T> = em.volatile_t<T>
+    const $: typeof em.$
     const $array: typeof em.$array
     const $bool: typeof em.$bool
     const $cb: typeof em.$cb
     const $cb$null: typeof em.$cb$null
     const $clone: typeof em.$clone
-    const $declare: typeof em.$declare
     const $delegate: typeof em.$delegate
     const $factory: typeof em.$factory
+    const $implements: typeof em.$implements
     const $i8: typeof em.$i8
     const $i16: typeof em.$i16
     const $i32: typeof em.$i32
@@ -880,6 +912,7 @@ declare global {
     const $config: typeof em.$config
     const $property: typeof em.$property
     const $proxy: typeof em.$proxy
+    const $range: typeof em.$range
     const $ref: typeof em.$ref
     const $sizeof: typeof em.$sizeof
     const $struct: typeof em.$struct
@@ -888,6 +921,8 @@ declare global {
     const $u16: typeof em.$u16
     const $u32: typeof em.$u32
     const $using: typeof em.$using
+    const fail: typeof em.fail
+    const halt: typeof em.halt
     const printf: typeof em.printf
     const c$: typeof em.c$
     const e$: typeof em.e$
@@ -895,14 +930,15 @@ declare global {
 }
 
 Object.assign(globalThis, {
+    $: em.$,
     $array: em.$array,
     $bool: em.$bool,
     $cb: em.$cb,
     $cb$null: em.$cb$null,
     $clone: em.$clone,
-    $declare: em.$declare,
     $delegate: em.$delegate,
     $factory: em.$factory,
+    $implements: em.$implements,
     $i8: em.$i8,
     $i16: em.$i16,
     $i32: em.$i32,
@@ -911,6 +947,7 @@ Object.assign(globalThis, {
     $config: em.$config,
     $property: em.$property,
     $proxy: em.$proxy,
+    $range: em.$range,
     $ref: em.$ref,
     $sizeof: em.$sizeof,
     $struct: em.$struct,
@@ -919,6 +956,8 @@ Object.assign(globalThis, {
     $u8: em.$u8,
     $u16: em.$u16,
     $u32: em.$u32,
+    fail: em.fail,
+    halt: em.halt,
     printf: em.printf,
     c$: em.c$,
     e$: em.e$,

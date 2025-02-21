@@ -64,7 +64,7 @@ function c2d(ch: u8): u8 { return ch - c$`0` }
 function formatNum(buf: frame_t<u8>, num: u32, base: u8, width: i8, pad: u8): frame_t<u8> {
     let HEXDIGS = t$`0123456789ABCDEF`
     let idx = buf.$len
-    for (; ;) {
+    while (true) {
         width -= 1
         idx -= 1
         buf[idx] = HEXDIGS[(num % base)]
@@ -120,24 +120,20 @@ export function print(fmt: text_t, a1: arg_t = 0, a2: arg_t = 0, a3: arg_t = 0, 
             }
             let nb = formatNum(num_buf, <u32>dn, 10, width, pad)
             putbuf(nb)
-        }
-        else if (ch == c$`x`) {
+        } else if (ch == c$`x`) {
             let xn = <u32>argp.$$
             argp.$inc()
             let nb = formatNum(num_buf, xn, 16, width, pad)
             putbuf(nb)
-        }
-        else if (ch == c$`c`) {
+        } else if (ch == c$`c`) {
             let cn = argp.$$
             argp.$inc()
             putch(cn)
-        }
-        else if (ch == c$`s`) {
+        } else if (ch == c$`s`) {
             let sp = <ptr_t<u8>><unknown>argp.$$
             argp.$inc()
             puts(sp)
-        }
-        else {
+        } else {
             putch(ch)
         }
     }

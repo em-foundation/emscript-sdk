@@ -1,9 +1,11 @@
 import em from '@$$emscript'
 export const $T = em.$declare('TEMPLATE')
 
+import * as GpioI from '@em.hal/GpioI.em'
+
 export namespace em$template {
 
-    export const $U = em.$declare('MODULE')
+    export const $U = em.$declare('MODULE', GpioI)
 
     export const pin_num = $config<i16>(-1)
 
@@ -64,8 +66,7 @@ export namespace em$template {
     export function setInternalPulldown(enable: bool_t): void {
         if (enable) {
             $R.IOC.IOC0.$[pn].$$ |= $R.IOC_IOC0_PULLCTL_PULL_DOWN
-        }
-        else {
+        } else {
             $R.IOC.IOC0.$[pn].$$ &= ~$R.IOC_IOC0_PULLCTL_PULL_DOWN
         }
     }
@@ -73,8 +74,7 @@ export namespace em$template {
     export function setInternalPullup(enable: bool_t): void {
         if (enable) {
             $R.IOC.IOC0.$[pn].$$ |= $R.IOC_IOC0_PULLCTL_PULL_UP
-        }
-        else {
+        } else {
             $R.IOC.IOC0.$[pn].$$ &= ~$R.IOC_IOC0_PULLCTL_PULL_UP
         }
     }

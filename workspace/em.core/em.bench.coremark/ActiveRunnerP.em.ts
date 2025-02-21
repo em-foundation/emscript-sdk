@@ -8,7 +8,7 @@ import * as Utils from '@em.bench.coremark/Utils.em'
 
 const AppLed = $delegate(BoardC.AppLed)
 
-let ITERATIONS = $config<u16>(10)
+const iterations = $config<u16>(10)
 
 export function em$startup() {
     CoreBench.setup()
@@ -19,11 +19,11 @@ export function em$run() {
     Common.BusyWait.$$.wait(250_000)
     AppLed.$$.off()
     Common.UsCounter.$$.start()
-    em.$['%%d+']
-    for (let i = 0; i < ITERATIONS.$$; i++) {
+    $['%%d+']
+    for (let _ of $range(iterations.$$)) {
         CoreBench.run(0)
     }
-    em.$['%%d-']
+    $['%%d-']
     let usecs = Common.UsCounter.$$.stop()
     AppLed.$$.on()
     Common.BusyWait.$$.wait(250_000)

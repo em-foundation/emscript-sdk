@@ -8,8 +8,8 @@ import * as TimeTypes from '@em.utils/TimeTypes.em'
 
 export const AppLed = $delegate(BoardC.AppLed)
 
-let alarm = $config<AlarmMgr.Obj>()
-let blinkF = $config<FiberMgr.Obj>()
+const alarm = $config<AlarmMgr.Obj>()
+const blinkF = $config<FiberMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
@@ -26,7 +26,7 @@ export function em$run() {
 }
 
 function blinkFB(a: arg_t) {
-    em.$['%%c']
+    $['%%c']
     counter += 1
     let msecs = (counter & 0x1) != 0 ? 100 : 5
     AppLed.$$.wink(msecs)

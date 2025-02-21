@@ -1,5 +1,7 @@
 import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+export const $U = em.$declare('MODULE', UsCounterI)
+
+import * as UsCounterI from '@em.hal/UsCounterI.em'
 
 export const MHZ = $config<u16>(48)
 

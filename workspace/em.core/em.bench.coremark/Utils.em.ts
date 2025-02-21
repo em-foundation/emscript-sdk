@@ -16,8 +16,8 @@ const seed_tab = $table<seed_t>('ro')
 export namespace em$meta {
 
     export function em$init() {
-        for (let i = Kind.FINAL; i < Kind.ZZZ_; i++) crc_tab.$add(0)
-        for (let i = 0; i < NUM_SEEDS; i++) seed_tab.$add(0)
+        for (let _ of $range(Kind.ZZZ_)) crc_tab.$add(0)
+        for (let _ of $range(NUM_SEEDS)) seed_tab.$add(0)
     }
 
     export function bindSeed(idx: u8, val: seed_t) {

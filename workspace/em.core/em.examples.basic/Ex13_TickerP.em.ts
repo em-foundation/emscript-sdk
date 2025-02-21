@@ -9,8 +9,8 @@ import * as TimeTypes from '@em.utils/TimeTypes.em'
 export const AppLed = $delegate(BoardC.AppLed)
 export const SysLed = $delegate(BoardC.SysLed)
 
-let app_ticker = $config<TickerMgr.Obj>()
-let sys_ticker = $config<TickerMgr.Obj>()
+const app_ticker = $config<TickerMgr.Obj>()
+const sys_ticker = $config<TickerMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
@@ -26,11 +26,11 @@ export function em$run() {
 }
 
 function appTickCb() {
-    em.$['%%c']
+    $['%%c']
     AppLed.$$.wink(100)
 }
 
 function sysTickCb() {
-    em.$['%%d']
+    $['%%d']
     SysLed.$$.wink(100)
 }

@@ -9,7 +9,7 @@ export class HandlerInfo extends $struct {
     mask: u32
 }
 
-let handler_info_tab = $table<HandlerInfo>('ro')
+const handler_info_tab = $table<HandlerInfo>('ro')
 
 export namespace em$meta {
 
@@ -28,10 +28,15 @@ export function em$startup() {
 
 export function GPIO_COMB_isr$$() {
     let mis = $R.GPIO.MIS.$$
-    for (let i = 0; i < handler_info_tab.$len; i++) {
-        let hi = $ref(handler_info_tab[i])
-        if ((mis & hi.$$.mask) && hi.$$.handler != $null) {
-            hi.$$.handler()
+    for (let hi of handler_info_tab) {
+        if ((mis & hi.mask) && hi.handler != $null) {
+            hi.handler()
         }
     }
+    // for (let i of $range(handler_info_tab.$len)) {
+    //     let hi = $ref(handler_info_tab[i])
+    //     if ((mis & hi.$$.mask) && hi.$$.handler != $null) {
+    //         hi.$$.handler()
+    //     }
+    // }
 }

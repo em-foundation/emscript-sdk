@@ -1,7 +1,8 @@
 import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+export const $U = em.$declare('MODULE', McuI)
 
 import * as Debug from '@em.lang/Debug.em'
+import * as McuI from '@em.hal/McuI.em'
 
 const use_sram = $config<bool_t>()
 
@@ -14,7 +15,7 @@ export namespace em$meta {
 
 export function startup(): void {
     Debug.startup()
-    em.$['%%a:'](2)
+    $['%%a:'](2)
     $R.CKMD.LFCLKSEL.$$ = e$`CKMD_LFCLKSEL_MAIN_LFXT`
     $R.CKMD.LFXTCTL.$$ = $R.CKMD_LFXTCTL_EN
     $R.CKMD.IMSET.$$ = $R.CKMD_IMSET_HFXTFAULT | $R.CKMD_IMSET_TRACKREFLOSS | $R.CKMD_IMSET_LFCLKGOOD

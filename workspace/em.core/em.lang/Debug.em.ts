@@ -14,7 +14,7 @@ function delay() {
 }
 
 export function mark(id: u8, val: u8) {
-    for (; ;) {
+    while (true) {
         pulse(id)
         if (val == 0) break
         val -= 1

@@ -7,7 +7,7 @@ import * as GpioI from '@em.hal/GpioI.em'
 
 export namespace em$template {
 
-    export const $U = em.$declare('MODULE')
+    export const $U = em.$declare('MODULE', EdgeI)
 
     export const Pin = $proxy<GpioI.$I>()
     export const pin_num = $config<i16>()

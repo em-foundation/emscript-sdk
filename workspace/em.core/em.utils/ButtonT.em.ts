@@ -8,7 +8,7 @@ import * as Poller from '@em.mcu/Poller.em'
 
 export namespace em$template {
 
-    export const $U = em.$declare('MODULE')
+    export const $U = em.$declare('MODULE', ButtonI)
 
     export const Edge = $proxy<EdgeI.$I>()
 
@@ -60,8 +60,7 @@ export namespace em$template {
         cur_min = min_dur_ms
         if (handler == $null) {
             Edge.$$.disableDetect()
-        }
-        else {
+        } else {
             Edge.$$.enableDetect()
         }
     }

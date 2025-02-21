@@ -21,21 +21,19 @@ export function addU32(val: u32, crc: sum_t): sum_t {
 function update(data: u8, crc: sum_t): sum_t {
     let x16 = <u8>0
     let carry = <u8>0
-    for (let i = 0; i < 8; i++) {
+    for (let _ of $range(8)) {
         x16 = <u8>((data & 1) ^ (<u8>crc & 1))
         data >>= 1
         if (x16 == 1) {
             crc ^= 0x4002
             carry = 1
-        }
-        else {
+        } else {
             carry = 0
         }
         crc >>= 1
         if (carry) {
             crc |= 0x8000
-        }
-        else {
+        } else {
             crc &= 0x7fff
         }
     }

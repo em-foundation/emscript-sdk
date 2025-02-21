@@ -9,7 +9,7 @@ export const AppLed = $delegate(BoardC.AppLed)
 
 export function em$run() {
     Common.GlobalInterrupts.$$.enable()
-    for (let i = 0; i < 5; i++) {
+    for (let _ of $range(5)) {
         Poller.upause(100_000) // 100ms
         AppLed.$$.wink(5) // 5ms
     }
