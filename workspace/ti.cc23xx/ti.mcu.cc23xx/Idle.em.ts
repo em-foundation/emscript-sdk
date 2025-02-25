@@ -11,7 +11,6 @@ const sleep_enter_tab = $table<SleepCB>('ro')
 const sleep_leave_tab = $table<SleepCB>('ro')
 
 export namespace em$meta {
-
     export function addSleepEnter(cb: SleepCB) {
         sleep_enter_tab.$add(cb)
     }
@@ -21,12 +20,13 @@ export namespace em$meta {
     }
 }
 
-var cur_pause_only = false
+let cur_pause_only = false
 
 export function em$startup() {
     $['%%b+']
     $R.PMCTL.VDDRCTL.$$ = $R.PMCTL_VDDRCTL_SELECT
-    $R.EVTULL.WKUPMASK.$$ = $R.EVTULL_WKUPMASK_AON_IOC_COMB | $R.EVTULL_WKUPMASK_AON_RTC_COMB
+    $R.EVTULL.WKUPMASK.$$ =
+        $R.EVTULL_WKUPMASK_AON_IOC_COMB | $R.EVTULL_WKUPMASK_AON_RTC_COMB
 }
 
 function doSleep() {
@@ -64,6 +64,4 @@ export function exec() {
     }
 }
 
-export function wakeup() {
-
-}
+export function wakeup() {}

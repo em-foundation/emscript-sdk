@@ -18,7 +18,7 @@ export namespace em$meta {
     }
 }
 
-var counter = <u32>0
+let counter = <u32>0
 
 export function em$run() {
     blinkF.$$.$$.post()
@@ -27,7 +27,7 @@ export function em$run() {
 
 function blinkFB(a: arg_t) {
     $['%%c']
-    AppLed.$$.wink(100)  // 100 ms
+    AppLed.$$.wink(100) // 100 ms
     counter += 1
     let msecs = (counter & 0x1) != 0 ? 2_000 : 750
     alarm.$$.$$.wakeup(TimeTypes.Secs24p8_initMsecs(msecs))

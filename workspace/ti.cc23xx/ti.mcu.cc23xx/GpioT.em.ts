@@ -4,13 +4,11 @@ export const $T = em.$declare('TEMPLATE')
 import * as GpioI from '@em.hal/GpioI.em'
 
 export namespace em$template {
-
     export const $U = em.$declare('MODULE', GpioI)
 
     export const pin_num = $config<i16>(-1)
 
     export namespace em$meta {
-
         export function pinId(): i16 {
             return pin_num.$$
         }
@@ -28,7 +26,9 @@ export namespace em$template {
     }
 
     export function get(): bool_t {
-        return isInput() ? (($R.GPIO.DIN31_0.$$ & mask) != 0) : (($R.GPIO.DOUT31_0.$$ & mask) != 0)
+        return isInput()
+            ? ($R.GPIO.DIN31_0.$$ & mask) != 0
+            : ($R.GPIO.DOUT31_0.$$ & mask) != 0
     }
 
     export function isInput(): bool_t {
@@ -42,7 +42,6 @@ export namespace em$template {
     export function makeInput(): void {
         $R.GPIO.DOECLR31_0.$$ = mask
         $R.IOC.IOC0.$[pn].$$ |= $R.IOC_IOC0_INPEN
-
     }
 
     export function makeOutput(): void {
@@ -84,4 +83,6 @@ export namespace em$template {
     }
 }
 
-export function $clone() { return { $T, ...em$template } }
+export function $clone() {
+    return { $T, ...em$template }
+}

@@ -8,7 +8,7 @@ export type sum_t = Utils.sum_t
 export function add16(val: i16, crc: sum_t): sum_t {
     const v = val
     crc = update(v, crc)
-    crc = update((v >> 8), crc)
+    crc = update(v >> 8, crc)
     return crc
 }
 
@@ -22,7 +22,7 @@ function update(data: u8, crc: sum_t): sum_t {
     let x16 = <u8>0
     let carry = <u8>0
     for (let _ of $range(8)) {
-        x16 = <u8>((data & 1) ^ (<u8>crc & 1))
+        x16 = <u8>((data & 1) ^ ((<u8>crc) & 1))
         data >>= 1
         if (x16 == 1) {
             crc ^= 0x4002

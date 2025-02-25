@@ -4,17 +4,20 @@ export const $U = em.$declare('MODULE')
 export const NUM_SEEDS = 5
 
 export enum Kind {
-    FINAL, LIST, MATRIX, STATE, ZZZ_
+    FINAL,
+    LIST,
+    MATRIX,
+    STATE,
+    ZZZ_,
 }
 
 export type seed_t = em.u16
 export type sum_t = em.u16
 
-var crc_tab = $table<sum_t>('rw')
+let crc_tab = $table<sum_t>('rw')
 const seed_tab = $table<seed_t>('ro')
 
 export namespace em$meta {
-
     export function em$init() {
         for (let _ of $range(Kind.ZZZ_)) crc_tab.$add(0)
         for (let _ of $range(NUM_SEEDS)) seed_tab.$add(0)

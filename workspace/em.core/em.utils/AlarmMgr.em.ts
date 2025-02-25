@@ -24,7 +24,6 @@ class Alarm extends $struct {
 let AlarmFac = $factory(Alarm.$make())
 
 export namespace em$meta {
-
     export function create(fiber: FiberMgr.Obj): Obj {
         let alarm = AlarmFac.$create()
         alarm.$$._fiber = fiber
@@ -32,26 +31,30 @@ export namespace em$meta {
     }
 }
 
-var cur_alarm = <Obj>$null
+let cur_alarm = <Obj>$null
 
 function dispatch(delta: Secs24p8) {
     WakeupTimer.$$.disable()
     let nxt_alarm = <Obj>$null
     let max_dt_secs = ~(<Secs24p8>0)
-    for (let a of AlarmFac) { // iterate through all alarms
+    for (let a of AlarmFac) {
+        // iterate through all alarms
         if (a.$$._dt_secs == 0) continue // INACTIVE state
-        a.$$._dt_secs -= (delta > a.$$._dt_secs) ? a.$$._dt_secs : delta
-        if (a.$$._dt_secs == 0) { // RINGING state
+        a.$$._dt_secs -= delta > a.$$._dt_secs ? a.$$._dt_secs : delta
+        if (a.$$._dt_secs == 0) {
+            // RINGING state
             a.$$._fiber.$$.post() // becomes INACTIVE after post
             continue
         }
-        if (a.$$._dt_secs <= max_dt_secs) { // ACTIVE state
+        if (a.$$._dt_secs <= max_dt_secs) {
+            // ACTIVE state
             nxt_alarm = a // best candidate
             max_dt_secs = a.$$._dt_secs
         }
     }
     cur_alarm = nxt_alarm // $null if no candidates found
-    if (cur_alarm) WakeupTimer.$$.enable(cur_alarm.$$._thresh, $cb(wakeupHandler))
+    if (cur_alarm)
+        WakeupTimer.$$.enable(cur_alarm.$$._thresh, $cb(wakeupHandler))
 }
 
 function setup(alarm: Obj, delta: Secs24p8) {

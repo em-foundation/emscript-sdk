@@ -11,12 +11,11 @@ type matres_t = i32
 
 const dimN = $config<u8>(0)
 
-var matA = $table<matdat_t>('rw')
-var matB = $table<matdat_t>('rw')
-var matC = $table<matres_t>('rw')
+let matA = $table<matdat_t>('rw')
+let matB = $table<matdat_t>('rw')
+let matC = $table<matres_t>('rw')
 
 export namespace em$meta {
-
     export function em$construct() {
         let i = 0
         let j = 0
@@ -66,7 +65,7 @@ export function run(arg: arg_t): Utils.sum_t {
 }
 
 export function setup() {
-    let s32 = <u32>Utils.getSeed(1) | (<u32>Utils.getSeed(2) << 16)
+    let s32 = (<u32>Utils.getSeed(1)) | ((<u32>Utils.getSeed(2)) << 16)
     let sd = <matdat_t>s32
     if (sd == 0) sd = 1
     let order = <matdat_t>1
@@ -98,7 +97,7 @@ function bix(res: matres_t, lower: u8, upper: u8): matres_t {
     let r = <u32>res
     let l = <u32>lower
     let u = <u32>upper
-    return <matres_t>((r >> l) & (~(0xffffffff << u)))
+    return <matres_t>((r >> l) & ~(0xffffffff << u))
 }
 
 function clip(d: matdat_t, b: bool_t): matdat_t {
@@ -114,7 +113,8 @@ function enlarge(val: matdat_t): matdat_t {
 function mulVal(val: matdat_t) {
     for (let i of $range(dimN.$$)) {
         for (let j of $range(dimN.$$)) {
-            matC[i * dimN.$$ + j] = <matres_t>(matA[i * dimN.$$ + j]) * <matres_t>val
+            matC[i * dimN.$$ + j] =
+                <matres_t>matA[i * dimN.$$ + j] * <matres_t>val
         }
     }
 }
@@ -124,7 +124,9 @@ function mulMat() {
         for (let j of $range(dimN.$$)) {
             matC[i * dimN.$$ + j] = 0
             for (let k of $range(dimN.$$)) {
-                matC[i * dimN.$$ + j] += <matres_t>matA[i * dimN.$$ + k] * <matres_t>matB[k * dimN.$$ + j]
+                matC[i * dimN.$$ + j] +=
+                    <matres_t>matA[i * dimN.$$ + k] *
+                    <matres_t>matB[k * dimN.$$ + j]
             }
         }
     }
@@ -135,7 +137,9 @@ function mulMatBix() {
         for (let j of $range(dimN.$$)) {
             matC[i * dimN.$$ + j] = 0
             for (let k of $range(dimN.$$)) {
-                let tmp = <matres_t>matA[i * dimN.$$ + k] * <matres_t>matB[k * dimN.$$ + j]
+                let tmp =
+                    <matres_t>matA[i * dimN.$$ + k] *
+                    <matres_t>matB[k * dimN.$$ + j]
                 matC[i * dimN.$$ + j] += bix(tmp, 2, 4) * bix(tmp, 5, 7)
             }
         }
@@ -175,7 +179,6 @@ function prRes(lab: text_t) {
     }
 }
 
-
 function sumDat(clipval: matdat_t): matdat_t {
     let cur = <matres_t>0
     let prev = <matres_t>0
@@ -188,9 +191,8 @@ function sumDat(clipval: matdat_t): matdat_t {
             if (tmp > clipval) {
                 ret += 10
                 tmp = 0
-            }
-            else {
-                ret += (cur > prev) ? 1 : 0
+            } else {
+                ret += cur > prev ? 1 : 0
             }
             prev = cur
         }

@@ -7,7 +7,6 @@ import * as FiberMgr from '@em.utils/FiberMgr.em'
 import * as Poller from '@em.mcu/Poller.em'
 
 export namespace em$template {
-
     export const $U = em.$declare('MODULE', ButtonI)
 
     export const Edge = $proxy<EdgeI.$I>()
@@ -17,17 +16,16 @@ export namespace em$template {
     const debounceF = $config<FiberMgr.Obj>()
 
     export namespace em$meta {
-
         export function em$construct() {
             debounceF.$$ = FiberMgr.em$meta.create($cb(debounceFB))
             Edge.$$.em$meta.setDetectHandler($cb(buttonHandler))
         }
     }
 
-    var cur_fxn = <Handler>$null
-    var cur_dur = 0
-    var cur_max = 0
-    var cur_min = 0
+    let cur_fxn = <Handler>$null
+    let cur_dur = 0
+    let cur_max = 0
+    let cur_min = 0
 
     export function em$startup() {
         Edge.$$.init(true)
@@ -54,7 +52,11 @@ export namespace em$template {
         return !Edge.$$.getState()
     }
 
-    export function onPressed(handler: Handler, min_dur_ms: u16, max_dur_ms: u16) {
+    export function onPressed(
+        handler: Handler,
+        min_dur_ms: u16,
+        max_dur_ms: u16
+    ) {
         cur_fxn = handler
         cur_max = max_dur_ms
         cur_min = min_dur_ms
@@ -64,7 +66,8 @@ export namespace em$template {
             Edge.$$.enableDetect()
         }
     }
-
 }
 
-export function $clone() { return { $T, ...em$template } }
+export function $clone() {
+    return { $T, ...em$template }
+}

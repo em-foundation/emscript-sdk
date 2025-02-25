@@ -35,7 +35,6 @@ function blinkFB(a: arg_t) {
     AppButEdge.$$.enableDetect()
 }
 
-
 function handler() {
     $['%%c']
     AppButEdge.$$.clearDetect()

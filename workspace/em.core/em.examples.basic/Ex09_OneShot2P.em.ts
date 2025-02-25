@@ -16,7 +16,7 @@ export namespace em$meta {
     }
 }
 
-var count = 5
+let count = 5
 
 export function em$run() {
     blinkF.$$.$$.post()

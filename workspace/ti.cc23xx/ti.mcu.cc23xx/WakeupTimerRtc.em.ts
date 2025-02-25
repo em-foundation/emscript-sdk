@@ -18,7 +18,7 @@ export function enable(secs256: Secs24p8, handler: Handler) {
 
 export function secsAligned(secs: Secs24p8): Secs24p8 {
     let raw_time = Rtc.getRawTime()
-    let raw_secs = <Secs24p8>(raw_time.secs << 8 | raw_time.subs >> 24)
+    let raw_secs = <Secs24p8>((raw_time.secs << 8) | (raw_time.subs >> 24))
     let rem = raw_secs % secs
     return secs - rem
 }

@@ -7,7 +7,7 @@ import * as Common from '@em.mcu/Common.em'
 export const AppLed = $delegate(BoardC.AppLed)
 export const OneShot = $delegate(BoardC.OneShot)
 
-var active_flag = false
+let active_flag = false
 
 export function em$run() {
     Common.GlobalInterrupts.$$.enable()

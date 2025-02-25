@@ -6,7 +6,7 @@ import * as OneShotI from '@em.hal/OneShotI.em'
 
 export const OneShot = $proxy<OneShotI.$I>()
 
-var active_flag = <volatile_t<bool_t>>false
+let active_flag = <volatile_t<bool_t>>false
 
 export function pause(time_ms: u32) {
     upause(time_ms * 1000)

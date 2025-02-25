@@ -9,7 +9,7 @@ export const CLK = $proxy<GpioI.$I>()
 export const PICO = $proxy<GpioI.$I>()
 export const POCI = $proxy<GpioI.$I>()
 
-const SD_CMD = <u8>0xB9
+const SD_CMD = <u8>0xb9
 
 export function em$startup() {
     $['%%c+']

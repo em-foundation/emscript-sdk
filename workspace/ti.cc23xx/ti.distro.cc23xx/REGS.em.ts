@@ -1816,7 +1816,6 @@ export const CKMD_HFTRACKCTL_RATIO_REF8M: any = '25165824'
 Use for 48MHz reference clock*/
 export const CKMD_HFTRACKCTL_RATIO_REF48M: any = '4194304'
 
-
 // -------- REGISTER LDOCTL -------- //
 
 /**
@@ -1948,7 +1947,6 @@ export const CKMD_LFCLKSEL_MAIN_LFOSC: any = '1'
 No LF clock selected. LFTICK will be generated from HFOSC, STANDBY entry will be prevented.*/
 export const CKMD_LFCLKSEL_MAIN_FAKE: any = '0'
 
-
 // -------- REGISTER TDCCLKSEL -------- //
 
 /**
@@ -1979,7 +1977,6 @@ export const CKMD_TDCCLKSEL_REFCLK_CLKSVT: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const CKMD_TDCCLKSEL_REFCLK_NONE: any = '0'
 
-
 // -------- REGISTER ADCCLKSEL -------- //
 
 /**
@@ -2004,7 +2001,6 @@ export const CKMD_ADCCLKSEL_SRC_HFXT: any = '1'
 /**
 48MHz CLKSVT*/
 export const CKMD_ADCCLKSEL_SRC_CLKSVT: any = '0'
-
 
 // -------- REGISTER LFCLKSTAT -------- //
 
@@ -2382,7 +2378,6 @@ export const CKMD_ATBCTL0_SEL_HFXTANA: any = '1'
 /**
 Internal. Only to be used through TI provided API.*/
 export const CKMD_ATBCTL0_SEL_OFF: any = '0'
-
 
 // -------- REGISTER ATBCTL1 -------- //
 
@@ -2844,7 +2839,6 @@ export const CKMD_AMPCFG0_FSMRATE__3M: any = '1'
 6 MHz*/
 export const CKMD_AMPCFG0_FSMRATE__6M: any = '0'
 
-
 // -------- REGISTER AMPCFG1 -------- //
 
 /**
@@ -2964,7 +2958,6 @@ export const CKMD_TDCCTL_CMD_RUN_SYNC_START: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const CKMD_TDCCTL_CMD_CLR_RESULT: any = '0'
 
-
 // -------- REGISTER TDCSTAT -------- //
 
 /**
@@ -3042,7 +3035,6 @@ export const CKMD_TDCSTAT_STATE_WAIT_START_STOP_CNT_EN: any = '4'
 /**
 Internal. Only to be used through TI provided API.*/
 export const CKMD_TDCSTAT_STATE_WAIT_START: any = '0'
-
 
 // -------- REGISTER TDCRESULT -------- //
 
@@ -3147,7 +3139,6 @@ export const CKMD_TDCSATCFG_LIMIT_R12: any = '3'
 /**
 Internal. Only to be used through TI provided API.*/
 export const CKMD_TDCSATCFG_LIMIT_NONE: any = '0'
-
 
 // -------- REGISTER TDCTRIGSRC -------- //
 
@@ -3380,7 +3371,6 @@ export const CKMD_TDCTRIGSRC_START_SRC_LFOSC: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const CKMD_TDCTRIGSRC_START_SRC_LFTICK: any = '0'
 
-
 // -------- REGISTER TDCTRIGCNT -------- //
 
 /**
@@ -3555,7 +3545,6 @@ export const CKMD_TDCPRECTL_SRC_LFOSC: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const CKMD_TDCPRECTL_SRC_LFTICK: any = '0'
 
-
 // -------- REGISTER TDCPRECNTR -------- //
 
 /**
@@ -3626,7 +3615,6 @@ DISABLE
 
 WDT continues counting while the CPU is stopped by a debugger.*/
 export const CKMD_WDTTEST_STALLEN_DIS: any = '0'
-
 
 // -------- REGISTER WDTLOCK -------- //
 
@@ -3886,7 +3874,6 @@ export const CLKCTL_DESCEX0_GPIO_IP_AVAIL: any = '1'
 /**
 IP is unavailable*/
 export const CLKCTL_DESCEX0_GPIO_IP_UNAVAIL: any = '0'
-
 
 // -------- REGISTER DESCEX1 -------- //
 
@@ -4151,7 +4138,6 @@ export const CLKCTL_CLKCFG0_GPIO_CLK_EN: any = '1'
 Clock is disabled*/
 export const CLKCTL_CLKCFG0_GPIO_CLK_DIS: any = '0'
 
-
 // -------- REGISTER CLKCFG1 -------- //
 
 /**
@@ -4357,7 +4343,6 @@ export const CLKCTL_CLKENSET0_GPIO_CLK_SET: any = '1'
 /**
 IP clock enable is unchanged*/
 export const CLKCTL_CLKENSET0_GPIO_CLK_UNCHGD: any = '0'
-
 
 // -------- REGISTER CLKENSET1 -------- //
 
@@ -4565,7 +4550,6 @@ export const CLKCTL_CLKENCLR0_GPIO_CLK_CLR: any = '1'
 IP clock enable is unchanged*/
 export const CLKCTL_CLKENCLR0_GPIO_CLK_UNCHGD: any = '0'
 
-
 // -------- REGISTER CLKENCLR1 -------- //
 
 /**
@@ -4591,7 +4575,6 @@ export const CLKCTL_STBYPTR_VAL_S: any = '32'
 /**
 Internal. Only to be used through TI provided API.*/
 export const CLKCTL_STBYPTR_VAL_MIN: any = '0'
-
 
 // -------- REGISTER IDLECFG -------- //
 
@@ -4622,7 +4605,6 @@ Flash LDO is on in SLEEP/IDLE mode.
 
 Gives fast wake up time from SLEEP/IDLE mode, but increased power consumption.*/
 export const CLKCTL_IDLECFG_MODE_LDO_ON: any = '0'
-
 
 // -------- MODULE EVTSVT -------- //
 
@@ -4781,7 +4763,6 @@ export const EVTSVT_DTB_SEL_S: any = '2'
 /**
 All 16 observation signals are set to zero.*/
 export const EVTSVT_DTB_SEL_DIS: any = '0'
-
 
 // -------- REGISTER NMISEL -------- //
 
@@ -5004,7 +4985,6 @@ export const EVTSVT_NMISEL_PUBID_AON_NMI_SEL: any = '1'
 /**
 Always inactive*/
 export const EVTSVT_NMISEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER CPUIRQ0SEL -------- //
 
@@ -5248,7 +5228,6 @@ export const EVTSVT_CPUIRQ0SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_CPUIRQ0SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER CPUIRQ1SEL -------- //
 
 /**
@@ -5491,7 +5470,6 @@ export const EVTSVT_CPUIRQ1SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_CPUIRQ1SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER CPUIRQ2SEL -------- //
 
 /**
@@ -5605,7 +5583,6 @@ export const EVTSVT_CPUIRQ2SEL_PUBID_AON_PMU_COMB: any = '2'
 /**
 Always inactive*/
 export const EVTSVT_CPUIRQ2SEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER CPUIRQ3SEL -------- //
 
@@ -5721,7 +5698,6 @@ export const EVTSVT_CPUIRQ3SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_CPUIRQ3SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER CPUIRQ4SEL -------- //
 
 /**
@@ -5836,7 +5812,6 @@ export const EVTSVT_CPUIRQ4SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_CPUIRQ4SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER CPUIRQ5SEL -------- //
 
 /**
@@ -5856,7 +5831,6 @@ export const EVTSVT_CPUIRQ5SEL_PUBID_S: any = '6'
 /**
 GPIO combined wake up interrupt, interrupt flags can be found here GPIO:MIS*/
 export const EVTSVT_CPUIRQ5SEL_PUBID_GPIO_COMB: any = '9'
-
 
 // -------- REGISTER CPUIRQ6SEL -------- //
 
@@ -5878,7 +5852,6 @@ export const EVTSVT_CPUIRQ6SEL_PUBID_S: any = '6'
 LRFD combined event, interrupt flags can be found here LRFDDBELL:MIS0*/
 export const EVTSVT_CPUIRQ6SEL_PUBID_LRFD_IRQ0: any = '12'
 
-
 // -------- REGISTER CPUIRQ7SEL -------- //
 
 /**
@@ -5898,7 +5871,6 @@ export const EVTSVT_CPUIRQ7SEL_PUBID_S: any = '6'
 /**
 LRFD combined event, interrupt flags can be found here LRFDDBELL:MIS1*/
 export const EVTSVT_CPUIRQ7SEL_PUBID_LRFD_IRQ1: any = '13'
-
 
 // -------- REGISTER CPUIRQ8SEL -------- //
 
@@ -5920,7 +5892,6 @@ export const EVTSVT_CPUIRQ8SEL_PUBID_S: any = '6'
 DMA combined done interrupt, corresponding flags can be found here DMA:REQDONE*/
 export const EVTSVT_CPUIRQ8SEL_PUBID_DMA_DONE_COMB: any = '20'
 
-
 // -------- REGISTER CPUIRQ9SEL -------- //
 
 /**
@@ -5940,7 +5911,6 @@ export const EVTSVT_CPUIRQ9SEL_PUBID_S: any = '6'
 /**
 AES accelerator combined interrupt request, interrupt flags can be found here AES:MIS*/
 export const EVTSVT_CPUIRQ9SEL_PUBID_AES_COMB: any = '22'
-
 
 // -------- REGISTER CPUIRQ10SEL -------- //
 
@@ -5962,7 +5932,6 @@ export const EVTSVT_CPUIRQ10SEL_PUBID_S: any = '6'
 SPI0 combined interrupt request, interrupt flags can be found here SPI0:MIS*/
 export const EVTSVT_CPUIRQ10SEL_PUBID_SPI0_COMB: any = '15'
 
-
 // -------- REGISTER CPUIRQ11SEL -------- //
 
 /**
@@ -5982,7 +5951,6 @@ export const EVTSVT_CPUIRQ11SEL_PUBID_S: any = '6'
 /**
 UART0 combined interrupt, interrupt flags are found here UART0:MIS*/
 export const EVTSVT_CPUIRQ11SEL_PUBID_UART0_COMB: any = '23'
-
 
 // -------- REGISTER CPUIRQ12SEL -------- //
 
@@ -6004,7 +5972,6 @@ export const EVTSVT_CPUIRQ12SEL_PUBID_S: any = '6'
 Interrupt event from I2C0, interrupt flags can be found here I2C0:MIS*/
 export const EVTSVT_CPUIRQ12SEL_PUBID_I2C0_IRQ: any = '24'
 
-
 // -------- REGISTER CPUIRQ13SEL -------- //
 
 /**
@@ -6024,7 +5991,6 @@ export const EVTSVT_CPUIRQ13SEL_PUBID_S: any = '6'
 /**
 LGPT0 combined interrupt, interrupt flags are found here LGPT0:MIS*/
 export const EVTSVT_CPUIRQ13SEL_PUBID_LGPT0_COMB: any = '18'
-
 
 // -------- REGISTER CPUIRQ14SEL -------- //
 
@@ -6046,7 +6012,6 @@ export const EVTSVT_CPUIRQ14SEL_PUBID_S: any = '6'
 LGPT1 combined interrupt, interrupt flags are found here LGPT1:MIS*/
 export const EVTSVT_CPUIRQ14SEL_PUBID_LGPT1_COMB: any = '19'
 
-
 // -------- REGISTER CPUIRQ15SEL -------- //
 
 /**
@@ -6066,7 +6031,6 @@ export const EVTSVT_CPUIRQ15SEL_PUBID_S: any = '6'
 /**
 ADC combined interrupt request, interrupt flags can be found here ADC:MIS0*/
 export const EVTSVT_CPUIRQ15SEL_PUBID_ADC_COMB: any = '16'
-
 
 // -------- REGISTER CPUIRQ16SEL -------- //
 
@@ -6310,7 +6274,6 @@ export const EVTSVT_CPUIRQ16SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_CPUIRQ16SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER CPUIRQ17SEL -------- //
 
 /**
@@ -6330,7 +6293,6 @@ export const EVTSVT_CPUIRQ17SEL_PUBID_S: any = '6'
 /**
 LGPT2 combined interrupt, interrupt flags are found here LGPT2:MIS*/
 export const EVTSVT_CPUIRQ17SEL_PUBID_LGPT2_COMB: any = '49'
-
 
 // -------- REGISTER CPUIRQ18SEL -------- //
 
@@ -6352,7 +6314,6 @@ export const EVTSVT_CPUIRQ18SEL_PUBID_S: any = '6'
 LGPT3 combined interrupt, interrupt flags are found here LGPT3:MIS*/
 export const EVTSVT_CPUIRQ18SEL_PUBID_LGPT3_COMB: any = '55'
 
-
 // -------- REGISTER SYSTIMC0SEL -------- //
 
 /**
@@ -6372,7 +6333,6 @@ export const EVTSVT_SYSTIMC0SEL_PUBID_S: any = '6'
 /**
 AON_RTC event, controlled by the RTC:IMASK setting*/
 export const EVTSVT_SYSTIMC0SEL_PUBID_AON_RTC_COMB: any = '4'
-
 
 // -------- REGISTER SYSTIMC1SEL -------- //
 
@@ -6616,7 +6576,6 @@ export const EVTSVT_SYSTIMC1SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_SYSTIMC1SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER SYSTIMC2SEL -------- //
 
 /**
@@ -6636,7 +6595,6 @@ export const EVTSVT_SYSTIMC2SEL_PUBID_S: any = '6'
 /**
 LRFD interrupt to SYSTIM, controlled by LRFDDBELL:SYSTIMOEV.SRC0*/
 export const EVTSVT_SYSTIMC2SEL_PUBID_LRFD_EVT0: any = '42'
-
 
 // -------- REGISTER SYSTIMC3SEL -------- //
 
@@ -6658,7 +6616,6 @@ export const EVTSVT_SYSTIMC3SEL_PUBID_S: any = '6'
 LRFD interrupt to SYSTIM, controlled by LRFDDBELL:SYSTIMOEV.SRC1*/
 export const EVTSVT_SYSTIMC3SEL_PUBID_LRFD_EVT1: any = '43'
 
-
 // -------- REGISTER SYSTIMC4SEL -------- //
 
 /**
@@ -6678,7 +6635,6 @@ export const EVTSVT_SYSTIMC4SEL_PUBID_S: any = '6'
 /**
 LRFD interrupt to SYSTIM, controlled by LRFDDBELL:SYSTIMOEV.SRC2*/
 export const EVTSVT_SYSTIMC4SEL_PUBID_LRFD_EVT2: any = '44'
-
 
 // -------- REGISTER ADCTRGSEL -------- //
 
@@ -6922,7 +6878,6 @@ export const EVTSVT_ADCTRGSEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_ADCTRGSEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPTSYNCSEL -------- //
 
 /**
@@ -7164,7 +7119,6 @@ export const EVTSVT_LGPTSYNCSEL_PUBID_AON_PMU_COMB: any = '2'
 /**
 Always inactive*/
 export const EVTSVT_LGPTSYNCSEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER LGPT0IN0SEL -------- //
 
@@ -7408,7 +7362,6 @@ export const EVTSVT_LGPT0IN0SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_LGPT0IN0SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPT0IN1SEL -------- //
 
 /**
@@ -7558,7 +7511,6 @@ export const EVTSVT_LGPT0IN1SEL_PUBID_GPIO_EVT: any = '10'
 /**
 Always inactive*/
 export const EVTSVT_LGPT0IN1SEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER LGPT0IN2SEL -------- //
 
@@ -7710,7 +7662,6 @@ export const EVTSVT_LGPT0IN2SEL_PUBID_GPIO_EVT: any = '10'
 Always inactive*/
 export const EVTSVT_LGPT0IN2SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPT0TENSEL -------- //
 
 /**
@@ -7860,7 +7811,6 @@ export const EVTSVT_LGPT0TENSEL_PUBID_GPIO_EVT: any = '10'
 /**
 Always inactive*/
 export const EVTSVT_LGPT0TENSEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER LGPT1IN0SEL -------- //
 
@@ -8104,7 +8054,6 @@ export const EVTSVT_LGPT1IN0SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_LGPT1IN0SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPT1IN1SEL -------- //
 
 /**
@@ -8254,7 +8203,6 @@ export const EVTSVT_LGPT1IN1SEL_PUBID_GPIO_EVT: any = '10'
 /**
 Always inactive*/
 export const EVTSVT_LGPT1IN1SEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER LGPT1IN2SEL -------- //
 
@@ -8406,7 +8354,6 @@ export const EVTSVT_LGPT1IN2SEL_PUBID_GPIO_EVT: any = '10'
 Always inactive*/
 export const EVTSVT_LGPT1IN2SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPT1TENSEL -------- //
 
 /**
@@ -8556,7 +8503,6 @@ export const EVTSVT_LGPT1TENSEL_PUBID_GPIO_EVT: any = '10'
 /**
 Always inactive*/
 export const EVTSVT_LGPT1TENSEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER LGPT2IN0SEL -------- //
 
@@ -8800,7 +8746,6 @@ export const EVTSVT_LGPT2IN0SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_LGPT2IN0SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPT2IN1SEL -------- //
 
 /**
@@ -8950,7 +8895,6 @@ export const EVTSVT_LGPT2IN1SEL_PUBID_GPIO_EVT: any = '10'
 /**
 Always inactive*/
 export const EVTSVT_LGPT2IN1SEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER LGPT2IN2SEL -------- //
 
@@ -9102,7 +9046,6 @@ export const EVTSVT_LGPT2IN2SEL_PUBID_GPIO_EVT: any = '10'
 Always inactive*/
 export const EVTSVT_LGPT2IN2SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPT2TENSEL -------- //
 
 /**
@@ -9252,7 +9195,6 @@ export const EVTSVT_LGPT2TENSEL_PUBID_GPIO_EVT: any = '10'
 /**
 Always inactive*/
 export const EVTSVT_LGPT2TENSEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER LGPT3IN0SEL -------- //
 
@@ -9496,7 +9438,6 @@ export const EVTSVT_LGPT3IN0SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_LGPT3IN0SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPT3IN1SEL -------- //
 
 /**
@@ -9646,7 +9587,6 @@ export const EVTSVT_LGPT3IN1SEL_PUBID_GPIO_EVT: any = '10'
 /**
 Always inactive*/
 export const EVTSVT_LGPT3IN1SEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER LGPT3IN2SEL -------- //
 
@@ -9798,7 +9738,6 @@ export const EVTSVT_LGPT3IN2SEL_PUBID_GPIO_EVT: any = '10'
 Always inactive*/
 export const EVTSVT_LGPT3IN2SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LGPT3TENSEL -------- //
 
 /**
@@ -9949,7 +9888,6 @@ export const EVTSVT_LGPT3TENSEL_PUBID_GPIO_EVT: any = '10'
 Always inactive*/
 export const EVTSVT_LGPT3TENSEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER LRFDIN0SEL -------- //
 
 /**
@@ -9969,7 +9907,6 @@ export const EVTSVT_LRFDIN0SEL_PUBID_S: any = '6'
 /**
 SYSTIM Channel 2 event, event flag is SYSTIM:MIS.EVT2*/
 export const EVTSVT_LRFDIN0SEL_PUBID_SYSTIM2: any = '29'
-
 
 // -------- REGISTER LRFDIN1SEL -------- //
 
@@ -9991,7 +9928,6 @@ export const EVTSVT_LRFDIN1SEL_PUBID_S: any = '6'
 SYSTIM Channel 3 event, event flag is SYSTIM:MIS.EVT3*/
 export const EVTSVT_LRFDIN1SEL_PUBID_SYSTIM3: any = '30'
 
-
 // -------- REGISTER LRFDIN2SEL -------- //
 
 /**
@@ -10011,7 +9947,6 @@ export const EVTSVT_LRFDIN2SEL_PUBID_S: any = '6'
 /**
 SYSTIM Channel 4 event, event flag is SYSTIM:MIS.EVT4*/
 export const EVTSVT_LRFDIN2SEL_PUBID_SYSTIM4: any = '31'
-
 
 // -------- REGISTER DMACH0SEL -------- //
 
@@ -10044,7 +9979,6 @@ export const EVTSVT_DMACH0SEL_IPID_UART0RXTRG: any = '7'
 Selects spi0txtrg as channel source*/
 export const EVTSVT_DMACH0SEL_IPID_SPI0TXTRG: any = '0'
 
-
 // -------- REGISTER DMACH1SEL -------- //
 
 /**
@@ -10075,7 +10009,6 @@ export const EVTSVT_DMACH1SEL_IPID_UART0TXTRG: any = '6'
 /**
 Selects spi0rxtrg as channel source*/
 export const EVTSVT_DMACH1SEL_IPID_SPI0RXTRG: any = '1'
-
 
 // -------- REGISTER DMACH2SEL -------- //
 
@@ -10110,7 +10043,6 @@ Reserved value. Should not be programmed.
 */
 export const EVTSVT_DMACH2SEL_IPID_RSVD: any = '2'
 
-
 // -------- REGISTER DMACH3SEL -------- //
 
 /**
@@ -10141,7 +10073,6 @@ export const EVTSVT_DMACH3SEL_IPID_UART0RXTRG: any = '7'
 /**
 Selects adc0trg as channel source*/
 export const EVTSVT_DMACH3SEL_IPID_ADC0TRG: any = '5'
-
 
 // -------- REGISTER DMACH4SEL -------- //
 
@@ -10176,7 +10107,6 @@ Reserved value. Should not be programmed.
 */
 export const EVTSVT_DMACH4SEL_IPID_RSVD: any = '2'
 
-
 // -------- REGISTER DMACH5SEL -------- //
 
 /**
@@ -10207,7 +10137,6 @@ export const EVTSVT_DMACH5SEL_IPID_ADC0TRG: any = '5'
 /**
 Selects laestrgb as channel source*/
 export const EVTSVT_DMACH5SEL_IPID_LAESTRGB: any = '4'
-
 
 // -------- REGISTER DMACH6SEL -------- //
 
@@ -10464,7 +10393,6 @@ export const EVTSVT_DMACH6SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_DMACH6SEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER DMACH7SEL -------- //
 
 /**
@@ -10720,7 +10648,6 @@ export const EVTSVT_DMACH7SEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTSVT_DMACH7SEL_PUBID_NONE: any = '0'
 
-
 // -------- MODULE EVTULL -------- //
 
 export interface EVTULL_t {
@@ -10831,7 +10758,6 @@ export const EVTULL_DTB_SEL_S: any = '1'
 All 16 observation signals are set to zero.*/
 export const EVTULL_DTB_SEL_DIS: any = '0'
 
-
 // -------- REGISTER NMISEL -------- //
 
 /**
@@ -10878,7 +10804,6 @@ export const EVTULL_NMISEL_PUBID_AON_PMU_COMB: any = '2'
 Always inactive*/
 export const EVTULL_NMISEL_PUBID_NONE: any = '0'
 
-
 // -------- REGISTER RTCCPTSEL -------- //
 
 /**
@@ -10924,7 +10849,6 @@ export const EVTULL_RTCCPTSEL_PUBID_AON_PMU_COMB: any = '2'
 /**
 Always inactive*/
 export const EVTULL_RTCCPTSEL_PUBID_NONE: any = '0'
-
 
 // -------- REGISTER WKUPMASK -------- //
 
@@ -11440,7 +11364,6 @@ export const GPIO_IMASK_DIO0_SET: any = '1'
 Clear Interrupt Mask*/
 export const GPIO_IMASK_DIO0_CLR: any = '0'
 
-
 // -------- REGISTER RIS -------- //
 
 /**
@@ -11787,7 +11710,6 @@ export const GPIO_RIS_DIO0_SET: any = '1'
 /**
 Interrupt did not occur*/
 export const GPIO_RIS_DIO0_CLR: any = '0'
-
 
 // -------- REGISTER MIS -------- //
 
@@ -12136,7 +12058,6 @@ export const GPIO_MIS_DIO0_SET: any = '1'
 Interrupt did not occur*/
 export const GPIO_MIS_DIO0_CLR: any = '0'
 
-
 // -------- REGISTER ISET -------- //
 
 /**
@@ -12483,7 +12404,6 @@ export const GPIO_ISET_DIO0_SET: any = '1'
 /**
 Writing 0 has no effect*/
 export const GPIO_ISET_DIO0_NOEFF: any = '0'
-
 
 // -------- REGISTER ICLR -------- //
 
@@ -12832,7 +12752,6 @@ export const GPIO_ICLR_DIO0_CLR: any = '1'
 Writing 0 has no effect*/
 export const GPIO_ICLR_DIO0_NOEFF: any = '0'
 
-
 // -------- REGISTER IMSET -------- //
 
 /**
@@ -13179,7 +13098,6 @@ export const GPIO_IMSET_DIO0_SET: any = '1'
 /**
 Writing 0 has no effect*/
 export const GPIO_IMSET_DIO0_NOEFF: any = '0'
-
 
 // -------- REGISTER IMCLR -------- //
 
@@ -13528,7 +13446,6 @@ export const GPIO_IMCLR_DIO0_CLR: any = '1'
 Writing 0 has no effect*/
 export const GPIO_IMCLR_DIO0_NOEFF: any = '0'
 
-
 // -------- REGISTER DOUT3_0 -------- //
 
 /**
@@ -13604,7 +13521,6 @@ export const GPIO_DOUT3_0_DIO0_ONE: any = '1'
 /**
 Output is set to 0*/
 export const GPIO_DOUT3_0_DIO0_ZERO: any = '0'
-
 
 // -------- REGISTER DOUT7_4 -------- //
 
@@ -13682,7 +13598,6 @@ export const GPIO_DOUT7_4_DIO4_ONE: any = '1'
 Output is set to 0*/
 export const GPIO_DOUT7_4_DIO4_ZERO: any = '0'
 
-
 // -------- REGISTER DOUT11_8 -------- //
 
 /**
@@ -13758,7 +13673,6 @@ export const GPIO_DOUT11_8_DIO8_ONE: any = '1'
 /**
 Output is set to 0*/
 export const GPIO_DOUT11_8_DIO8_ZERO: any = '0'
-
 
 // -------- REGISTER DOUT15_12 -------- //
 
@@ -13836,7 +13750,6 @@ export const GPIO_DOUT15_12_DIO12_ONE: any = '1'
 Output is set to 0*/
 export const GPIO_DOUT15_12_DIO12_ZERO: any = '0'
 
-
 // -------- REGISTER DOUT19_16 -------- //
 
 /**
@@ -13912,7 +13825,6 @@ export const GPIO_DOUT19_16_DIO16_ONE: any = '1'
 /**
 Output is set to 0*/
 export const GPIO_DOUT19_16_DIO16_ZERO: any = '0'
-
 
 // -------- REGISTER DOUT23_20 -------- //
 
@@ -13990,7 +13902,6 @@ export const GPIO_DOUT23_20_DIO20_ONE: any = '1'
 Output is set to 0*/
 export const GPIO_DOUT23_20_DIO20_ZERO: any = '0'
 
-
 // -------- REGISTER DOUT27_24 -------- //
 
 /**
@@ -14030,7 +13941,6 @@ export const GPIO_DOUT27_24_DIO24_ONE: any = '1'
 /**
 Output is set to 0*/
 export const GPIO_DOUT27_24_DIO24_ZERO: any = '0'
-
 
 // -------- REGISTER DOUT31_0 -------- //
 
@@ -14379,7 +14289,6 @@ export const GPIO_DOUT31_0_DIO0_ONE: any = '1'
 Output is set to 0*/
 export const GPIO_DOUT31_0_DIO0_ZERO: any = '0'
 
-
 // -------- REGISTER DOUTSET31_0 -------- //
 
 /**
@@ -14726,7 +14635,6 @@ export const GPIO_DOUTSET31_0_DIO0_SET: any = '1'
 /**
 No effect*/
 export const GPIO_DOUTSET31_0_DIO0_NOEFF: any = '0'
-
 
 // -------- REGISTER DOUTCLR31_0 -------- //
 
@@ -15075,7 +14983,6 @@ export const GPIO_DOUTCLR31_0_DIO0_CLR: any = '1'
 No effect*/
 export const GPIO_DOUTCLR31_0_DIO0_NOEFF: any = '0'
 
-
 // -------- REGISTER DOUTTGL31_0 -------- //
 
 /**
@@ -15423,7 +15330,6 @@ export const GPIO_DOUTTGL31_0_DIO0_TOGGLE: any = '1'
 No effect*/
 export const GPIO_DOUTTGL31_0_DIO0_NOEFF: any = '0'
 
-
 // -------- REGISTER DOUTTGL3_0 -------- //
 
 /**
@@ -15499,7 +15405,6 @@ export const GPIO_DOUTTGL3_0_DIO0_TOGGLE: any = '1'
 /**
 No effect*/
 export const GPIO_DOUTTGL3_0_DIO0_NOEFF: any = '0'
-
 
 // -------- REGISTER DOUTTGL7_4 -------- //
 
@@ -15577,7 +15482,6 @@ export const GPIO_DOUTTGL7_4_DIO4_TOGGLE: any = '1'
 No effect*/
 export const GPIO_DOUTTGL7_4_DIO4_NOEFF: any = '0'
 
-
 // -------- REGISTER DOUTTGL11_8 -------- //
 
 /**
@@ -15653,7 +15557,6 @@ export const GPIO_DOUTTGL11_8_DIO8_TOGGLE: any = '1'
 /**
 No effect*/
 export const GPIO_DOUTTGL11_8_DIO8_NOEFF: any = '0'
-
 
 // -------- REGISTER DOUTTGL15_12 -------- //
 
@@ -15731,7 +15634,6 @@ export const GPIO_DOUTTGL15_12_DIO12_TOGGLE: any = '1'
 No effect*/
 export const GPIO_DOUTTGL15_12_DIO12_NOEFF: any = '0'
 
-
 // -------- REGISTER DOUTTGL19_16 -------- //
 
 /**
@@ -15807,7 +15709,6 @@ export const GPIO_DOUTTGL19_16_DIO16_TOGGLE: any = '1'
 /**
 No effect*/
 export const GPIO_DOUTTGL19_16_DIO16_NOEFF: any = '0'
-
 
 // -------- REGISTER DOUTTGL23_20 -------- //
 
@@ -15885,7 +15786,6 @@ export const GPIO_DOUTTGL23_20_DIO20_TOGGLE: any = '1'
 No effect*/
 export const GPIO_DOUTTGL23_20_DIO20_NOEFF: any = '0'
 
-
 // -------- REGISTER DOUTTGL27_24 -------- //
 
 /**
@@ -15925,7 +15825,6 @@ export const GPIO_DOUTTGL27_24_DIO24_TOGGLE: any = '1'
 /**
 No effect*/
 export const GPIO_DOUTTGL27_24_DIO24_NOEFF: any = '0'
-
 
 // -------- REGISTER DOE3_0 -------- //
 
@@ -16003,7 +15902,6 @@ export const GPIO_DOE3_0_DIO0_EN: any = '1'
 Output disabled*/
 export const GPIO_DOE3_0_DIO0_DIS: any = '0'
 
-
 // -------- REGISTER DOE7_4 -------- //
 
 /**
@@ -16079,7 +15977,6 @@ export const GPIO_DOE7_4_DIO4_EN: any = '1'
 /**
 Output disabled*/
 export const GPIO_DOE7_4_DIO4_DIS: any = '0'
-
 
 // -------- REGISTER DOE11_8 -------- //
 
@@ -16157,7 +16054,6 @@ export const GPIO_DOE11_8_DIO8_EN: any = '1'
 Output disabled*/
 export const GPIO_DOE11_8_DIO8_DIS: any = '0'
 
-
 // -------- REGISTER DOE15_12 -------- //
 
 /**
@@ -16233,7 +16129,6 @@ export const GPIO_DOE15_12_DIO12_EN: any = '1'
 /**
 Output disabled*/
 export const GPIO_DOE15_12_DIO12_DIS: any = '0'
-
 
 // -------- REGISTER DOE19_16 -------- //
 
@@ -16311,7 +16206,6 @@ export const GPIO_DOE19_16_DIO16_EN: any = '1'
 Output disabled*/
 export const GPIO_DOE19_16_DIO16_DIS: any = '0'
 
-
 // -------- REGISTER DOE23_20 -------- //
 
 /**
@@ -16388,7 +16282,6 @@ export const GPIO_DOE23_20_DIO20_EN: any = '1'
 Output disabled*/
 export const GPIO_DOE23_20_DIO20_DIS: any = '0'
 
-
 // -------- REGISTER DOE27_24 -------- //
 
 /**
@@ -16428,7 +16321,6 @@ export const GPIO_DOE27_24_DIO24_EN: any = '1'
 /**
 Output disabled*/
 export const GPIO_DOE27_24_DIO24_DIS: any = '0'
-
 
 // -------- REGISTER DOE31_0 -------- //
 
@@ -16777,7 +16669,6 @@ export const GPIO_DOE31_0_DIO0_EN: any = '1'
 Output disabled*/
 export const GPIO_DOE31_0_DIO0_DIS: any = '0'
 
-
 // -------- REGISTER DOESET31_0 -------- //
 
 /**
@@ -17124,7 +17015,6 @@ export const GPIO_DOESET31_0_DIO0_SET: any = '1'
 /**
 No effect*/
 export const GPIO_DOESET31_0_DIO0_NOEFF: any = '0'
-
 
 // -------- REGISTER DOECLR31_0 -------- //
 
@@ -17473,7 +17363,6 @@ export const GPIO_DOECLR31_0_DIO0_CLR: any = '1'
 No effect*/
 export const GPIO_DOECLR31_0_DIO0_NOEFF: any = '0'
 
-
 // -------- REGISTER DOETGL31_0 -------- //
 
 /**
@@ -17821,7 +17710,6 @@ export const GPIO_DOETGL31_0_DIO0_TOGGLE: any = '1'
 No effect*/
 export const GPIO_DOETGL31_0_DIO0_NOEFF: any = '0'
 
-
 // -------- REGISTER DIN3_0 -------- //
 
 /**
@@ -17897,7 +17785,6 @@ export const GPIO_DIN3_0_DIO0_ONE: any = '1'
 /**
 Input value is 0*/
 export const GPIO_DIN3_0_DIO0_ZERO: any = '0'
-
 
 // -------- REGISTER DIN7_4 -------- //
 
@@ -17975,7 +17862,6 @@ export const GPIO_DIN7_4_DIO4_ONE: any = '1'
 Input value is 0*/
 export const GPIO_DIN7_4_DIO4_ZERO: any = '0'
 
-
 // -------- REGISTER DIN11_8 -------- //
 
 /**
@@ -18051,7 +17937,6 @@ export const GPIO_DIN11_8_DIO8_ONE: any = '1'
 /**
 Input value is 0*/
 export const GPIO_DIN11_8_DIO8_ZERO: any = '0'
-
 
 // -------- REGISTER DIN15_12 -------- //
 
@@ -18129,7 +18014,6 @@ export const GPIO_DIN15_12_DIO12_ONE: any = '1'
 Input value is 0*/
 export const GPIO_DIN15_12_DIO12_ZERO: any = '0'
 
-
 // -------- REGISTER DIN19_16 -------- //
 
 /**
@@ -18205,7 +18089,6 @@ export const GPIO_DIN19_16_DIO16_ONE: any = '1'
 /**
 Input value is 0*/
 export const GPIO_DIN19_16_DIO16_ZERO: any = '0'
-
 
 // -------- REGISTER DIN23_20 -------- //
 
@@ -18283,7 +18166,6 @@ export const GPIO_DIN23_20_DIO20_ONE: any = '1'
 Input value is 0*/
 export const GPIO_DIN23_20_DIO20_ZERO: any = '0'
 
-
 // -------- REGISTER DIN27_24 -------- //
 
 /**
@@ -18323,7 +18205,6 @@ export const GPIO_DIN27_24_DIO24_ONE: any = '1'
 /**
 Input value is 0*/
 export const GPIO_DIN27_24_DIO24_ZERO: any = '0'
-
 
 // -------- REGISTER DIN31_0 -------- //
 
@@ -18672,7 +18553,6 @@ export const GPIO_DIN31_0_DIO0_ONE: any = '1'
 Input value is 0*/
 export const GPIO_DIN31_0_DIO0_ZERO: any = '0'
 
-
 // -------- REGISTER EVTCFG -------- //
 
 /**
@@ -18714,7 +18594,6 @@ export const GPIO_EVTCFG_DIOSEL_MAXIMUM: any = '63'
 /**
 Minimum value*/
 export const GPIO_EVTCFG_DIOSEL_MINIMUM: any = '0'
-
 
 // -------- MODULE IOC -------- //
 
@@ -18849,7 +18728,6 @@ export const IOC_DESCEX_NUMDIO_MAXIMUM: any = '63'
 /**
 Smallest value*/
 export const IOC_DESCEX_NUMDIO_MINIMUM: any = '0'
-
 
 // -------- REGISTER IOC0 -------- //
 
@@ -19049,7 +18927,6 @@ export const IOC_IOC0_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC0_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC1 -------- //
 
 /**
@@ -19247,7 +19124,6 @@ export const IOC_IOC1_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC1_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC2 -------- //
 
@@ -19447,7 +19323,6 @@ export const IOC_IOC2_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC2_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC3 -------- //
 
 /**
@@ -19645,7 +19520,6 @@ export const IOC_IOC3_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC3_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC4 -------- //
 
@@ -19845,7 +19719,6 @@ export const IOC_IOC4_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC4_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC5 -------- //
 
 /**
@@ -20043,7 +19916,6 @@ export const IOC_IOC5_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC5_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC6 -------- //
 
@@ -20243,7 +20115,6 @@ export const IOC_IOC6_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC6_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC7 -------- //
 
 /**
@@ -20441,7 +20312,6 @@ export const IOC_IOC7_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC7_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC8 -------- //
 
@@ -20641,7 +20511,6 @@ export const IOC_IOC8_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC8_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC9 -------- //
 
 /**
@@ -20839,7 +20708,6 @@ export const IOC_IOC9_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC9_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC10 -------- //
 
@@ -21039,7 +20907,6 @@ export const IOC_IOC10_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC10_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC11 -------- //
 
 /**
@@ -21237,7 +21104,6 @@ export const IOC_IOC11_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC11_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC12 -------- //
 
@@ -21488,7 +21354,6 @@ export const IOC_IOC12_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC12_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC13 -------- //
 
 /**
@@ -21686,7 +21551,6 @@ export const IOC_IOC13_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC13_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC14 -------- //
 
@@ -21886,7 +21750,6 @@ export const IOC_IOC14_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC14_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC15 -------- //
 
 /**
@@ -22084,7 +21947,6 @@ export const IOC_IOC15_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC15_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC16 -------- //
 
@@ -22335,7 +22197,6 @@ export const IOC_IOC16_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC16_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC17 -------- //
 
 /**
@@ -22584,7 +22445,6 @@ export const IOC_IOC17_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC17_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC18 -------- //
 
@@ -22835,7 +22695,6 @@ export const IOC_IOC18_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC18_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC19 -------- //
 
 /**
@@ -23085,7 +22944,6 @@ export const IOC_IOC19_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC19_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC20 -------- //
 
 /**
@@ -23283,7 +23141,6 @@ export const IOC_IOC20_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC20_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC21 -------- //
 
@@ -23483,7 +23340,6 @@ export const IOC_IOC21_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC21_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC22 -------- //
 
 /**
@@ -23682,7 +23538,6 @@ export const IOC_IOC22_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC22_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC23 -------- //
 
 /**
@@ -23880,7 +23735,6 @@ export const IOC_IOC23_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC23_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER IOC24 -------- //
 
@@ -24131,7 +23985,6 @@ export const IOC_IOC24_PORTCFG_PFUNC1: any = '1'
 Base function*/
 export const IOC_IOC24_PORTCFG_BASE: any = '0'
 
-
 // -------- REGISTER IOC25 -------- //
 
 /**
@@ -24329,7 +24182,6 @@ export const IOC_IOC25_PORTCFG_PFUNC1: any = '1'
 /**
 Base function*/
 export const IOC_IOC25_PORTCFG_BASE: any = '0'
-
 
 // -------- REGISTER DTBCFG -------- //
 
@@ -24625,7 +24477,6 @@ export const IOC_DTBOE_EN0_EN: any = '1'
 DTB output disabled*/
 export const IOC_DTBOE_EN0_DIS: any = '0'
 
-
 // -------- REGISTER EVTCFG -------- //
 
 /**
@@ -24695,7 +24546,6 @@ export const IOC_TEST_SEL_HI: any = '1'
 /**
 Output data and output enable managed by IOC*/
 export const IOC_TEST_SEL_LO: any = '0'
-
 
 // -------- REGISTER DTBSTAT -------- //
 
@@ -24905,7 +24755,6 @@ export const LGPT_STARTCFG_LGPT0_S: any = '2'
 LGPT starts when synchronized event input is high. Configured here EVTSVT.LGPTSYNCSEL.*/
 export const LGPT_STARTCFG_LGPT0_EV_SYNC: any = '0'
 
-
 // -------- REGISTER CTL -------- //
 
 /**
@@ -25063,7 +24912,6 @@ export const LGPT_CTL_MODE_UP_ONCE: any = '1'
 Disable timer. Updates to counter, channels, and events stop.*/
 export const LGPT_CTL_MODE_DIS: any = '0'
 
-
 // -------- REGISTER OUTCTL -------- //
 
 /**
@@ -25203,7 +25051,6 @@ export const LGPT_PRECFG_TICKSRC_RISE_TICK: any = '1'
 Prescaler is updated at the system clock.*/
 export const LGPT_PRECFG_TICKSRC_CLK: any = '0'
 
-
 // -------- REGISTER PREEVENT -------- //
 
 /**
@@ -25279,7 +25126,6 @@ export const LGPT_CHFILT_MODE_CLK: any = '1'
 Filter is bypassed. No Filter is used.*/
 export const LGPT_CHFILT_MODE_BYPASS: any = '0'
 
-
 // -------- REGISTER QDECSTAT -------- //
 
 /**
@@ -25318,7 +25164,6 @@ export const LGPT_QDECSTAT_QDIR_DOWN: any = '1'
 Up (PHA leads PHB)*/
 export const LGPT_QDECSTAT_QDIR_UP: any = '0'
 
-
 // -------- REGISTER IRGEN -------- //
 
 /**
@@ -25348,7 +25193,6 @@ export const LGPT_IRGEN_CTL_EN: any = '1'
 /**
 Disable.*/
 export const LGPT_IRGEN_CTL_DIS: any = '0'
-
 
 // -------- REGISTER DMA -------- //
 
@@ -25388,7 +25232,7 @@ export const LGPT_DMA_RESERVED4: any = '4'
 export const LGPT_DMA_RESERVED4_M: any = '4'
 export const LGPT_DMA_RESERVED4_S: any = '4'
 /**
-*/
+ */
 export const LGPT_DMA_REQ: any = '4'
 export const LGPT_DMA_REQ_M: any = '4'
 export const LGPT_DMA_REQ_S: any = '4'
@@ -25458,7 +25302,6 @@ export const LGPT_DMA_REQ_TGT: any = '1'
 Disabled*/
 export const LGPT_DMA_REQ_DIS: any = '0'
 
-
 // -------- REGISTER DMARW -------- //
 
 /**
@@ -25495,7 +25338,7 @@ export const LGPT_ADCTRG_RESERVED4: any = '28'
 export const LGPT_ADCTRG_RESERVED4_M: any = '28'
 export const LGPT_ADCTRG_RESERVED4_S: any = '28'
 /**
-*/
+ */
 export const LGPT_ADCTRG_SRC: any = '4'
 export const LGPT_ADCTRG_SRC_M: any = '4'
 export const LGPT_ADCTRG_SRC_S: any = '4'
@@ -25564,7 +25407,6 @@ export const LGPT_ADCTRG_SRC_TGT: any = '1'
 /**
 Disabled*/
 export const LGPT_ADCTRG_SRC_DIS: any = '0'
-
 
 // -------- REGISTER IOCTL -------- //
 
@@ -25722,7 +25564,6 @@ export const LGPT_IOCTL_OUT0_LOW: any = '1'
 Normal output. The IO output is not changed.*/
 export const LGPT_IOCTL_OUT0_NRM: any = '0'
 
-
 // -------- REGISTER IMASK -------- //
 
 /**
@@ -25869,7 +25710,6 @@ export const LGPT_IMASK_TGT_EN: any = '1'
 /**
 Disable*/
 export const LGPT_IMASK_TGT_DIS: any = '0'
-
 
 // -------- REGISTER RIS -------- //
 
@@ -26018,7 +25858,6 @@ export const LGPT_RIS_TGT_SET: any = '1'
 Cleared*/
 export const LGPT_RIS_TGT_CLR: any = '0'
 
-
 // -------- REGISTER MIS -------- //
 
 /**
@@ -26165,7 +26004,6 @@ export const LGPT_MIS_TGT_SET: any = '1'
 /**
 Cleared*/
 export const LGPT_MIS_TGT_CLR: any = '0'
-
 
 // -------- REGISTER ISET -------- //
 
@@ -26314,7 +26152,6 @@ export const LGPT_ISET_TGT_SET: any = '1'
 No effect*/
 export const LGPT_ISET_TGT_NO_EFFECT: any = '0'
 
-
 // -------- REGISTER ICLR -------- //
 
 /**
@@ -26461,7 +26298,6 @@ export const LGPT_ICLR_TGT_CLR: any = '1'
 /**
 No effect*/
 export const LGPT_ICLR_TGT_NO_EFFECT: any = '0'
-
 
 // -------- REGISTER IMSET -------- //
 
@@ -26610,7 +26446,6 @@ export const LGPT_IMSET_TGT_SET: any = '1'
 No effect*/
 export const LGPT_IMSET_TGT_NO_EFFECT: any = '0'
 
-
 // -------- REGISTER IMCLR -------- //
 
 /**
@@ -26758,7 +26593,6 @@ export const LGPT_IMCLR_TGT_CLR: any = '1'
 No effect*/
 export const LGPT_IMCLR_TGT_NO_EFFECT: any = '0'
 
-
 // -------- REGISTER EMU -------- //
 
 /**
@@ -26799,7 +26633,6 @@ export const LGPT_EMU_HALT_EN: any = '1'
 /**
 Disable.*/
 export const LGPT_EMU_HALT_DIS: any = '0'
-
 
 // -------- REGISTER C0CFG -------- //
 
@@ -27109,7 +26942,6 @@ export const LGPT_C0CFG_CCACT_SET_ON_CAPT_DIS: any = '1'
 Disable channel.*/
 export const LGPT_C0CFG_CCACT_DIS: any = '0'
 
-
 // -------- REGISTER C1CFG -------- //
 
 /**
@@ -27418,7 +27250,6 @@ export const LGPT_C1CFG_CCACT_SET_ON_CAPT_DIS: any = '1'
 Disable channel.*/
 export const LGPT_C1CFG_CCACT_DIS: any = '0'
 
-
 // -------- REGISTER C2CFG -------- //
 
 /**
@@ -27726,7 +27557,6 @@ export const LGPT_C2CFG_CCACT_SET_ON_CAPT_DIS: any = '1'
 /**
 Disable channel.*/
 export const LGPT_C2CFG_CCACT_DIS: any = '0'
-
 
 // -------- REGISTER PTGT -------- //
 
@@ -28322,7 +28152,6 @@ export const LGPT3_STARTCFG_LGPT0_S: any = '2'
 LGPT starts when synchronized event input is high. Configured here EVTSVT.LGPTSYNCSEL.*/
 export const LGPT3_STARTCFG_LGPT0_EV_SYNC: any = '0'
 
-
 // -------- REGISTER CTL -------- //
 
 /**
@@ -28480,7 +28309,6 @@ export const LGPT3_CTL_MODE_UP_ONCE: any = '1'
 Disable timer. Updates to counter, channels, and events stop.*/
 export const LGPT3_CTL_MODE_DIS: any = '0'
 
-
 // -------- REGISTER OUTCTL -------- //
 
 /**
@@ -28620,7 +28448,6 @@ export const LGPT3_PRECFG_TICKSRC_RISE_TICK: any = '1'
 Prescaler is updated at the system clock.*/
 export const LGPT3_PRECFG_TICKSRC_CLK: any = '0'
 
-
 // -------- REGISTER PREEVENT -------- //
 
 /**
@@ -28696,7 +28523,6 @@ export const LGPT3_CHFILT_MODE_CLK: any = '1'
 Filter is bypassed. No Filter is used.*/
 export const LGPT3_CHFILT_MODE_BYPASS: any = '0'
 
-
 // -------- REGISTER DMA -------- //
 
 /**
@@ -28735,7 +28561,7 @@ export const LGPT3_DMA_RESERVED4: any = '4'
 export const LGPT3_DMA_RESERVED4_M: any = '4'
 export const LGPT3_DMA_RESERVED4_S: any = '4'
 /**
-*/
+ */
 export const LGPT3_DMA_REQ: any = '4'
 export const LGPT3_DMA_REQ_M: any = '4'
 export const LGPT3_DMA_REQ_S: any = '4'
@@ -28805,7 +28631,6 @@ export const LGPT3_DMA_REQ_TGT: any = '1'
 Disabled*/
 export const LGPT3_DMA_REQ_DIS: any = '0'
 
-
 // -------- REGISTER DMARW -------- //
 
 /**
@@ -28842,7 +28667,7 @@ export const LGPT3_ADCTRG_RESERVED4: any = '28'
 export const LGPT3_ADCTRG_RESERVED4_M: any = '28'
 export const LGPT3_ADCTRG_RESERVED4_S: any = '28'
 /**
-*/
+ */
 export const LGPT3_ADCTRG_SRC: any = '4'
 export const LGPT3_ADCTRG_SRC_M: any = '4'
 export const LGPT3_ADCTRG_SRC_S: any = '4'
@@ -28911,7 +28736,6 @@ export const LGPT3_ADCTRG_SRC_TGT: any = '1'
 /**
 Disabled*/
 export const LGPT3_ADCTRG_SRC_DIS: any = '0'
-
 
 // -------- REGISTER IOCTL -------- //
 
@@ -29069,7 +28893,6 @@ export const LGPT3_IOCTL_OUT0_LOW: any = '1'
 Normal output. The IO output is not changed.*/
 export const LGPT3_IOCTL_OUT0_NRM: any = '0'
 
-
 // -------- REGISTER IMASK -------- //
 
 /**
@@ -29216,7 +29039,6 @@ export const LGPT3_IMASK_TGT_EN: any = '1'
 /**
 Disable*/
 export const LGPT3_IMASK_TGT_DIS: any = '0'
-
 
 // -------- REGISTER RIS -------- //
 
@@ -29365,7 +29187,6 @@ export const LGPT3_RIS_TGT_SET: any = '1'
 Cleared*/
 export const LGPT3_RIS_TGT_CLR: any = '0'
 
-
 // -------- REGISTER MIS -------- //
 
 /**
@@ -29512,7 +29333,6 @@ export const LGPT3_MIS_TGT_SET: any = '1'
 /**
 Cleared*/
 export const LGPT3_MIS_TGT_CLR: any = '0'
-
 
 // -------- REGISTER ISET -------- //
 
@@ -29661,7 +29481,6 @@ export const LGPT3_ISET_TGT_SET: any = '1'
 No effect*/
 export const LGPT3_ISET_TGT_NO_EFFECT: any = '0'
 
-
 // -------- REGISTER ICLR -------- //
 
 /**
@@ -29808,7 +29627,6 @@ export const LGPT3_ICLR_TGT_CLR: any = '1'
 /**
 No effect*/
 export const LGPT3_ICLR_TGT_NO_EFFECT: any = '0'
-
 
 // -------- REGISTER IMSET -------- //
 
@@ -29957,7 +29775,6 @@ export const LGPT3_IMSET_TGT_SET: any = '1'
 No effect*/
 export const LGPT3_IMSET_TGT_NO_EFFECT: any = '0'
 
-
 // -------- REGISTER IMCLR -------- //
 
 /**
@@ -30105,7 +29922,6 @@ export const LGPT3_IMCLR_TGT_CLR: any = '1'
 No effect*/
 export const LGPT3_IMCLR_TGT_NO_EFFECT: any = '0'
 
-
 // -------- REGISTER EMU -------- //
 
 /**
@@ -30146,7 +29962,6 @@ export const LGPT3_EMU_HALT_EN: any = '1'
 /**
 Disable.*/
 export const LGPT3_EMU_HALT_DIS: any = '0'
-
 
 // -------- REGISTER C0CFG -------- //
 
@@ -30456,7 +30271,6 @@ export const LGPT3_C0CFG_CCACT_SET_ON_CAPT_DIS: any = '1'
 Disable channel.*/
 export const LGPT3_C0CFG_CCACT_DIS: any = '0'
 
-
 // -------- REGISTER C1CFG -------- //
 
 /**
@@ -30765,7 +30579,6 @@ export const LGPT3_C1CFG_CCACT_SET_ON_CAPT_DIS: any = '1'
 Disable channel.*/
 export const LGPT3_C1CFG_CCACT_DIS: any = '0'
 
-
 // -------- REGISTER C2CFG -------- //
 
 /**
@@ -31073,7 +30886,6 @@ export const LGPT3_C2CFG_CCACT_SET_ON_CAPT_DIS: any = '1'
 /**
 Disable channel.*/
 export const LGPT3_C2CFG_CCACT_DIS: any = '0'
-
 
 // -------- REGISTER PTGT -------- //
 
@@ -31647,7 +31459,6 @@ This is the only valid key value that will trigger SHUTDOWN mode.
 All other values are invalid and will have no effect.*/
 export const PMCTL_SHTDWN_KEY_VALID: any = '42405'
 
-
 // -------- REGISTER SLPCTL -------- //
 
 /**
@@ -31673,7 +31484,6 @@ export const PMCTL_SLPCTL_SLPN_DIS: any = '1'
 /**
 I/O pad sleep mode is enabled*/
 export const PMCTL_SLPCTL_SLPN_EN: any = '0'
-
 
 // -------- REGISTER WUSTA -------- //
 
@@ -31702,7 +31512,6 @@ Wakeup from system reset / SHUTDOWN mode.
 
 See RSTSTA for more status information.*/
 export const PMCTL_WUSTA_SRC_RST_SHTDWN: any = '1'
-
 
 // -------- REGISTER VDDRCTL -------- //
 
@@ -31740,7 +31549,6 @@ export const PMCTL_VDDRCTL_SELECT_DCDC: any = '1'
 /**
 GLDO enabled for regulation of VDDR voltage*/
 export const PMCTL_VDDRCTL_SELECT_GLDO: any = '0'
-
 
 // -------- REGISTER SYSFSET -------- //
 
@@ -31790,7 +31598,6 @@ export const PMCTL_SYSFSET_FLAG0_SET: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const PMCTL_SYSFSET_FLAG0_NOEFF: any = '0'
 
-
 // -------- REGISTER SYSFCLR -------- //
 
 /**
@@ -31839,7 +31646,6 @@ export const PMCTL_SYSFCLR_FLAG0_CLR: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const PMCTL_SYSFCLR_FLAG0_NOEFF: any = '0'
 
-
 // -------- REGISTER SYSFSTA -------- //
 
 /**
@@ -31883,7 +31689,6 @@ export const PMCTL_SYSFSTA_FLAG0_VAL1: any = '1'
 /**
 Internal. Only to be used through TI provided API.*/
 export const PMCTL_SYSFSTA_FLAG0_VAL0: any = '0'
-
 
 // -------- REGISTER RSTCTL -------- //
 
@@ -31945,7 +31750,6 @@ export const PMCTL_RSTCTL_SYSRST_SET: any = '1'
 /**
 No effect*/
 export const PMCTL_RSTCTL_SYSRST_NOEFF: any = '0'
-
 
 // -------- REGISTER RSTSTA -------- //
 
@@ -32077,7 +31881,6 @@ export const PMCTL_RSTSTA_RESETSRC_PINRESET: any = '1'
 Power on reset*/
 export const PMCTL_RSTSTA_RESETSRC_PWRON: any = '0'
 
-
 // -------- REGISTER BOOTSTA -------- //
 
 /**
@@ -32184,7 +31987,6 @@ export const PMCTL_BOOTSTA_FLAG_BOOT_COLD_BOOT: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const PMCTL_BOOTSTA_FLAG_BOOT_RESET: any = '0'
 
-
 // -------- REGISTER AONRSTA1 -------- //
 
 /**
@@ -32228,7 +32030,6 @@ export const PMCTL_AONRSET1_FLAG_ALL_SET: any = '262143'
 No flags changed status*/
 export const PMCTL_AONRSET1_FLAG_NOEFF: any = '0'
 
-
 // -------- REGISTER AONRCLR1 -------- //
 
 /**
@@ -32252,7 +32053,6 @@ export const PMCTL_AONRCLR1_FLAG_ALL_CLR: any = '262143'
 /**
 No flags changed status*/
 export const PMCTL_AONRCLR1_FLAG_NOEFF: any = '0'
-
 
 // -------- REGISTER ETPP -------- //
 
@@ -32438,7 +32238,6 @@ export const RTC_CTL_RST_CLR: any = '1'
 No effect*/
 export const RTC_CTL_RST_NOEFF: any = '0'
 
-
 // -------- REGISTER ARMSET -------- //
 
 /**
@@ -32480,7 +32279,6 @@ export const RTC_ARMSET_CH0_SET: any = '1'
 /**
 No effect on the channel*/
 export const RTC_ARMSET_CH0_NOEFF: any = '0'
-
 
 // -------- REGISTER ARMCLR -------- //
 
@@ -32525,7 +32323,6 @@ export const RTC_ARMCLR_CH0_CLR: any = '1'
 /**
 No effect on the channel*/
 export const RTC_ARMCLR_CH0_NOEFF: any = '0'
-
 
 // -------- REGISTER TIME8U -------- //
 
@@ -32596,7 +32393,6 @@ export const RTC_CH1CFG_EDGE_FALL: any = '1'
 Rising Edge.*/
 export const RTC_CH1CFG_EDGE_RISE: any = '0'
 
-
 // -------- REGISTER IMASK -------- //
 
 /**
@@ -32631,7 +32427,6 @@ export const RTC_IMASK_EV0_EN: any = '1'
 /**
 Disable Interrupt Mask*/
 export const RTC_IMASK_EV0_DIS: any = '0'
-
 
 // -------- REGISTER RIS -------- //
 
@@ -32674,7 +32469,6 @@ export const RTC_RIS_EV0_SET: any = '1'
 Interrupt did not occur*/
 export const RTC_RIS_EV0_CLR: any = '0'
 
-
 // -------- REGISTER MIS -------- //
 
 /**
@@ -32709,7 +32503,6 @@ export const RTC_MIS_EV0_SET: any = '1'
 /**
 Interrupt did not occur*/
 export const RTC_MIS_EV0_CLR: any = '0'
-
 
 // -------- REGISTER ISET -------- //
 
@@ -32746,7 +32539,6 @@ export const RTC_ISET_EV0_SET: any = '1'
 Writing 0 has no effect*/
 export const RTC_ISET_EV0_NO_EFFECT: any = '0'
 
-
 // -------- REGISTER ICLR -------- //
 
 /**
@@ -32781,7 +32573,6 @@ export const RTC_ICLR_EV0_CLR: any = '1'
 /**
 Writing 0 has no effect*/
 export const RTC_ICLR_EV0_NO_EFF: any = '0'
-
 
 // -------- REGISTER IMSET -------- //
 
@@ -32818,7 +32609,6 @@ export const RTC_IMSET_EV0_SET: any = '1'
 Writing 0 has no effect*/
 export const RTC_IMSET_EV0_NO_EFF: any = '0'
 
-
 // -------- REGISTER IMCLR -------- //
 
 /**
@@ -32854,7 +32644,6 @@ export const RTC_IMCLR_EV0_CLR: any = '1'
 Writing 0 has no effect*/
 export const RTC_IMCLR_EV0_NO_EFF: any = '0'
 
-
 // -------- REGISTER EMU -------- //
 
 /**
@@ -32876,7 +32665,6 @@ export const RTC_EMU_HALT_STOP: any = '1'
 /**
 Free run option. The IP ignores the state of the core halted input.*/
 export const RTC_EMU_HALT_RUN: any = '0'
-
 
 // -------- MODULE UART -------- //
 
@@ -33035,7 +32823,6 @@ export const UART_RSR_ECR_FE_CLEAR_ERROR_1: any = '1'
 /**
 Error flag is not set*/
 export const UART_RSR_ECR_FE_ERROR_NOTSET: any = '0'
-
 
 // -------- REGISTER RESERVED0 -------- //
 
@@ -33463,7 +33250,6 @@ export const UART_CTL_UARTEN_EN: any = '1'
 UART disabled*/
 export const UART_CTL_UARTEN_DIS: any = '0'
 
-
 // -------- REGISTER IFLS -------- //
 
 /**
@@ -33510,7 +33296,6 @@ export const UART_IFLS_TXSEL_HALF: any = '2'
 /**
 Transmit FIFO becomes $lt;= 1/4 full*/
 export const UART_IFLS_TXSEL_QUARTER: any = '1'
-
 
 // -------- REGISTER IMSC -------- //
 
@@ -34068,7 +33853,6 @@ export const VIMS_FLWS1T_VAL_WS1: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const VIMS_FLWS1T_VAL_WS0: any = '0'
 
-
 // -------- REGISTER FLWS2T -------- //
 
 /**
@@ -34114,7 +33898,6 @@ export const VIMS_FLWS2T_VAL_WS1: any = '1'
 /**
 Internal. Only to be used through TI provided API.*/
 export const VIMS_FLWS2T_VAL_WS0: any = '0'
-
 
 // -------- REGISTER PTRMC0 -------- //
 
@@ -34168,7 +33951,6 @@ export const VIMS_FLBLCK_VAL_BLOCK: any = '1'
 Internal. Only to be used through TI provided API.*/
 export const VIMS_FLBLCK_VAL_ALLOW: any = '0'
 
-
 // -------- REGISTER CFG -------- //
 
 /**
@@ -34195,7 +33977,6 @@ export const VIMS_CFG_WEPRTRM_ALLOW: any = '1'
 /**
 Internal. Only to be used through TI provided API.*/
 export const VIMS_CFG_WEPRTRM_RESTRICT: any = '0'
-
 
 // -------- REGISTER WEPRA -------- //
 
@@ -34316,7 +34097,6 @@ export const VIMS_FLBSTAT_B1TRDY_READY: any = '1'
 Not Ready*/
 export const VIMS_FLBSTAT_B1TRDY_NOTREADY: any = '0'
 
-
 // -------- REGISTER CCHCTRL -------- //
 
 /**
@@ -34366,7 +34146,6 @@ export const VIMS_CCHCTRL_CCHEN_EN: any = '1'
 /**
 Disable*/
 export const VIMS_CCHCTRL_CCHEN_DIS: any = '0'
-
 
 // -------- INSTANCES -------- //
 

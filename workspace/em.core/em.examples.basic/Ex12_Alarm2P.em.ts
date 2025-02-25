@@ -18,7 +18,7 @@ export namespace em$meta {
     }
 }
 
-var counter = <u32>0
+let counter = <u32>0
 
 export function em$run() {
     blinkF.$$.$$.post()

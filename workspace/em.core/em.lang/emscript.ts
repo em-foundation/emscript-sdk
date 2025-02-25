@@ -3,10 +3,11 @@ import * as Path from 'path'
 import { sprintf } from 'sprintf-js'
 
 const PATH = 'workspace/.emscript/props.json'
-const PROPS = Fs.existsSync(PATH) ? JSON.parse(String(Fs.readFileSync(PATH))) : {}
+const PROPS = Fs.existsSync(PATH)
+    ? JSON.parse(String(Fs.readFileSync(PATH)))
+    : {}
 
 namespace em {
-
     const __ARRAY__ = null
     // #region
 
@@ -21,25 +22,26 @@ namespace em {
             this.$base = proto
             this.$len = len
         }
-        $make() { return instantiate(this) }
-
+        $make() {
+            return instantiate(this)
+        }
     }
     class em$ArrayVal<T> implements frame_t<T> {
         $len: number
-        private items: globalThis.Array<T>
+        private items: globalThis.Array<T>;
         [index: number]: T
         constructor(len: number, defaultVal: T) {
             this.$len = len
             this.items = new globalThis.Array(len).fill(defaultVal)
             return new globalThis.Proxy(this, {
                 get(target, prop) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         return target.items[Number(prop)]
                     }
                     return (target as any)[prop]
                 },
                 set(target, prop, value) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         target.items[Number(prop)] = value
                         return true
                     }
@@ -47,7 +49,8 @@ namespace em {
                 },
             })
         }
-        [Symbol.iterator](): Iterator<ref_t<T>> {   // TODO combine with FRAME
+        [Symbol.iterator](): Iterator<ref_t<T>> {
+            // TODO combine with FRAME
             let idx = 0
             let items = this.items
             return {
@@ -56,15 +59,18 @@ namespace em {
                         let cur = idx
                         idx += 1
                         return { value: new em$ptr<T>(items, cur), done: false }
-                    }
-                    else {
+                    } else {
                         return { value: undefined as any, done: true }
                     }
-                }
+                },
             }
         }
-        $frame(beg: i16, len: u16 = 0) { return frame$create<T>(this.items, 0, beg, len) }
-        $ptr(): ptr_t<T> { return new em$ptr<T>(this.items) }
+        $frame(beg: i16, len: u16 = 0) {
+            return frame$create<T>(this.items, 0, beg, len)
+        }
+        $ptr(): ptr_t<T> {
+            return new em$ptr<T>(this.items)
+        }
     }
 
     // #endregion
@@ -72,26 +78,31 @@ namespace em {
     const __CB__ = null
     // #region
 
-    
-    export function $cb<A extends any[]>(fxn: (...args: A) => void, cname?: string): cb_t<A> {
+    export function $cb<A extends any[]>(
+        fxn: (...args: A) => void,
+        cname?: string
+    ): cb_t<A> {
         return new em$cb(fxn, cname!) as unknown as cb_t<A>
     }
-    
+
     export function $cb$null() {
         return new em$cb(undefined, '<undefined')
     }
 
     class em$cb<A extends any[]> {
         __em$class = 'em$cb'
-        constructor(private fxn: ((...args: A) => void) | undefined, private cname: string) {
+        constructor(
+            private fxn: ((...args: A) => void) | undefined,
+            private cname: string
+        ) {
             return new Proxy(this, {
                 apply: (target, thisArg, args: A) => {
-                    return this.fxn!(...args);
-                }
-            }) as any;
+                    return this.fxn!(...args)
+                },
+            }) as any
         }
     }
-     
+
     // class em$cb<A extends any[]> {
     //     constructor(readonly $$: (...args: A) => void) {
     //     }
@@ -115,8 +126,8 @@ namespace em {
     const __DEBUG__ = null
     // #region
 
-    export function fail() { }
-    export function halt() { }
+    export function fail() {}
+    export function halt() {}
 
     export const $ = {
         '%%>': (val: any) => null as null,
@@ -145,16 +156,20 @@ namespace em {
 
     class em$oref<T> implements ref_t<T> {
         __em$class = 'em$oref'
-        constructor(private arr: T[], private idx: u16, private cname: string) {
+        constructor(
+            private arr: T[],
+            private idx: u16,
+            private cname: string
+        ) {
             return new globalThis.Proxy(this, {
                 get(target, prop) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         return target.arr[idx + Number(prop)]
                     }
                     return (target as any)[prop]
                 },
                 set(target, prop, value) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         target.arr[idx + Number(prop)] = value
                         return true
                     }
@@ -162,34 +177,52 @@ namespace em {
                 },
             })
         }
-        get $$() { return this.arr[this.idx] }
-        set $$(v: T) { this.arr[this.idx] = v }
+        get $$() {
+            return this.arr[this.idx]
+        }
+        set $$(v: T) {
+            this.arr[this.idx] = v
+        }
     }
 
     class em$factory<T extends $struct> {
         [index: number]: T
         private $$em$config: string = 'factory'
         private elems: T[] = []
-        constructor(private proto: T, private cname: string) {
+        constructor(
+            private proto: T,
+            private cname: string
+        ) {
             return new globalThis.Proxy(this, {
                 get(target, prop) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         return target.elems[Number(prop)]
                     }
                     return (target as any)[prop]
                 },
             })
         }
-        get $len(): u16 { return this.elems.length }
-        $add(e: T) { this.elems.push(e) }
+        get $len(): u16 {
+            return this.elems.length
+        }
+        $add(e: T) {
+            this.elems.push(e)
+        }
         $create(): ref_t<T> {
             this.$add(clone(this.proto))
             return new em$oref<T>(this.elems, this.elems.length - 1, this.cname)
         }
-        $frame(beg: i16, len: u16 = 0) { return frame$create<T>(this.elems, 0, beg, len) }
-        $null(): ref_t<T> { return new em$oref<T>(this.elems, -1, this.cname) }
-        $ptr(): ptr_t<T> { return new em$ptr<T>(this.elems) }
-        [Symbol.iterator](): Iterator<ref_t<T>> {  // TODO combine with ARRAY
+        $frame(beg: i16, len: u16 = 0) {
+            return frame$create<T>(this.elems, 0, beg, len)
+        }
+        $null(): ref_t<T> {
+            return new em$oref<T>(this.elems, -1, this.cname)
+        }
+        $ptr(): ptr_t<T> {
+            return new em$ptr<T>(this.elems)
+        }
+        [Symbol.iterator](): Iterator<ref_t<T>> {
+            // TODO combine with ARRAY
             let idx = 0
             let items = this.elems
             return {
@@ -198,11 +231,10 @@ namespace em {
                         let cur = idx
                         idx += 1
                         return { value: new em$ptr<T>(items, cur), done: false }
-                    }
-                    else {
+                    } else {
                         return { value: undefined as any, done: true }
                     }
-                }
+                },
             }
         }
         // [Symbol.iterator](): Iterator<T> {  // TODO combine with ARRAY
@@ -225,13 +257,17 @@ namespace em {
 
     export type factory_t<T extends $struct> = em$factory<T>
 
-    export function $factory<T extends $struct>(proto: T, __cname?: string): factory_t<T> {
+    export function $factory<T extends $struct>(
+        proto: T,
+        __cname?: string
+    ): factory_t<T> {
         const handler = {
             get(targ: any, prop: string | symbol) {
                 const idx = Number(prop)
                 if (!isNaN(idx)) return targ.elems[idx]
                 switch (prop) {
-                    default: return targ[prop]
+                    default:
+                        return targ[prop]
                 }
             },
             set(targ: any, prop: string | symbol, val: any) {
@@ -239,14 +275,12 @@ namespace em {
                 if (isNaN(idx)) return false
                 targ.elems[idx] = val
                 return true
-            }
+            },
         }
         return new globalThis.Proxy(new em$factory(proto, __cname!), handler)
     }
 
     // #endregion
-
-
 
     const __FRAME__ = null
     // #region
@@ -254,16 +288,19 @@ namespace em {
     class em$ptr<T> implements ptr_t<T> {
         [index: number]: T
         __em$class = 'em$ptr'
-        constructor(private arr: T[], private idx: u16 = 0) {
+        constructor(
+            private arr: T[],
+            private idx: u16 = 0
+        ) {
             return new globalThis.Proxy(this, {
                 get(target, prop) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         return target.arr[idx + Number(prop)]
                     }
                     return (target as any)[prop]
                 },
                 set(target, prop, value) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         target.arr[idx + Number(prop)] = value
                         return true
                     }
@@ -271,17 +308,29 @@ namespace em {
                 },
             })
         }
-        get $$() { return this.arr[this.idx] }
-        set $$(v: T) { this.arr[this.idx] = v }
-        $cur() { return this.idx }
-        $dec() { this.idx -= 1 }
-        $inc() { this.idx += 1 }
+        get $$() {
+            return this.arr[this.idx]
+        }
+        set $$(v: T) {
+            this.arr[this.idx] = v
+        }
+        $cur() {
+            return this.idx
+        }
+        $dec() {
+            this.idx -= 1
+        }
+        $inc() {
+            this.idx += 1
+        }
     }
 
     class em$ref<T> implements ref_t<T> {
         $$: T
         __em$class = 'em$ref'
-        constructor(lval: T) { this.$$ = lval }
+        constructor(lval: T) {
+            this.$$ = lval
+        }
     }
 
     export function $ref<T>(lval: T): ref_t<T> {
@@ -291,7 +340,7 @@ namespace em {
     class em$frame<T> implements frame_t<T> {
         private items: T[]
         $start: u16
-        $len: number
+        $len: number;
         [index: number]: T
         constructor(arr: T[], start: u16, len: u16 = 0) {
             this.items = arr
@@ -299,13 +348,13 @@ namespace em {
             this.$len = len
             return new globalThis.Proxy(this, {
                 get(target, prop) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         return target.items[start + Number(prop)]
                     }
                     return (target as any)[prop]
                 },
                 set(target, prop, value) {
-                    if (typeof prop === "string" && !isNaN(Number(prop))) {
+                    if (typeof prop === 'string' && !isNaN(Number(prop))) {
                         target.items[start + Number(prop)] = value
                         return true
                     }
@@ -313,7 +362,8 @@ namespace em {
                 },
             })
         }
-        [Symbol.iterator](): Iterator<ref_t<T>> {  // TODO combine with ARRAY
+        [Symbol.iterator](): Iterator<ref_t<T>> {
+            // TODO combine with ARRAY
             let idx = this.$start
             let items = this.items
             return {
@@ -322,19 +372,25 @@ namespace em {
                         let cur = idx
                         idx += 1
                         return { value: new em$ptr<T>(items, cur), done: false }
-                    }
-                    else {
+                    } else {
                         return { value: undefined as any, done: true }
                     }
-                }
+                },
             }
         }
-        $frame(beg: i16, len: u16 = 0): frame_t<T> { return frame$create<T>(this.items, this.$start, beg, len) }
+        $frame(beg: i16, len: u16 = 0): frame_t<T> {
+            return frame$create<T>(this.items, this.$start, beg, len)
+        }
     }
 
-    function frame$create<T>(arr: T[], start: u16, beg: i16, len: u16): frame_t<T> {
-        start = (beg < 0) ? arr.length + beg : start + beg
-        len = (len == 0) ? arr.length - start : len
+    function frame$create<T>(
+        arr: T[],
+        start: u16,
+        beg: i16,
+        len: u16
+    ): frame_t<T> {
+        start = beg < 0 ? arr.length + beg : start + beg
+        len = len == 0 ? arr.length - start : len
         return new em$frame<T>(arr, start, len)
     }
 
@@ -344,9 +400,15 @@ namespace em {
     class em$config_t<T> {
         private $$em$config: string = 'config'
         private val: T | null = null
-        constructor(val?: T) { this.val = val === undefined ? null : val }
-        get $$(): T { return this.val! }
-        set $$(v: T) { this.val = v }
+        constructor(val?: T) {
+            this.val = val === undefined ? null : val
+        }
+        get $$(): T {
+            return this.val!
+        }
+        set $$(v: T) {
+            this.val = v
+        }
     }
     export function $config<T>(val?: T): em$config_t<T> & Boxed<T> {
         return new em$config_t<T>(val)
@@ -357,23 +419,25 @@ namespace em {
     const __PROXY__ = null
     // #region
 
-    class em$proxy_t<I extends Object> {
+    class em$proxy_t<I extends object> {
         private $$em$config: string = 'proxy'
         private bound: boolean = false
         private prx: I = isa<I>()
         private dunit: Unit | null = null
-        get $$(): I { return this.prx }
+        get $$(): I {
+            return this.prx
+        }
         set $$(delegate: I) {
             this.prx = delegate
             this.bound = true
             if ('em$_U' in delegate) this.dunit = delegate.em$_U as Unit
         }
     }
-    export function $proxy<I extends Object>(): em$proxy_t<I> & Boxed<I> {
+    export function $proxy<I extends object>(): em$proxy_t<I> & Boxed<I> {
         return new em$proxy_t<I>()
     }
 
-    export function $delegate<U extends Object>(unit: U): em$proxy_t<U> {
+    export function $delegate<U extends object>(unit: U): em$proxy_t<U> {
         const prx = new em$proxy_t<U>()
         prx.$$ = unit
         return prx
@@ -385,19 +449,19 @@ namespace em {
     // #region
 
     export function ref<T>(): em$RefProto<T> {
-        return new em$RefProto<T>();
+        return new em$RefProto<T>()
     }
 
     export class em$RefProto<T> implements Sized {
-        readonly $alignof: u16 = 4;
-        readonly $sizeof: u16 = 4;
-        constructor(public target: em$RefVal<T> | null = null) { }
+        readonly $alignof: u16 = 4
+        readonly $sizeof: u16 = 4
+        constructor(public target: em$RefVal<T> | null = null) {}
     }
 
     export class em$RefVal<T> implements Sized {
-        readonly $alignof: u16 = 4;
-        readonly $sizeof: u16 = 4;
-        constructor(public target: T | null) { }
+        readonly $alignof: u16 = 4
+        readonly $sizeof: u16 = 4
+        constructor(public target: T | null) {}
     }
 
     // #endregion
@@ -422,18 +486,42 @@ namespace em {
             this.$val = val
             this.$memory = { size: sz, align: sz }
         }
-        get $alignof(): number { return this.$memory.align }
-        get $sizeof(): number { return this.$memory.size }
-        get $$(): T { return this.$val }
-        set $$(val: T) { this.$val = val }
+        get $alignof(): number {
+            return this.$memory.align
+        }
+        get $sizeof(): number {
+            return this.$memory.size
+        }
+        get $$(): T {
+            return this.$val
+        }
+        set $$(val: T) {
+            this.$val = val
+        }
     }
-    export function $bool(val: bool_t = false): Contained<bool_t> & em$Scalar<bool_t> { return new em$Scalar('boot_t', val, 1) }
-    export function $i8(val: i8 = 0): Contained<i8> & em$Scalar<i8> { return new em$Scalar('i8', val, 1) }
-    export function $i16(val: i16 = 0): Contained<i16> & em$Scalar<i16> { return new em$Scalar('i16', val, 2) }
-    export function $i32(val: i32 = 0): Contained<i32> & em$Scalar<i32> { return new em$Scalar('i32', val, 4) }
-    export function $u8(val: u8 = 0): Contained<u8> & em$Scalar<u8> { return new em$Scalar('u8', val, 1) }
-    export function $u16(val: u16 = 0): Contained<u16> & em$Scalar<u16> { return new em$Scalar('u16', val, 2) }
-    export function $u32(val: u32 = 0): Contained<u32> & em$Scalar<u32> { return new em$Scalar('u32', val, 4) }
+    export function $bool(
+        val: bool_t = false
+    ): Contained<bool_t> & em$Scalar<bool_t> {
+        return new em$Scalar('boot_t', val, 1)
+    }
+    export function $i8(val: i8 = 0): Contained<i8> & em$Scalar<i8> {
+        return new em$Scalar('i8', val, 1)
+    }
+    export function $i16(val: i16 = 0): Contained<i16> & em$Scalar<i16> {
+        return new em$Scalar('i16', val, 2)
+    }
+    export function $i32(val: i32 = 0): Contained<i32> & em$Scalar<i32> {
+        return new em$Scalar('i32', val, 4)
+    }
+    export function $u8(val: u8 = 0): Contained<u8> & em$Scalar<u8> {
+        return new em$Scalar('u8', val, 1)
+    }
+    export function $u16(val: u16 = 0): Contained<u16> & em$Scalar<u16> {
+        return new em$Scalar('u16', val, 2)
+    }
+    export function $u32(val: u32 = 0): Contained<u32> & em$Scalar<u32> {
+        return new em$Scalar('u32', val, 4)
+    }
 
     // #endregion
 
@@ -443,8 +531,8 @@ namespace em {
     export type struct_t<T extends { [key: string]: any }> = T
 
     export abstract class $struct {
-        static $make<T extends $struct>(this: { new (): T }): T { 
-            console.log("*** bad call to $make()")
+        static $make<T extends $struct>(this: { new (): T }): T {
+            console.log('*** bad call to $make()')
             return new this()
         }
     }
@@ -458,12 +546,21 @@ namespace em {
     class em$table_t<T> {
         private $$em$config: string = 'table'
         private elems: T[] = []
-        constructor(readonly access: TableAccess) { }
-        get $len(): u16 { return this.elems.length }
-        $add(e: T) { this.elems.push(e) }
-        $frame(beg: i16, len: u16 = 0) { return frame$create<T>(this.elems, 0, beg, len) }
-        $ptr(): ptr_t<T> { return new em$ptr<T>(this.elems) }
-        [Symbol.iterator](): Iterator<T> {  // TODO combine with ARRAY
+        constructor(readonly access: TableAccess) {}
+        get $len(): u16 {
+            return this.elems.length
+        }
+        $add(e: T) {
+            this.elems.push(e)
+        }
+        $frame(beg: i16, len: u16 = 0) {
+            return frame$create<T>(this.elems, 0, beg, len)
+        }
+        $ptr(): ptr_t<T> {
+            return new em$ptr<T>(this.elems)
+        }
+        [Symbol.iterator](): Iterator<T> {
+            // TODO combine with ARRAY
             let idx = 0
             let items = this.elems
             return {
@@ -472,11 +569,10 @@ namespace em {
                         let cur = idx
                         idx += 1
                         return { value: items[cur], done: false }
-                    }
-                    else {
+                    } else {
                         return { value: undefined as any, done: true }
                     }
-                }
+                },
             }
         }
     }
@@ -487,7 +583,8 @@ namespace em {
                 const idx = Number(prop)
                 if (!isNaN(idx)) return targ.elems[idx]
                 switch (prop) {
-                    default: return targ[prop]
+                    default:
+                        return targ[prop]
                 }
             },
             set(targ: any, prop: string | symbol, val: any) {
@@ -495,7 +592,7 @@ namespace em {
                 if (isNaN(idx)) return false
                 targ.elems[idx] = val
                 return true
-            }
+            },
         }
         return new globalThis.Proxy(new em$table_t(access), handler)
     }
@@ -513,10 +610,20 @@ namespace em {
 
     class em$text_t {
         private str: string
-        constructor(str: string) { this.str = str }
-        private get $$() { return this.str }
-        get $len() { return this.str.length }
-        $ptr(): ptr_t<u8> { return new em$ptr<u8>(globalThis.Array.from(this.str + '\0', ch => ch.charCodeAt(0))) }
+        constructor(str: string) {
+            this.str = str
+        }
+        private get $$() {
+            return this.str
+        }
+        get $len() {
+            return this.str.length
+        }
+        $ptr(): ptr_t<u8> {
+            return new em$ptr<u8>(
+                globalThis.Array.from(this.str + '\0', (ch) => ch.charCodeAt(0))
+            )
+        }
         [Symbol.iterator](): Iterator<u8> {
             let idx = 0
             let str = this.str
@@ -526,11 +633,10 @@ namespace em {
                         let cur = idx
                         idx += 1
                         return { value: str.charCodeAt(cur), done: false }
-                    }
-                    else {
+                    } else {
                         return { value: undefined as any, done: true }
                     }
-                }
+                },
             }
         }
     }
@@ -540,9 +646,10 @@ namespace em {
                 const idx = Number(prop)
                 if (!isNaN(idx)) return targ.$$.charCodeAt(idx)
                 switch (prop) {
-                    default: return targ[prop]
+                    default:
+                        return targ[prop]
                 }
-            }
+            },
         }
         return new globalThis.Proxy(new em$text_t(str), handler)
     }
@@ -552,7 +659,18 @@ namespace em {
     const __TRAITS__ = null
     // #region
 
-    export type arg_t = bool_t | i8 | i16 | i32 | text_t | u8 | u16 | u32 | cb_t<any> | ptr_t<any> | ref_t<any>
+    export type arg_t =
+        | bool_t
+        | i8
+        | i16
+        | i32
+        | text_t
+        | u8
+        | u16
+        | u32
+        | cb_t<any>
+        | ptr_t<any>
+        | ref_t<any>
 
     export interface cb_t<A extends any[] = []> {
         (...args: A): void
@@ -628,15 +746,15 @@ namespace em {
         return unit
     }
 
-
-    export function $clone<M extends { $clone(): any }>(mod: M): ReturnType<M['$clone']> {
+    export function $clone<M extends { $clone(): any }>(
+        mod: M
+    ): ReturnType<M['$clone']> {
         return mod.$clone()
     }
 
-    export function $implements<I extends {$U: Unit}>(iunit: I) {
-    }
+    export function $implements<I extends { $U: Unit }>(iunit: I) {}
 
-    export function $using<U extends Object>(unit: U) {
+    export function $using<U extends object>(unit: U) {
         if ('$U' in unit) (unit['$U'] as Unit).used()
     }
 
@@ -646,9 +764,11 @@ namespace em {
         private _used: boolean = false
         constructor(
             readonly uid: string,
-            readonly kind: UnitKind,
-        ) { }
-        used() { this._used = true }
+            readonly kind: UnitKind
+        ) {}
+        used() {
+            this._used = true
+        }
     }
 
     export function $units(): ReadonlyArray<UnitDesc> {
@@ -666,7 +786,7 @@ namespace em {
 
     const __UTILS__ = null
     // #
-    
+
     export function e$(sa: TemplateStringsArray): any {
         return 0
     }
@@ -679,43 +799,57 @@ namespace em {
         return val
     }
 
-    export function* $range(stop: number, start: number = 0, step: number = 1): Iterable<number> {
+    export function* $range(
+        stop: number,
+        start: number = 0,
+        step: number = 1
+    ): Iterable<number> {
         if (step > 0) {
-            for (let i = start; i < stop; i += step) yield i;
+            for (let i = start; i < stop; i += step) yield i
         } else {
-            for (let i = start; i > stop; i += step) yield i;
+            for (let i = start; i > stop; i += step) yield i
         }
     }
 
-    export function $sizeof<T>(required?: undefined) { return 0 }
+    export function $sizeof<T>(required?: undefined) {
+        return 0
+    }
 
     class em$BoxedVal<T> {
         $$: T
-        constructor(v: T) { this.$$ = v }
+        constructor(v: T) {
+            this.$$ = v
+        }
     }
 
-    export type Unbox<T> = T extends em$RefProto<infer RefType>
-        ? em$RefVal<Unbox<RefType>> // Force correct wrapping in `em$RefVal`
-        : T extends { $$: infer U }
-        ? U // Boxed scalar case
-        : T extends em$ArrayProto<infer Proto>
-        ? em$ArrayVal<Unbox<Proto>> // Array case
-        : T extends Record<string, any>
-        ? { [K in keyof T]: Unbox<T[K]> } // Struct-like case
-        : T;
+    export type Unbox<T> =
+        T extends em$RefProto<infer RefType>
+            ? em$RefVal<Unbox<RefType>> // Force correct wrapping in `em$RefVal`
+            : T extends { $$: infer U }
+              ? U // Boxed scalar case
+              : T extends em$ArrayProto<infer Proto>
+                ? em$ArrayVal<Unbox<Proto>> // Array case
+                : T extends Record<string, any>
+                  ? { [K in keyof T]: Unbox<T[K]> } // Struct-like case
+                  : T
 
-    export function instantiate<T extends Object>(proto: T): Unbox<T> {
+    export function instantiate<T extends object>(proto: T): Unbox<T> {
         if (proto instanceof em$RefProto) {
-            return new em$RefVal(null as any) as Unbox<T>; // Explicit type cast
+            return new em$RefVal(null as any) as Unbox<T> // Explicit type cast
         }
-        if ('$$' in proto) {  // Boxed scalar case
+        if ('$$' in proto) {
+            // Boxed scalar case
             return (proto as { $$: any }).$$ as Unbox<T>
         }
-        if (proto instanceof em$ArrayProto) {  // Array case
+        if (proto instanceof em$ArrayProto) {
+            // Array case
             const len = (proto as { $len: number }).$len
             const elementProto = (proto as { $base: any }).$base
             const defaultVal = instantiate(elementProto)
-            return new em$ArrayVal<Unbox<typeof elementProto>>(len, defaultVal) as Unbox<T>
+            return new em$ArrayVal<Unbox<typeof elementProto>>(
+                len,
+                defaultVal
+            ) as Unbox<T>
         }
         if (proto instanceof em$RefProto) {
             return new em$RefVal<T>(null) as unknown as Unbox<T>
@@ -723,33 +857,51 @@ namespace em {
         throw new Error('Unsupported proto type.')
     }
 
-
-    export function clone<T extends Object>(obj: T): T {
+    export function clone<T extends object>(obj: T): T {
         if (obj === null || typeof obj !== 'object') {
             return obj
         }
         if (globalThis.Array.isArray(obj)) {
-            return obj.map(e => clone(e)) as unknown as T
+            return obj.map((e) => clone(e)) as unknown as T
         }
-        const cobj = Object.create(Object.getPrototypeOf(obj), Object.getOwnPropertyDescriptors(obj))
+        const cobj = Object.create(
+            Object.getPrototypeOf(obj),
+            Object.getOwnPropertyDescriptors(obj)
+        )
         for (const key of Object.keys(cobj)) {
             cobj[key] = clone(cobj[key])
         }
         return cobj
     }
 
-    export function isa<T extends Object>(): T {
+    export function isa<T extends object>(): T {
         return new globalThis.Proxy({} as T, {
             get(_, prop: string) {
                 return (...args: any[]) => {
                     return undefined // Adjust this for specific return types if necessary
                 }
-            }
+            },
         })
     }
 
-    export function printf(sa: TemplateStringsArray): (a1?: arg_t, a2?: arg_t, a3?: arg_t, a4?: arg_t, a5?: arg_t, a6?: arg_t) => void {
-        function fn(a1?: arg_t, a2?: arg_t, a3?: arg_t, a4?: arg_t, a5?: arg_t, a6?: arg_t) {
+    export function printf(
+        sa: TemplateStringsArray
+    ): (
+        a1?: arg_t,
+        a2?: arg_t,
+        a3?: arg_t,
+        a4?: arg_t,
+        a5?: arg_t,
+        a6?: arg_t
+    ) => void {
+        function fn(
+            a1?: arg_t,
+            a2?: arg_t,
+            a3?: arg_t,
+            a4?: arg_t,
+            a5?: arg_t,
+            a6?: arg_t
+        ) {
             console.log(sprintf(sa[0], a1, a2, a3, a4, a5, a6))
         }
         return fn
@@ -777,9 +929,10 @@ namespace em {
         const align = (sz: number, al: number): number => {
             return (sz + al - 1) & ~(al - 1)
         }
-        for (const [key, val] of Object.entries(obj as Object)) {
+        for (const [key, val] of Object.entries(obj as object)) {
             const mi = memoryof(val)
-            if (Number.isNaN(mi.size)) throw new Error(`*** memoryof: unsized field '${key}' `)
+            if (Number.isNaN(mi.size))
+                throw new Error(`*** memoryof: unsized field '${key}' `)
             if (mi.align > res.align) res.align = mi.align
             res.size = align(res.size, mi.align) + mi.size
         }
@@ -787,11 +940,11 @@ namespace em {
         return res
     }
 
-    export function alignof(proto: Object): number {
+    export function alignof(proto: object): number {
         return memoryof(proto).align
     }
 
-    export function sizeof(proto: Object): number {
+    export function sizeof(proto: object): number {
         return memoryof(proto).size
     }
 
@@ -802,7 +955,10 @@ namespace em {
         static readonly TAB = 4
         private col: number
         private text: Array<string>
-        constructor(readonly path: string, readonly mode?: Fs.Mode) {
+        constructor(
+            readonly path: string,
+            readonly mode?: Fs.Mode
+        ) {
             this.col = 0
             this.path = path
             this.text = []
@@ -816,7 +972,7 @@ namespace em {
             this.addText('\n')
         }
         addText(...text: string[]) {
-            text.forEach(t => this.text.push(t))
+            text.forEach((t) => this.text.push(t))
         }
         clearText(): string {
             let res = this.getText()
@@ -829,13 +985,13 @@ namespace em {
             Fs.writeFileSync(this.path, this.getText(), { mode: this.mode })
         }
         genTitle(msg: string) {
-            this.print("\n// -------- %1 -------- //\n\n", msg)
+            this.print('\n// -------- %1 -------- //\n\n', msg)
         }
         getText(): string {
             return this.text.join('')
         }
         print(fmt: string, a0?: any, a1?: any, a2?: any, a3?: any) {
-            let res = ""
+            let res = ''
             let idx = 0
             while (idx < fmt.length) {
                 const c = fmt.charAt(idx++)
@@ -875,7 +1031,6 @@ namespace em {
     }
 
     // #endregion
-
 }
 
 declare global {

@@ -25,7 +25,6 @@ let FiberFac = $factory(Fiber.$make())
 let ready_list = List.$make()
 
 export namespace em$meta {
-
     export function create(body: Body, arg: arg_t = 0): Obj {
         let fiber = FiberFac.$create()
         fiber.$$.body = body
@@ -66,8 +65,7 @@ function List__empty(self: ref_t<List>): bool_t {
 function List__give(self: ref_t<List>, elem: ref_t<Fiber>): void {
     if (self.$$.empty()) {
         self.$$.head = elem
-    }
-    else {
+    } else {
         self.$$.tail.$$.link = elem
     }
     self.$$.tail = elem

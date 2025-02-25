@@ -8,14 +8,13 @@ import * as OneShotI from '@em.hal/OneShotI.em'
 export type Handler = OneShotI.Handler
 
 export namespace em$meta {
-
     export function em$construct() {
         IntrVec.em$meta.useIntr('LGPT3_COMB')
     }
 }
 
-var cur_arg: arg_t
-var cur_fxn: Handler = $null
+let cur_arg: arg_t
+let cur_fxn: Handler = $null
 
 export function disable() {
     cur_fxn = $null

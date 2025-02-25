@@ -19,7 +19,6 @@ class Ticker extends $struct {
 let TickerFac = $factory(Ticker.$make())
 
 export namespace em$meta {
-
     export function create(): Obj {
         let ticker = TickerFac.$create()
         let fiber = FiberMgr.em$meta.create($cb(alarmFB), TickerFac.$len - 1)

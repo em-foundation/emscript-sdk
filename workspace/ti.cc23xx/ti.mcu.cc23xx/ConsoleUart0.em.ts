@@ -8,7 +8,6 @@ import * as Idle from '@ti.mcu.cc23xx/Idle.em'
 export const TxPin = $proxy<GpioI.$I>()
 
 export namespace em$meta {
-
     export function em$configure() {
         Idle.em$meta.addSleepEnter($cb(sleepEnter))
         Idle.em$meta.addSleepLeave($cb(sleepLeave))

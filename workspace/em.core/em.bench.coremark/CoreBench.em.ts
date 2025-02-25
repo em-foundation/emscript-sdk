@@ -11,7 +11,6 @@ const total_data_size = $config<u16>(2000)
 const num_algs = $config<u8>(3)
 
 export namespace em$meta {
-
     export function em$configure() {
         let memsize = Math.floor(total_data_size.$$ / num_algs.$$)
         ListBench.memsize.$$ = memsize
@@ -38,9 +37,15 @@ export function print() {
 
 export function run(arg: i16): Utils.sum_t {
     let crc = ListBench.run(1)
-    Utils.setCrc(Utils.Kind.FINAL, Crc.add16(<i16>crc, Utils.getCrc(Utils.Kind.FINAL)))
+    Utils.setCrc(
+        Utils.Kind.FINAL,
+        Crc.add16(<i16>crc, Utils.getCrc(Utils.Kind.FINAL))
+    )
     crc = ListBench.run(-1)
-    Utils.setCrc(Utils.Kind.FINAL, Crc.add16(<i16>crc, Utils.getCrc(Utils.Kind.FINAL)))
+    Utils.setCrc(
+        Utils.Kind.FINAL,
+        Crc.add16(<i16>crc, Utils.getCrc(Utils.Kind.FINAL))
+    )
     Utils.bindCrc(Utils.Kind.LIST, Utils.getCrc(Utils.Kind.FINAL))
     return Utils.getCrc(Utils.Kind.FINAL)
 }

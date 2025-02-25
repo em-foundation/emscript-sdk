@@ -1,7 +1,6 @@
 import em from '@$$emscript'
 export const $U = em.$declare('COMPOSITE')
 
-
 export function em$generate() {
     let out = $outfile('linkcmd.ld')
     let use_sram = $property('em.build.BootFlash', false)
@@ -59,7 +58,8 @@ export function em$generate() {
             |->     __stack_top__ = 0x20000000 + 0x00009000;
             |-> }
         `)
-    } else { // use_sram
+    } else {
+        // use_sram
         out.addFrag(`
             |-> MEMORY {
             |->     DMEM : ORIGIN = 0x20005000, LENGTH = 0x00004000

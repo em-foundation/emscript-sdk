@@ -9,7 +9,14 @@ export const memsize = $config<u16>(0)
 const NUM_STATES = 8
 
 enum State {
-    START, INVALID, S1, S2, INT, FLOAT, EXPONENT, SCIENTIFIC
+    START,
+    INVALID,
+    S1,
+    S2,
+    INT,
+    FLOAT,
+    EXPONENT,
+    SCIENTIFIC,
 }
 
 const intPat = $table<text_t>('ro')
@@ -24,10 +31,9 @@ const errPatLen = $config<u16>(0)
 
 const StateCnt = $array($u32(), NUM_STATES)
 
-var membuf = $table<u8>('rw')
+let membuf = $table<u8>('rw')
 
 export namespace em$meta {
-
     export function em$init() {
         intPat.$add(t$`5012`)
         intPat.$add(t$`1234`)
@@ -80,14 +86,11 @@ function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
             case State.START:
                 if (isDigit(ch)) {
                     state = State.INT
-                }
-                else if (ch == c$`+` || ch == c$`-`) {
+                } else if (ch == c$`+` || ch == c$`-`) {
                     state = State.S1
-                }
-                else if (ch == c$`.`) {
+                } else if (ch == c$`.`) {
                     state = State.FLOAT
-                }
-                else {
+                } else {
                     state = State.INVALID
                     transCnt[ord(State.INVALID)] += 1
                 }
@@ -97,12 +100,10 @@ function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
                 if (isDigit(ch)) {
                     state = State.INT
                     transCnt[ord(State.S1)] += 1
-                }
-                else if (ch == c$`.`) {
+                } else if (ch == c$`.`) {
                     state = State.FLOAT
                     transCnt[ord(State.S1)] += 1
-                }
-                else {
+                } else {
                     state = State.INVALID
                     transCnt[ord(State.S1)] += 1
                 }
@@ -111,8 +112,7 @@ function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
                 if (ch == c$`.`) {
                     state = State.FLOAT
                     transCnt[ord(State.INT)] += 1
-                }
-                else if (!isDigit(ch)) {
+                } else if (!isDigit(ch)) {
                     state = State.INVALID
                     transCnt[ord(State.INT)] += 1
                 }
@@ -121,8 +121,7 @@ function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
                 if (ch == c$`E` || ch == c$`e`) {
                     state = State.S2
                     transCnt[ord(State.FLOAT)] += 1
-                }
-                else if (!isDigit(ch)) {
+                } else if (!isDigit(ch)) {
                     state = State.INVALID
                     transCnt[ord(State.FLOAT)] += 1
                 }
@@ -131,8 +130,7 @@ function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
                 if (ch == c$`+` || ch == c$`-`) {
                     state = State.EXPONENT
                     transCnt[ord(State.S2)] += 1
-                }
-                else {
+                } else {
                     state = State.INVALID
                     transCnt[ord(State.S2)] += 1
                 }
@@ -141,8 +139,7 @@ function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
                 if (isDigit(ch)) {
                     state = State.SCIENTIFIC
                     transCnt[ord(State.EXPONENT)] += 1
-                }
-                else {
+                } else {
                     state = State.INVALID
                     transCnt[ord(State.EXPONENT)] += 1
                 }
@@ -159,7 +156,6 @@ function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
     return state
 }
 
-
 function ord(state: State): u8 {
     return <u8>state
 }
@@ -169,7 +165,7 @@ export function print() {
     let cnt = 0
     printf`\n%c`(c$`"`)
     while (p.$$) {
-        if ((cnt++ % 8) == 0) {
+        if (cnt++ % 8 == 0) {
             printf`\n    `()
         }
         while (true) {
@@ -211,7 +207,8 @@ function scan(finalCnt: index_t<u32>, transCnt: index_t<u32>) {
 }
 
 function scramble(seed: Utils.seed_t, step: u32) {
-    for (let idx = 0; idx < memsize.$$; idx += step) { // TODO: use $range
+    for (let idx = 0; idx < memsize.$$; idx += step) {
+        // TODO: use $range
         if (membuf[idx] != c$`,`) membuf[idx] ^= <u8>seed
     }
 }
@@ -222,7 +219,7 @@ export function setup() {
     let total = 0
     let pat = t$``
     let plen = 0
-    while ((total + plen + 1) < (memsize.$$ - 1)) {
+    while (total + plen + 1 < memsize.$$ - 1) {
         if (plen) {
             for (let i of $range(plen)) {
                 p.$$ = pat[i]

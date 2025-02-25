@@ -11,7 +11,6 @@ export const TxPin = $proxy<GpioI.$I>()
 const bit_time = $config<u16>()
 
 export namespace em$meta {
-
     export function em$construct() {
         bit_time.$$ = Math.floor(1_000_000 / baud_rate.$$)
     }
@@ -22,12 +21,11 @@ export function em$startup(): void {
     TxPin.$$.set()
 }
 
-export function flush(): void {
-}
+export function flush(): void {}
 
 export function put(data: u8): void {
     const bit_cnt = 10
-    var tx_byte: u16 = (data << 1) | 0x600
+    let tx_byte: u16 = (data << 1) | 0x600
     const key = Common.GlobalInterrupts.$$.disable()
     for (let _ of $range(bit_cnt)) {
         Common.UsCounter.$$.set(bit_time.$$)

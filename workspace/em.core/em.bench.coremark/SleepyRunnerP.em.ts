@@ -9,13 +9,12 @@ import * as TimeTypes from '@em.utils/TimeTypes.em'
 const ticker = $config<TickerMgr.Obj>()
 
 export namespace em$meta {
-
     export function em$construct() {
         ticker.$$ = TickerMgr.em$meta.create()
     }
 }
 
-var count = 10
+let count = 10
 
 export function em$startup() {
     CoreBench.setup()

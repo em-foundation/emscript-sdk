@@ -15,7 +15,7 @@ export namespace em$meta {
     }
 }
 
-var count = <u8>5
+let count = <u8>5
 
 export function em$run() {
     blinkF.$$.$$.post()
@@ -30,5 +30,4 @@ function blinkFB(a: arg_t) {
     AppLed.$$.off()
     Common.BusyWait.$$.wait(250_000)
     blinkF.$$.$$.post()
-
 }

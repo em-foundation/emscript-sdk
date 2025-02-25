@@ -23,10 +23,9 @@ type Comparator = (a: ref_t<Data>, b: ref_t<Data>) => i32
 const maxElems = $config<u16>(0)
 
 let curHead_c = $config<ref_t<Elem>>()
-var curHead: ref_t<Elem>
+let curHead: ref_t<Elem>
 
 export namespace em$meta {
-
     export function em$construct() {
         let itemSize = 16 + $sizeof<Data>()
         maxElems.$$ = Math.round(memsize.$$ / itemSize) - 3
@@ -34,7 +33,7 @@ export namespace em$meta {
         curHead.$$.data = DataFac.$create()
         let p = curHead
         for (let _ of $range(maxElems.$$ - 1)) {
-            let q = p.$$.next = ElemFac.$create()
+            let q = (p.$$.next = ElemFac.$create())
             q.$$.data = DataFac.$create()
             p = q
         }
@@ -42,7 +41,6 @@ export namespace em$meta {
         p.$$.next = ElemFac.$null()
         curHead_c.$$ = curHead
     }
-
 }
 
 function find(list: ref_t<Elem>, data: ref_t<Data>): ref_t<Elem> {
@@ -51,9 +49,11 @@ function find(list: ref_t<Elem>, data: ref_t<Data>): ref_t<Elem> {
         while (elem && elem.$$.data.$$.idx != data.$$.idx) {
             elem = elem.$$.next
         }
-    }
-    else {
-        while (elem && <i16>(<u16>elem.$$.data.$$.val & 0xff) != data.$$.val) {
+    } else {
+        while (
+            elem &&
+            <i16>((<u16>elem.$$.data.$$.val) & 0xff) != data.$$.val
+        ) {
             elem = elem.$$.next
         }
     }
@@ -61,8 +61,12 @@ function find(list: ref_t<Elem>, data: ref_t<Data>): ref_t<Elem> {
 }
 
 function idxCompare(a: ref_t<Data>, b: ref_t<Data>): i32 {
-    a.$$.val = <i16>((<u16>a.$$.val & 0xff00) | (0x00ff & <u16>(a.$$.val >> 8)))
-    b.$$.val = <i16>((<u16>b.$$.val & 0xff00) | (0x00ff & <u16>(b.$$.val >> 8)))
+    a.$$.val = <i16>(
+        (((<u16>a.$$.val) & 0xff00) | (0x00ff & (<u16>(a.$$.val >> 8))))
+    )
+    b.$$.val = <i16>(
+        (((<u16>b.$$.val) & 0xff00) | (0x00ff & (<u16>(b.$$.val >> 8))))
+    )
     return a.$$.idx - b.$$.idx
 }
 
@@ -74,7 +78,7 @@ function pr(list: ref_t<Elem>, name: text_t) {
     let sz = 0
     printf`%s\n[`(name)
     for (let e = list; e != null; e = e.$$.next) {
-        let pre = (sz++ % 8) == 0 ? t$`\n    ` : t$``
+        let pre = sz++ % 8 == 0 ? t$`\n    ` : t$``
         printf`%s(%04x,%04x)`(pre, e.$$.data.$$.idx, <u16>e.$$.data.$$.val)
     }
     printf`\n], size = %d\n`(sz)
@@ -105,7 +109,6 @@ function reverse(list: ref_t<Elem>): ref_t<Elem> {
     return next
 }
 
-
 export function run(arg: i16): Utils.sum_t {
     let list = curHead
     let finderIdx = <i16>arg
@@ -121,11 +124,10 @@ export function run(arg: i16): Utils.sum_t {
         list = reverse(list)
         if (!elem) {
             missed += 1
-            retval += <u16>(list.$$.next.$$.data.$$.val >> 8) & 0x1
-        }
-        else {
+            retval += (<u16>(list.$$.next.$$.data.$$.val >> 8)) & 0x1
+        } else {
             found += 1
-            if (<u16>elem.$$.data.$$.val & 0x1) {
+            if ((<u16>elem.$$.data.$$.val) & 0x1) {
                 retval += (<u16>(elem.$$.data.$$.val >> 9)) & 0x1
             }
             if (elem.$$.next) {
@@ -163,14 +165,13 @@ export function setup() {
     e.$$.data.$$.idx = 0
     e.$$.data.$$.val = 0x8080
     for (e = e.$$.next; e.$$.next != null; e = e.$$.next) {
-        let pat = <u16>(seed ^ kd) & 0xf
+        let pat = (<u16>(seed ^ kd)) & 0xf
         let dat = (pat << 3) | (kd & 0x7)
         e.$$.data.$$.val = <i16>((dat << 8) | dat)
         kd -= 1
-        if (ki < (maxElems.$$ / 5)) {
+        if (ki < maxElems.$$ / 5) {
             e.$$.data.$$.idx = ki++
-        }
-        else {
+        } else {
             pat = <u16>(seed ^ ki++)
             e.$$.data.$$.idx = <i16>(0x3fff & (((ki & 0x7) << 8) | pat))
         }
@@ -186,10 +187,10 @@ function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
     let e: ref_t<Elem>
     while (true) {
         let p = list
-        let tail = list = ElemFac.$null()
-        let nmerges = <i32>0  // count number of merges we do in this pass
+        let tail = (list = ElemFac.$null())
+        let nmerges = <i32>0 // count number of merges we do in this pass
         while (p) {
-            nmerges++  // there exists a merge to be done
+            nmerges++ // there exists a merge to be done
             // step `insize` places along from p
             q = p
             let psize = 0
@@ -208,20 +209,17 @@ function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
                     e = q
                     q = q.$$.next
                     qsize--
-                }
-                else if (qsize == 0 || !q) {
+                } else if (qsize == 0 || !q) {
                     // q is empty; e must come from p.
                     e = p
                     p = p.$$.next
                     psize--
-                }
-                else if (cmp(p.$$.data, q.$$.data) <= 0) {
+                } else if (cmp(p.$$.data, q.$$.data) <= 0) {
                     // First element of p is lower (or same); e must come from p.
                     e = p
                     p = p.$$.next
                     psize--
-                }
-                else {
+                } else {
                     // First element of q is lower; e must come from q.
                     e = q
                     q = q.$$.next
@@ -230,8 +228,7 @@ function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
                 // add the next element to the merged list
                 if (tail) {
                     tail.$$.next = e
-                }
-                else {
+                } else {
                     list = e
                 }
                 tail = e
@@ -241,7 +238,7 @@ function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
         }
         tail.$$.next = ElemFac.$null()
         // If we have done only one merge, we're finished
-        if (nmerges <= 1) break  // allow for nmerges==0, the empty list case
+        if (nmerges <= 1) break // allow for nmerges==0, the empty list case
         // Otherwise repeat, merging lists twice the size
         insize *= 2
     }
@@ -263,12 +260,12 @@ import * as Bench1 from '@em.bench.coremark/MatrixBench.em'
 
 function valCalc(pval: ref_t<i16>): i16 {
     let val = <u16>pval.$$
-    let optype = <u8>(val >> 7) & 1
+    let optype = (<u8>(val >> 7)) & 1
     if (optype) return <i16>(val & 0x007f)
     let flag = val & 0x7
     let vtype = (val >> 3) & 0xf
     vtype |= vtype << 4
-    var ret: u16
+    let ret: u16
     switch (flag) {
         case 0:
             ret = Bench0.run(<i16>vtype)
@@ -283,9 +280,12 @@ function valCalc(pval: ref_t<i16>): i16 {
             break
     }
     let newcrc = Crc.add16(<i16>ret, Utils.getCrc(Utils.Kind.FINAL))
-    Utils.setCrc(Utils.Kind.FINAL, Crc.add16(<i16>ret, Utils.getCrc(Utils.Kind.FINAL)))
+    Utils.setCrc(
+        Utils.Kind.FINAL,
+        Crc.add16(<i16>ret, Utils.getCrc(Utils.Kind.FINAL))
+    )
     ret &= 0x007f
-    pval.$$ = <i16>((val & 0xff00) | 0x0080 | ret)   // cache the result
+    pval.$$ = <i16>((val & 0xff00) | 0x0080 | ret) // cache the result
     return <i16>ret
 }
 

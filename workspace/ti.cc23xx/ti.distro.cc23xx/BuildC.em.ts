@@ -121,13 +121,16 @@ export function em$generate() {
     `)
     out.close()
     //
-    const dslite = process.platform === 'win32'
-        ? 'dslite.bat'
-        : process.platform === 'linux'
-            ? 'dslite-Cortex_M0P.sh'
-            : 'dslite.sh'
+    const dslite =
+        process.platform === 'win32'
+            ? 'dslite.bat'
+            : process.platform === 'linux'
+              ? 'dslite-Cortex_M0P.sh'
+              : 'dslite.sh'
     out = $outfile('load.sh', 0o755)
-    out.addText(`${tools}/ti-uniflash/${dslite} -c ../ti.cc23xx/ti.distro.cc23xx/CC2340R5.ccxml .out/main.out\n`)
+    out.addText(
+        `${tools}/ti-uniflash/${dslite} -c ../ti.cc23xx/ti.distro.cc23xx/CC2340R5.ccxml .out/main.out\n`
+    )
     out.close()
 }
 
@@ -136,5 +139,5 @@ declare global {
 }
 
 Object.assign(globalThis, {
-    $R: REGS
+    $R: REGS,
 })

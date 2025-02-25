@@ -2,7 +2,6 @@ import em from '@$$emscript'
 export const $U = em.$declare('MODULE')
 
 export namespace em$meta {
-
     const NO_VEC = '<NA>'
 
     const core_intrs = [
@@ -51,7 +50,12 @@ export namespace em$meta {
                         |->     { .fxn = em__start },
         `)
         for (let n of intr_list) {
-            const s = n == NO_VEC ? '0' : used_set.has(n) ? `${n}_isr$$` : 'DEFAULT_isr$$'
+            const s =
+                n == NO_VEC
+                    ? '0'
+                    : used_set.has(n)
+                      ? `${n}_isr$$`
+                      : 'DEFAULT_isr$$'
             out.addFrag(`
                         |-> /**/${s},
             `)
@@ -100,7 +104,7 @@ export function DEFAULT_isr$$() {
     $['%%b:'](3)
     let vnum = <u32>e$`__get_IPSR()`
     $['%%>'](vnum)
-    let fp = <ptr_t<u32>>(e$`__get_MSP()`)
+    let fp = <ptr_t<u32>>e$`__get_MSP()`
     $['%%>'](fp.$cur())
     for (let _ of $range(8)) {
         $['%%b']

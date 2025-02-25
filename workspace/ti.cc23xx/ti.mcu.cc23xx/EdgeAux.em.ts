@@ -12,7 +12,6 @@ export class HandlerInfo extends $struct {
 const handler_info_tab = $table<HandlerInfo>('ro')
 
 export namespace em$meta {
-
     export function em$construct() {
         IntrVec.em$meta.useIntr('GPIO_COMB')
     }
@@ -29,7 +28,7 @@ export function em$startup() {
 export function GPIO_COMB_isr$$() {
     let mis = $R.GPIO.MIS.$$
     for (let hi of handler_info_tab) {
-        if ((mis & hi.mask) && hi.handler != $null) {
+        if (mis & hi.mask && hi.handler != $null) {
             hi.handler()
         }
     }
