@@ -1,0 +1,16 @@
+#ifndef __REGS_M
+#define __REGS_M
+
+#include "../../adi.max326xx/adi.distro.max326xx/inc/max32655.h"
+#include "../../adi.max326xx/adi.distro.max326xx/inc/gcr_regs.h"
+#include "../../adi.max326xx/adi.distro.max326xx/inc/gpio_regs.h"
+#include "../../adi.max326xx/adi.distro.max326xx/inc/icc_regs.h"
+#include "../../adi.max326xx/adi.distro.max326xx/inc/lpgcr_regs.h"
+#include "../../adi.max326xx/adi.distro.max326xx/inc/rtc_regs.h"
+#include "../../adi.max326xx/adi.distro.max326xx/inc/uart_regs.h"
+
+#define MXC_GPIO_GET_BASE(i) \
+    ((i) == 0 ? MXC_BASE_GPIO0 : (i) == 1 ? MXC_BASE_GPIO1 : (i) == 2 ? MXC_BASE_GPIO2 : (i) == 3 ? MXC_BASE_GPIO3 : 0)
+
+
+#endif

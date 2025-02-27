@@ -1,0 +1,25 @@
+$DEFAULTS:
+    $inherits:      $DEFAULTS      ## non-circular inheritance relation terminating here
+    $overrides:     false          ## designates this local board definition overrides the platform
+    activeLowLeds:  false          ## setting applies to {app,com,sys}Led pins
+    pins:
+        appBut:     -1
+        appLed:     -1
+        appOut:     -1
+        sysDbgA:    -1  
+        sysDbgB:    -1  
+        sysDbgC:    -1  
+        sysDbgD:    -1
+        sysLed:     -1
+
+MAX32655FTHR:
+    activeLowLeds:  true
+    pins:
+        appBut:     0x003   ## P0.3
+        appLed:     0x013   ## P0.19
+        appOut:     0x207   ## P2.7
+        sysDbgA:    0x106   ## P1.6
+        sysDbgB:    0x107   ## P1.7
+        sysDbgC:    0x108   ## P1.8
+        sysDbgD:    0x109   ## P1.9
+        sysLed:     0x012   ## P0_18
