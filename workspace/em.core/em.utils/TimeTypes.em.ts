@@ -23,6 +23,12 @@ export class TimeParts extends $struct {
 
 export type Secs24p8 = u32
 
+export function RawTime_ZERO(): RawTime {
+    let raw_time = RawTime.$make()
+    raw_time.secs = raw_time.subs = 0
+    return raw_time
+}
+
 export function RawSubsToMsecs(subs: u32): u32 {
     return ((subs >> 16) * 1000) / 65536
 }

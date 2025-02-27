@@ -133,11 +133,3 @@ export function em$generate() {
     )
     out.close()
 }
-
-declare global {
-    const $R: typeof REGS
-}
-
-Object.assign(globalThis, {
-    $R: REGS,
-})

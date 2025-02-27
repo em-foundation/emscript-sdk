@@ -1,6 +1,8 @@
 import em from '@$$emscript'
 export const $U = em.$declare('MODULE', OneShotI)
 
+import * as $R from '@ti.distro.cc23xx/REGS.em'
+
 import * as Idle from '@ti.mcu.cc23xx/Idle.em'
 import * as IntrVec from '@em.arch.arm/IntrVec.em'
 import * as OneShotI from '@em.hal/OneShotI.em'

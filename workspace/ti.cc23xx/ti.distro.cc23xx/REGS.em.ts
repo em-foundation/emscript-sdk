@@ -2,7 +2,7 @@ import em from '@$$emscript'
 export const $U = em.$declare('COMPOSITE')
 
 export function em$generate() {
-    let out = new em.$outfile('ti.distro.cc23xx/REGS.hpp')
+    let out = $outfile('ti.distro.cc23xx/REGS.hpp')
     out.addFile('../ti.cc23xx/ti.distro.cc23xx/REGS.hpp.txt')
     out.close()
 }

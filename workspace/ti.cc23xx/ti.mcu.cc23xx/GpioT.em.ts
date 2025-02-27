@@ -1,6 +1,8 @@
 import em from '@$$emscript'
 export const $T = em.$declare('TEMPLATE')
 
+import * as $R from '@ti.distro.cc23xx/REGS.em'
+
 import * as GpioI from '@em.hal/GpioI.em'
 
 export namespace em$template {

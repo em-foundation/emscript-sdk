@@ -126,6 +126,8 @@ namespace em {
     const __DEBUG__ = null
     // #region
 
+    export const $bkpt = e$`asm volatile("asm")`
+
     export function fail() {}
     export function halt() {}
 
@@ -1052,6 +1054,7 @@ declare global {
     type volatile_t<T> = em.volatile_t<T>
     const $: typeof em.$
     const $array: typeof em.$array
+    const $bkpt: typeof em.$bkpt
     const $bool: typeof em.$bool
     const $cb: typeof em.$cb
     const $cb$null: typeof em.$cb$null
@@ -1087,6 +1090,7 @@ declare global {
 Object.assign(globalThis, {
     $: em.$,
     $array: em.$array,
+    $bkpt: em.$bkpt,
     $bool: em.$bool,
     $cb: em.$cb,
     $cb$null: em.$cb$null,

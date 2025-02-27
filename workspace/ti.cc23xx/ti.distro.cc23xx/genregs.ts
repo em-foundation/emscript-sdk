@@ -70,10 +70,10 @@ function readXmlFile(xfile: string): any {
 }
 
 meta.addText(`import em from '@$$emscript'\n`)
-meta.addText(`export const em$_U = em.$declare('COMPOSITE')\n`)
+meta.addText(`export const $U = em.$declare('COMPOSITE')\n`)
 meta.addText(`
 export function em$generate() {
-    let out = new em.$outfile('ti.distro.cc23xx/REGS.hpp')
+    let out = $outfile('ti.distro.cc23xx/REGS.hpp')
     out.addFile('../ti.cc23xx/ti.distro.cc23xx/REGS.hpp.txt')
     out.close()
 }

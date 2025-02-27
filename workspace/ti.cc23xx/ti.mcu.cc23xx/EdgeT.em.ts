@@ -1,6 +1,8 @@
 import em from '@$$emscript'
 export const $T = em.$declare('TEMPLATE')
 
+import * as $R from '@ti.distro.cc23xx/REGS.em'
+
 import * as Aux from '@ti.mcu.cc23xx/EdgeAux.em'
 import * as EdgeI from '@em.hal/EdgeI.em'
 import * as GpioI from '@em.hal/GpioI.em'

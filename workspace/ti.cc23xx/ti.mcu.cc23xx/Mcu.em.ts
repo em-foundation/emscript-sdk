@@ -1,6 +1,8 @@
 import em from '@$$emscript'
 export const $U = em.$declare('MODULE', McuI)
 
+import * as $R from '@ti.distro.cc23xx/REGS.em'
+
 import * as Debug from '@em.lang/Debug.em'
 import * as McuI from '@em.hal/McuI.em'
 

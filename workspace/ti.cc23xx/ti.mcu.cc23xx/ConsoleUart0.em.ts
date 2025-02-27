@@ -14,6 +14,8 @@ export namespace em$meta {
     }
 }
 
+import * as $R from '@ti.distro.cc23xx/REGS.em'
+
 export function em$startup(): void {
     sleepLeave()
 }

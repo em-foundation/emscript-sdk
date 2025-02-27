@@ -1,0 +1,41 @@
+$DEFAULTS:
+    $inherits:        $DEFAULTS      ## non-circular inheritance relation terminating here
+    $overrides:       false          ## designates this local board definition overrides the platform
+    activeLowLeds:    false          ## setting applies to {app,com,sys}Led pins
+    baudRate:         115200         ## appOut baud rate
+    clockFreq:        0              ## master clock freq in Hz
+    extFlashDisable:  false          ## shutdown external SPI flash at startup 
+    lfXtalEnable:     false          ## use external LFXTAL if true 
+    pins:
+        appBut:       -1
+        appLed:       -1
+        appOut:       -1
+        extFlashCS:   -1
+        extFlashCLK:  -1
+        extFlashPICO: -1
+        extFlashPOCI: -1
+        sysDbgA:      -1  
+        sysDbgB:      -1  
+        sysDbgC:      -1  
+        sysDbgD:      -1
+        sysLed:       -1
+
+LP_EM_CC2340R5:
+    activeLowLeds:    false
+    baudRate:         115200
+    clockFreq:        48000000
+    extFlashDisable:  true
+    lfXtalEnable:     true
+    pins:
+        appBut:       9
+        appLed:       15
+        appOut:       20
+        extFlashCS:   6
+        extFlashCLK:  18
+        extFlashPICO: 13
+        extFlashPOCI: 12
+        sysDbgA:      23
+        sysDbgB:      25
+        sysDbgC:      1
+        sysDbgD:      2
+        sysLed:       14
