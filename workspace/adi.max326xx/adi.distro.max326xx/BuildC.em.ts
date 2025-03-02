@@ -1,4 +1,5 @@
 import em from '@$$emscript'
+import { userInfo } from 'os'
 export const $U = em.$declare('COMPOSITE')
 
 import * as ArmStartupC from '@em.arch.arm/StartupC.em'
@@ -104,7 +105,15 @@ export function em$generate() {
     `)
     out.close()
     //
+    const load_folder =
+      process.platform === 'win32'
+        // TODO: This only works if the DAPLINK USB disk mounts as D: on the windows system
+        // figure out how to get the mounted volume labeled DAPLINK
+        ? '/d'
+        : process.platform === 'linux'
+          ? `/media/${userInfo().username}/DAPLINK/`
+          : '/Volumes/daplink'
     out = $outfile('load.sh', 0o755)
-    out.addText(`cp -f .out/main.out.hex /d\n`)
+    out.addText(`cp -f .out/main.out.hex ${load_folder}\n`)
     out.close()
 }
