@@ -3,7 +3,7 @@ export const $U = em.$declare('MODULE', BusyWaitI)
 
 import * as BusyWaitI from '@em.hal/BusyWaitI.em'
 
-export const scalar = $config<u8>(3)
+export const scalar = $config<u8>(10)
 
 export function wait(usecs: u32): void {
     if (usecs == 0) return
