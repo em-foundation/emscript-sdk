@@ -14,7 +14,7 @@ import * as LedT from '@em.utils/LedT.em'
 import * as Mcu from '@adi.mcu.max326xx/Mcu.em'
 import * as OneShot from '@adi.mcu.max326xx/OneShotN.em'
 import * as Poller from '@em.mcu/Poller.em'
-import * as Uptimer from '@adi.mcu.max326xx/Uptimer.em'
+import * as Uptimer from '@adi.mcu.max326xx/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
 
 export const AppLed = $clone(LedT)

@@ -1,11 +1,10 @@
 import em from '@$$emscript'
 export const $U = em.$declare('MODULE', UptimerI)
 
+import * as Rtc from '@adi.mcu.max326xx/Rtc.em'
 import * as UptimerI from '@em.hal/UptimerI.em'
 import * as TimeTypes from '@em.utils/TimeTypes.em'
 
-export namespace em$meta {}
-
 export function read(): TimeTypes.RawTime {
-    return TimeTypes.RawTime_ZERO()
+    return Rtc.getRawTime()
 }
