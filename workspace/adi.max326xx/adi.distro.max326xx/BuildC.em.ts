@@ -113,9 +113,10 @@ export function em$generate() {
         if (lines.length && lines[0].startsWith('Caption=')) {
           return lines[0].split('=')[1].trim()
         }
+        console.warn(`Warn: No ${driveLabel} drive label found.`)
         return null
       } catch (error) {
-        console.error('Error:', error)
+        console.warn(`Warn: No ${driveLabel} drive label found.`, error)
         return null
       }
     }
