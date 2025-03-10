@@ -29,18 +29,18 @@
         "url": "git+https://github.com/em-foundation/emscript-sdk.git"
     },
     "dependencies": {
-        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.2.0.202503100933.tgz",
+        "emscript-cli": "https://github.com/em-foundation/npm-packages/releases/download/resources/emscript-cli-26.2.0.202503101256.tgz",
         "segger-arm": "https://github.com/em-foundation/npm-packages/releases/download/resources/segger-arm-8.22.1.tgz",
         "ti-uniflash": "https://github.com/em-foundation/npm-packages/releases/download/resources/ti-uniflash-8.7.0.tgz"
     },
     "scripts": {
-        "clean": "cd workspace; ../node_modules/emscript-cli/bin/main.js clean",
+        "clean": "cd workspace; $(npm prefix)/node_modules/emscript-cli/bin/main.js clean",
         "postinstall": "if pwd | grep -q '/node_modules/@em-foundation/emscript-sdk$'; then cp -r ./* ../../../ && cd ../../../; fi && ./node_modules/emscript-cli/bin/main.js --root=. config",
         "verify-build": "npm run verify-build-ti",
         "verify-load": "npm run verify-load-ti",
-        "verify-build-ti": "cd workspace; ../node_modules/emscript-cli/bin/main.js build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts -S ti.cc23xx://default",
-        "verify-load-ti": "cd workspace; ../node_modules/emscript-cli/bin/main.js build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts -S ti.cc23xx://default --load",
-        "verify-build-adi": "cd workspace; ../node_modules/emscript-cli/bin/main.js build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts -S adi.max326xx://default",
-        "verify-load-adi": "cd workspace; ../node_modules/emscript-cli/bin/main.js build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts -S adi.max326xx://default --load"
+        "verify-build-ti": "cd workspace; $(npm prefix)/node_modules/emscript-cli/bin/main.js build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts -S ti.cc23xx://default",
+        "verify-load-ti": "cd workspace; $(npm prefix)/node_modules/emscript-cli/bin/main.js build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts -S ti.cc23xx://default --load",
+        "verify-build-adi": "cd workspace; $(npm prefix)/node_modules/emscript-cli/bin/main.js build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts -S adi.max326xx://default",
+        "verify-load-adi": "cd workspace; $(npm prefix)/node_modules/emscript-cli/bin/main.js build --unit em.core/em.examples.basic/Ex02_BlinkerP.em.ts -S adi.max326xx://default --load"
     }
 }
