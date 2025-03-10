@@ -5,7 +5,8 @@ import * as BoardController from '@em.utils/BoardController.em'
 import * as BusyWait from '@adi.mcu.max326xx/BusyWait.em'
 import * as Console from '@em.lang/Console.em'
 import * as Common from '@em.mcu/Common.em'
-import * as ConsoleUart from '@adi.mcu.max326xx/ConsoleUart3.em'
+import * as ConsoleUart0 from '@adi.mcu.max326xx/ConsoleUart0.em'
+import * as ConsoleUart3 from '@adi.mcu.max326xx/ConsoleUart3.em'
 import * as Debug from '@em.lang/Debug.em'
 import * as GlobalInterrupts from '@em.arch.arm/GlobalInterrupts.em'
 import * as GpioT from '@adi.mcu.max326xx/GpioT.em'
@@ -27,13 +28,30 @@ export const DbgD = $clone(GpioT)
 export const SysLed = $clone(LedT)
 export const SysLedPin = $clone(GpioT)
 
+export const DEFAULTS = {
+    /** setting applies to {app,com,sys}Led pins */ activeLowLeds: false,
+    /** use UART3 for appOut if true */ useLpUart: false,
+    pins: {
+        appBut: <i16>-1,
+        appLed: <i16>-1,
+        appOut: <i16>-1,
+        sysDbgA: <i16>-1,
+        sysDbgB: <i16>-1,
+        sysDbgC: <i16>-1,
+        sysDbgD: <i16>-1,
+        sysLed: <i16>-1,
+    }
+}
+
 export function em$configure(): void {
+    const brd = $board(DEFAULTS)
+    const ConsoleUart = brd.useLpUart ? ConsoleUart3 : ConsoleUart0
     $using(BoardController)
     $using(Console)
     AppLed.Pin.$$ = AppLedPin
-    AppLed.active_low.$$ = true
-    AppLedPin.pin_num.$$ = 0x013 // P0.19
-    AppOutPin.pin_num.$$ = 0x207 // P2.7
+    AppLed.active_low.$$ = brd.activeLowLeds
+    AppLedPin.pin_num.$$ = brd.pins.appLed
+    AppOutPin.pin_num.$$ = brd.pins.appOut
     BoardController.Led.$$ = SysLed
     Common.BusyWait.$$ = BusyWait
     Common.ConsoleUart.$$ = ConsoleUart
@@ -43,10 +61,10 @@ export function em$configure(): void {
     Common.Uptimer.$$ = Uptimer
     Common.UsCounter.$$ = UsCounter
     ConsoleUart.TxPin.$$ = AppOutPin
-    DbgA.pin_num.$$ = 0x106 // P1.6
-    DbgB.pin_num.$$ = 0x107 // P1.7
-    DbgC.pin_num.$$ = 0x108 // P1.8
-    DbgD.pin_num.$$ = 0x109 // P1.9
+    DbgA.pin_num.$$ = brd.pins.sysDbgA
+    DbgB.pin_num.$$ = brd.pins.sysDbgB
+    DbgC.pin_num.$$ = brd.pins.sysDbgC
+    DbgD.pin_num.$$ = brd.pins.sysDbgD
     Debug.DbgA.$$ = DbgA
     Debug.DbgB.$$ = DbgB
     Debug.DbgC.$$ = DbgC
@@ -54,6 +72,6 @@ export function em$configure(): void {
     Poller.OneShot.$$ = OneShot
     SysLed.Pin.$$ = SysLedPin
     SysLed.active_low.$$ = true
-    SysLedPin.pin_num.$$ = 0x012 // P0.18
+    SysLedPin.pin_num.$$ = brd.pins.sysLed
     UsCounter.MHZ.$$ = 60
 }

@@ -1,6 +1,7 @@
 import * as Fs from 'fs'
 import * as Path from 'path'
 import { sprintf } from 'sprintf-js'
+import * as Yaml from 'js-yaml'
 
 const PATH = 'workspace/.emscript/props.json'
 const PROPS = Fs.existsSync(PATH)
@@ -75,6 +76,35 @@ namespace em {
 
     // #endregion
 
+    const __BOARDS__ = null
+    // #region
+
+
+    function deepAssign<T extends object>(target: T, source: Partial<T>): T {
+        for (const key in source) {
+            if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+                target[key] = deepAssign(
+                    (target[key] as object) ?? {},
+                    source[key] as object
+                ) as T[typeof key]
+            } else {
+                target[key] = source[key] as T[typeof key]
+            }
+        }
+        return target
+    }
+
+    export function $board<T extends Object>(proto: T): T {
+        const path = Path.join($property('em.lang.Distro', '').replace('://', '/'), 'em-boards')
+        const brd: string = $property('em.lang.BoardKind', '')
+        const yobj = Yaml.load(String(Fs.readFileSync(path))) as Object
+        const bobj = (yobj as Record<string, Object>)[brd] as T
+        let res = clone(proto) as T
+        return deepAssign(res, bobj)
+    }
+
+    // #endregion
+
     const __CB__ = null
     // #region
 
@@ -128,8 +158,8 @@ namespace em {
 
     export const $bkpt = e$`asm volatile("asm")`
 
-    export function fail() {}
-    export function halt() {}
+    export function fail() { }
+    export function halt() { }
 
     export const $ = {
         '%%>': (val: any) => null as null,
@@ -457,13 +487,13 @@ namespace em {
     export class em$RefProto<T> implements Sized {
         readonly $alignof: u16 = 4
         readonly $sizeof: u16 = 4
-        constructor(public target: em$RefVal<T> | null = null) {}
+        constructor(public target: em$RefVal<T> | null = null) { }
     }
 
     export class em$RefVal<T> implements Sized {
         readonly $alignof: u16 = 4
         readonly $sizeof: u16 = 4
-        constructor(public target: T | null) {}
+        constructor(public target: T | null) { }
     }
 
     // #endregion
@@ -533,7 +563,7 @@ namespace em {
     export type struct_t<T extends { [key: string]: any }> = T
 
     export abstract class $struct {
-        static $make<T extends $struct>(this: { new (): T }): T {
+        static $make<T extends $struct>(this: { new(): T }): T {
             console.log('*** bad call to $make()')
             return new this()
         }
@@ -548,7 +578,7 @@ namespace em {
     class em$table_t<T> {
         private $$em$config: string = 'table'
         private elems: T[] = []
-        constructor(readonly access: TableAccess) {}
+        constructor(readonly access: TableAccess) { }
         get $len(): u16 {
             return this.elems.length
         }
@@ -754,7 +784,7 @@ namespace em {
         return mod.$clone()
     }
 
-    export function $implements<I extends { $U: Unit }>(iunit: I) {}
+    export function $implements<I extends { $U: Unit }>(iunit: I) { }
 
     export function $using<U extends object>(unit: U) {
         if ('$U' in unit) (unit['$U'] as Unit).used()
@@ -767,7 +797,7 @@ namespace em {
         constructor(
             readonly uid: string,
             readonly kind: UnitKind
-        ) {}
+        ) { }
         used() {
             this._used = true
         }
@@ -826,14 +856,14 @@ namespace em {
 
     export type Unbox<T> =
         T extends em$RefProto<infer RefType>
-            ? em$RefVal<Unbox<RefType>> // Force correct wrapping in `em$RefVal`
-            : T extends { $$: infer U }
-              ? U // Boxed scalar case
-              : T extends em$ArrayProto<infer Proto>
-                ? em$ArrayVal<Unbox<Proto>> // Array case
-                : T extends Record<string, any>
-                  ? { [K in keyof T]: Unbox<T[K]> } // Struct-like case
-                  : T
+        ? em$RefVal<Unbox<RefType>> // Force correct wrapping in `em$RefVal`
+        : T extends { $$: infer U }
+        ? U // Boxed scalar case
+        : T extends em$ArrayProto<infer Proto>
+        ? em$ArrayVal<Unbox<Proto>> // Array case
+        : T extends Record<string, any>
+        ? { [K in keyof T]: Unbox<T[K]> } // Struct-like case
+        : T
 
     export function instantiate<T extends object>(proto: T): Unbox<T> {
         if (proto instanceof em$RefProto) {
@@ -1055,6 +1085,7 @@ declare global {
     const $: typeof em.$
     const $array: typeof em.$array
     const $bkpt: typeof em.$bkpt
+    const $board: typeof em.$board
     const $bool: typeof em.$bool
     const $cb: typeof em.$cb
     const $cb$null: typeof em.$cb$null
@@ -1091,6 +1122,7 @@ Object.assign(globalThis, {
     $: em.$,
     $array: em.$array,
     $bkpt: em.$bkpt,
+    $board: em.$board,
     $bool: em.$bool,
     $cb: em.$cb,
     $cb$null: em.$cb$null,

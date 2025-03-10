@@ -3,6 +3,7 @@
 ## VERSION-26.2.0-dev
 * `adi.max326xx` distro package with support for `MAX32655FTRHR` board
 * **Setup** and **Board** status-bar items in VS Code
+* **EM&bull;SCRIPT TOUR GUIDE** view in VS Code
 
 ## VERSION-26.1.3
 * optional `inherits` parameter for `em.$declare`

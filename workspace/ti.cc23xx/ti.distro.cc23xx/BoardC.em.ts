@@ -41,17 +41,36 @@ export const FlashPOCI = $clone(GpioT)
 export const SysLed = $clone(LedT)
 export const SysLedPin = $clone(GpioT)
 
+export const DEFAULTS = {
+    /** setting applies to {app,com,sys}Led pins */ activeLowLeds: false,
+    pins: {
+        appBut: <i16>-1,
+        appLed: <i16>-1,
+        appOut: <i16>-1,
+        extFlashCS: <i16>-1,
+        extFlashCLK: <i16>-1,
+        extFlashPICO: <i16>-1,
+        extFlashPOCI: <i16>-1,
+        sysDbgA: <i16>-1,
+        sysDbgB: <i16>-1,
+        sysDbgC: <i16>-1,
+        sysDbgD: <i16>-1,
+        sysLed: <i16>-1,
+    }
+}
+
 export function em$configure(): void {
+    const brd = $board(DEFAULTS)
     $using(BoardController)
     $using(Console)
     $using(ExtFlashDisabler)
     AlarmMgr.WakeupTimer.$$ = WakeupTimer
     AppBut.Edge.$$ = AppButEdge
     AppButEdge.Pin.$$ = AppButPin
-    AppButEdge.pin_num.$$ = AppButPin.pin_num.$$ = 9
+    AppButEdge.pin_num.$$ = AppButPin.pin_num.$$ = brd.pins.appBut
     AppLed.Pin.$$ = AppLedPin
-    AppLedPin.pin_num.$$ = 15
-    AppOutPin.pin_num.$$ = 20
+    AppLedPin.pin_num.$$ = brd.pins.appLed
+    AppOutPin.pin_num.$$ = brd.pins.appOut
     BoardController.Led.$$ = SysLed
     Common.BusyWait.$$ = BusyWait
     Common.ConsoleUart.$$ = ConsoleUart0
@@ -61,10 +80,10 @@ export function em$configure(): void {
     Common.Uptimer.$$ = Uptimer
     Common.UsCounter.$$ = UsCounter
     ConsoleUart0.TxPin.$$ = AppOutPin
-    DbgA.pin_num.$$ = 23
-    DbgB.pin_num.$$ = 25
-    DbgC.pin_num.$$ = 1
-    DbgD.pin_num.$$ = 2
+    DbgA.pin_num.$$ = brd.pins.sysDbgA
+    DbgB.pin_num.$$ = brd.pins.sysDbgB
+    DbgC.pin_num.$$ = brd.pins.sysDbgC
+    DbgD.pin_num.$$ = brd.pins.sysDbgD
     Debug.DbgA.$$ = DbgA
     Debug.DbgB.$$ = DbgB
     Debug.DbgC.$$ = DbgC
@@ -73,11 +92,11 @@ export function em$configure(): void {
     ExtFlashDisabler.CS.$$ = FlashCS
     ExtFlashDisabler.PICO.$$ = FlashPICO
     ExtFlashDisabler.POCI.$$ = FlashPOCI
-    FlashCLK.pin_num.$$ = 18
-    FlashCS.pin_num.$$ = 6
-    FlashPICO.pin_num.$$ = 13
-    FlashPOCI.pin_num.$$ = 12
+    FlashCLK.pin_num.$$ = brd.pins.extFlashCLK
+    FlashCS.pin_num.$$ = brd.pins.extFlashCS
+    FlashPICO.pin_num.$$ = brd.pins.extFlashPICO
+    FlashPOCI.pin_num.$$ = brd.pins.extFlashPOCI
     Poller.OneShot.$$ = OneShot
     SysLed.Pin.$$ = SysLedPin
-    SysLedPin.pin_num.$$ = 14
+    SysLedPin.pin_num.$$ = brd.pins.sysLed
 }

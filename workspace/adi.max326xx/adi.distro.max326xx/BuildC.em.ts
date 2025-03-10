@@ -106,27 +106,33 @@ export function em$generate() {
     `)
     out.close()
     //
-    const getDriveLetter = (driveLabel: string) => {
-      try {
-        const stdout = execSync(`wmic logicaldisk where volumename="${driveLabel}" get caption /value`).toString()
-        const lines = stdout.trim().split('\r\n')
-        if (lines.length && lines[0].startsWith('Caption=')) {
-          return lines[0].split('=')[1].trim()
-        }
-        console.warn(`Warn: No ${driveLabel} drive label found.`)
-        return null
-      } catch (error) {
-        console.warn(`Warn: No ${driveLabel} drive label found.`, error)
-        return null
-      }
-    }
-    const load_folder =
-      process.platform === 'win32'
-        ? `/${getDriveLetter('DAPLINK')?.toLowerCase().replace(':', '') || 'd'}`
-        : process.platform === 'linux'
-          ? `/media/${userInfo().username}/DAPLINK/`
-          : '/Volumes/daplink'
     out = $outfile('load.sh', 0o755)
-    out.addText(`cp -f .out/main.out.hex ${load_folder}\n`)
+    let dst: string
+    switch (process.platform) {
+        case 'win32': {
+            dst = findDrive('DAPLINK')
+            break
+        }
+        case 'linux': {
+            dst = `/media/${userInfo().username}/DAPLINK/`
+            break
+        }
+        default: {
+            dst = 'Volumes/daplink'
+            break
+        }
+    }
+
+    out = $outfile('load.sh', 0o755)
+    out.addText(`cp -f .out/main.out.hex ${dst}\n`)
     out.close()
+}
+
+import * as ChildProc from 'child_process'
+
+function findDrive(label: string): string {
+    const cmd = `wmic logicaldisk where "VolumeName='${label}'" get DeviceID`
+    const stdout = String(ChildProc.execSync(cmd, { stdio: ['pipe', 'pipe', 'ignore'] }))
+    const lines = stdout.trim().split('\n')
+    return lines.length < 2 ? '/dev/null' : `/${lines[1].slice(0, 1)}`
 }

@@ -54,8 +54,8 @@ export namespace em$meta {
                 n == NO_VEC
                     ? '0'
                     : used_set.has(n)
-                      ? `${n}_isr$$`
-                      : 'DEFAULT_isr$$'
+                        ? `${n}_isr$$`
+                        : 'DEFAULT_isr$$'
             out.addFrag(`
                         |-> /**/${s},
             `)
@@ -66,8 +66,8 @@ export namespace em$meta {
         out.close()
     }
 
-    export function addIntr(name: string) {
-        intr_list.push(name)
+    export function addIntr(name: string | null) {
+        intr_list.push(name ?? NO_VEC)
     }
 
     export function useIntr(name: string) {

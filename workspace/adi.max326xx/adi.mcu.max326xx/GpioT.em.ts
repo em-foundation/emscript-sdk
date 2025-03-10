@@ -25,8 +25,18 @@ export namespace em$template {
     }
 
     export function functionSelect(select: u8): void {
-        $R.GPIO[pn].EN0_CLR.$$ = mask
-        $R.GPIO[pn].EN1_SET.$$ = mask
+        switch (select) {
+            case 1: {
+                $R.GPIO[pn].EN0_CLR.$$ = mask
+                $R.GPIO[pn].EN1_CLR.$$ = mask
+                break
+            }
+            case 2: {
+                $R.GPIO[pn].EN0_CLR.$$ = mask
+                $R.GPIO[pn].EN1_SET.$$ = mask
+                break
+            }
+        }
     }
 
     export function get(): bool_t {
@@ -55,15 +65,15 @@ export namespace em$template {
         return pid
     }
 
-    export function reset(): void {}
+    export function reset(): void { }
 
     export function set(): void {
         $R.GPIO[pn].OUT_SET.$$ = mask
     }
 
-    export function setInternalPulldown(enable: bool_t): void {}
+    export function setInternalPulldown(enable: bool_t): void { }
 
-    export function setInternalPullup(enable: bool_t): void {}
+    export function setInternalPullup(enable: bool_t): void { }
 
     export function toggle(): void {
         $R.GPIO[pn].OUT.$$ ^= mask
