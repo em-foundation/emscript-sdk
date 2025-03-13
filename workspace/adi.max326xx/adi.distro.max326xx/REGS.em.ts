@@ -1570,6 +1570,378 @@ RTC 32kHz Square Wave Output*/
 export const F_RTC_OSCCTRL_SQW_32K: any = '1'
 export const F_RTC_OSCCTRL_SQW_32K_POS: any = '1'
 
+// -------- PERIPHERAL TMR -------- //
+
+export interface TMR_t {
+    CNT: em.$Reg
+    CMP: em.$Reg
+    PWM: em.$Reg
+    INTFL: em.$Reg
+    CTRL0: em.$Reg
+    NOLCMP: em.$Reg
+    CTRL1: em.$Reg
+    WKFL: em.$Reg
+}
+
+// -------- REGISTER CNT -------- //
+
+/**
+Timer Counter Register.*/
+/**
+The current count value for the timer. This field increments as the timer counts.*/
+export const F_TMR_CNT_COUNT: any = '32'
+export const F_TMR_CNT_COUNT_POS: any = '32'
+
+// -------- REGISTER CMP -------- //
+
+/**
+Timer Compare Register.*/
+/**
+The value in this register is used as the compare value for the timer's count value. The compare field meaning is determined by the specific mode of the timer.*/
+export const F_TMR_CMP_COMPARE: any = '32'
+export const F_TMR_CMP_COMPARE_POS: any = '32'
+
+// -------- REGISTER PWM -------- //
+
+/**
+Timer PWM Register.*/
+/**
+Timer PWM Match:
+
+                In PWM Mode, this field sets the count value for the first transition period of the PWM cycle. At the end of the cycle where CNT equals PWM, the PWM output transitions to the second period of the PWM cycle. The second PWM period count is stored in the CMP register. The value set for PWM must me less than the value set in CMP for PWM mode operation. Timer Capture Value:
+                In Capture, Compare, and Capture/Compare modes, this field is used to store the CNT value when a Capture, Compare, or Capture/Compare event occurs.*/
+export const F_TMR_PWM_PWM: any = '32'
+export const F_TMR_PWM_PWM_POS: any = '32'
+
+// -------- REGISTER INTFL -------- //
+
+/**
+Timer Interrupt Status Register.*/
+/**
+Interrupt Flag for Timer A.*/
+export const F_TMR_INTFL_IRQ_A: any = '1'
+export const F_TMR_INTFL_IRQ_A_POS: any = '1'
+/**
+Write Done Flag for Timer A indicating the write is complete from APB to CLK_TMR domain.*/
+export const F_TMR_INTFL_WRDONE_A: any = '1'
+export const F_TMR_INTFL_WRDONE_A_POS: any = '1'
+/**
+Write Disable to CNT/PWM for Timer A in the non-cascaded dual timer configuration.*/
+export const F_TMR_INTFL_WR_DIS_A: any = '1'
+export const F_TMR_INTFL_WR_DIS_A_POS: any = '1'
+/**
+Interrupt Flag for Timer B.*/
+export const F_TMR_INTFL_IRQ_B: any = '1'
+export const F_TMR_INTFL_IRQ_B_POS: any = '1'
+/**
+Write Done Flag for Timer B indicating the write is complete from APB to CLK_TMR domain.*/
+export const F_TMR_INTFL_WRDONE_B: any = '1'
+export const F_TMR_INTFL_WRDONE_B_POS: any = '1'
+/**
+Write Disable to CNT/PWM for Timer B in the non-cascaded dual timer configuration.*/
+export const F_TMR_INTFL_WR_DIS_B: any = '1'
+export const F_TMR_INTFL_WR_DIS_B_POS: any = '1'
+
+// -------- REGISTER CTRL0 -------- //
+
+/**
+Timer Control Register.*/
+/**
+Mode Select for Timer A*/
+export const F_TMR_CTRL0_MODE_A: any = '4'
+export const F_TMR_CTRL0_MODE_A_POS: any = '4'
+export const S_TMR_CTRL0_MODE_A_ONE_SHOT: any = '0'
+export const V_TMR_CTRL0_MODE_A_ONE_SHOT: any = '0'
+export const S_TMR_CTRL0_MODE_A_CONTINUOUS: any = '1'
+export const V_TMR_CTRL0_MODE_A_CONTINUOUS: any = '1'
+export const S_TMR_CTRL0_MODE_A_COUNTER: any = '2'
+export const V_TMR_CTRL0_MODE_A_COUNTER: any = '2'
+export const S_TMR_CTRL0_MODE_A_PWM: any = '3'
+export const V_TMR_CTRL0_MODE_A_PWM: any = '3'
+export const S_TMR_CTRL0_MODE_A_CAPTURE: any = '4'
+export const V_TMR_CTRL0_MODE_A_CAPTURE: any = '4'
+export const S_TMR_CTRL0_MODE_A_COMPARE: any = '5'
+export const V_TMR_CTRL0_MODE_A_COMPARE: any = '5'
+export const S_TMR_CTRL0_MODE_A_GATED: any = '6'
+export const V_TMR_CTRL0_MODE_A_GATED: any = '6'
+export const S_TMR_CTRL0_MODE_A_CAPCOMP: any = '7'
+export const V_TMR_CTRL0_MODE_A_CAPCOMP: any = '7'
+export const S_TMR_CTRL0_MODE_A_DUAL_EDGE: any = '8'
+export const V_TMR_CTRL0_MODE_A_DUAL_EDGE: any = '8'
+export const S_TMR_CTRL0_MODE_A_IGATED: any = '14'
+export const V_TMR_CTRL0_MODE_A_IGATED: any = '14'
+/**
+Clock Divider Select for Timer A*/
+export const F_TMR_CTRL0_CLKDIV_A: any = '4'
+export const F_TMR_CTRL0_CLKDIV_A_POS: any = '4'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_1: any = '0'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_1: any = '0'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_2: any = '1'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_2: any = '1'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_4: any = '2'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_4: any = '2'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_8: any = '3'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_8: any = '3'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_16: any = '4'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_16: any = '4'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_32: any = '5'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_32: any = '5'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_64: any = '6'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_64: any = '6'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_128: any = '7'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_128: any = '7'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_256: any = '8'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_256: any = '8'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_512: any = '9'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_512: any = '9'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_1024: any = '10'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_1024: any = '10'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_2048: any = '11'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_2048: any = '11'
+export const S_TMR_CTRL0_CLKDIV_A_DIV_BY_4096: any = '12'
+export const V_TMR_CTRL0_CLKDIV_A_DIV_BY_4096: any = '12'
+/**
+Timer Polarity for Timer A*/
+export const F_TMR_CTRL0_POL_A: any = '1'
+export const F_TMR_CTRL0_POL_A_POS: any = '1'
+/**
+PWM Synchronization Mode for Timer A*/
+export const F_TMR_CTRL0_PWMSYNC_A: any = '1'
+export const F_TMR_CTRL0_PWMSYNC_A_POS: any = '1'
+/**
+PWM Phase A (Non-Overlapping High) Polarity for Timer A*/
+export const F_TMR_CTRL0_NOLHPOL_A: any = '1'
+export const F_TMR_CTRL0_NOLHPOL_A_POS: any = '1'
+/**
+PWM Phase A-Prime (Non-Overlapping Low) Polarity for Timer A*/
+export const F_TMR_CTRL0_NOLLPOL_A: any = '1'
+export const F_TMR_CTRL0_NOLLPOL_A_POS: any = '1'
+/**
+PWM Phase A-Prime Output Disable for Timer A*/
+export const F_TMR_CTRL0_PWMCKBD_A: any = '1'
+export const F_TMR_CTRL0_PWMCKBD_A_POS: any = '1'
+/**
+Resets all flip flops in the CLK_TMR domain for Timer A. Self-clears.*/
+export const F_TMR_CTRL0_RST_A: any = '1'
+export const F_TMR_CTRL0_RST_A_POS: any = '1'
+/**
+Write 1 to Enable CLK_TMR for Timer A*/
+export const F_TMR_CTRL0_CLKEN_A: any = '1'
+export const F_TMR_CTRL0_CLKEN_A_POS: any = '1'
+/**
+Enable for Timer A*/
+export const F_TMR_CTRL0_EN_A: any = '1'
+export const F_TMR_CTRL0_EN_A_POS: any = '1'
+/**
+Mode Select for Timer B*/
+export const F_TMR_CTRL0_MODE_B: any = '4'
+export const F_TMR_CTRL0_MODE_B_POS: any = '4'
+export const S_TMR_CTRL0_MODE_B_ONE_SHOT: any = '0'
+export const V_TMR_CTRL0_MODE_B_ONE_SHOT: any = '0'
+export const S_TMR_CTRL0_MODE_B_CONTINUOUS: any = '1'
+export const V_TMR_CTRL0_MODE_B_CONTINUOUS: any = '1'
+export const S_TMR_CTRL0_MODE_B_COUNTER: any = '2'
+export const V_TMR_CTRL0_MODE_B_COUNTER: any = '2'
+export const S_TMR_CTRL0_MODE_B_PWM: any = '3'
+export const V_TMR_CTRL0_MODE_B_PWM: any = '3'
+export const S_TMR_CTRL0_MODE_B_CAPTURE: any = '4'
+export const V_TMR_CTRL0_MODE_B_CAPTURE: any = '4'
+export const S_TMR_CTRL0_MODE_B_COMPARE: any = '5'
+export const V_TMR_CTRL0_MODE_B_COMPARE: any = '5'
+export const S_TMR_CTRL0_MODE_B_GATED: any = '6'
+export const V_TMR_CTRL0_MODE_B_GATED: any = '6'
+export const S_TMR_CTRL0_MODE_B_CAPCOMP: any = '7'
+export const V_TMR_CTRL0_MODE_B_CAPCOMP: any = '7'
+export const S_TMR_CTRL0_MODE_B_DUAL_EDGE: any = '8'
+export const V_TMR_CTRL0_MODE_B_DUAL_EDGE: any = '8'
+export const S_TMR_CTRL0_MODE_B_IGATED: any = '14'
+export const V_TMR_CTRL0_MODE_B_IGATED: any = '14'
+/**
+Clock Divider Select for Timer B*/
+export const F_TMR_CTRL0_CLKDIV_B: any = '4'
+export const F_TMR_CTRL0_CLKDIV_B_POS: any = '4'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_1: any = '0'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_1: any = '0'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_2: any = '1'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_2: any = '1'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_4: any = '2'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_4: any = '2'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_8: any = '3'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_8: any = '3'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_16: any = '4'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_16: any = '4'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_32: any = '5'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_32: any = '5'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_64: any = '6'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_64: any = '6'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_128: any = '7'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_128: any = '7'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_256: any = '8'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_256: any = '8'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_512: any = '9'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_512: any = '9'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_1024: any = '10'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_1024: any = '10'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_2048: any = '11'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_2048: any = '11'
+export const S_TMR_CTRL0_CLKDIV_B_DIV_BY_4096: any = '12'
+export const V_TMR_CTRL0_CLKDIV_B_DIV_BY_4096: any = '12'
+/**
+Timer Polarity for Timer B*/
+export const F_TMR_CTRL0_POL_B: any = '1'
+export const F_TMR_CTRL0_POL_B_POS: any = '1'
+/**
+PWM Synchronization Mode for Timer B*/
+export const F_TMR_CTRL0_PWMSYNC_B: any = '1'
+export const F_TMR_CTRL0_PWMSYNC_B_POS: any = '1'
+/**
+PWM Phase A (Non-Overlapping High) Polarity for Timer B*/
+export const F_TMR_CTRL0_NOLHPOL_B: any = '1'
+export const F_TMR_CTRL0_NOLHPOL_B_POS: any = '1'
+/**
+PWM Phase A-Prime (Non-Overlapping Low) Polarity for Timer B*/
+export const F_TMR_CTRL0_NOLLPOL_B: any = '1'
+export const F_TMR_CTRL0_NOLLPOL_B_POS: any = '1'
+/**
+PWM Phase A-Prime Output Disable for Timer B*/
+export const F_TMR_CTRL0_PWMCKBD_B: any = '1'
+export const F_TMR_CTRL0_PWMCKBD_B_POS: any = '1'
+/**
+Resets all flip flops in the CLK_TMR domain for Timer B. Self-clears.*/
+export const F_TMR_CTRL0_RST_B: any = '1'
+export const F_TMR_CTRL0_RST_B_POS: any = '1'
+/**
+Write 1 to Enable CLK_TMR for Timer B*/
+export const F_TMR_CTRL0_CLKEN_B: any = '1'
+export const F_TMR_CTRL0_CLKEN_B_POS: any = '1'
+/**
+Enable for Timer B*/
+export const F_TMR_CTRL0_EN_B: any = '1'
+export const F_TMR_CTRL0_EN_B_POS: any = '1'
+
+// -------- REGISTER NOLCMP -------- //
+
+/**
+Timer Non-Overlapping Compare Register.*/
+/**
+Non-Overlapping Low Compare value for Timer A controls the time between the falling edge of PWM Phase A and the next rising edge of PWM Phase A-Prime.*/
+export const F_TMR_NOLCMP_LO_A: any = '8'
+export const F_TMR_NOLCMP_LO_A_POS: any = '8'
+/**
+Non-Overlapping High Compare value for Timer A controls the time between the falling edge of PWM Phase A-Prime and the next rising edge of PWM Phase A.*/
+export const F_TMR_NOLCMP_HI_A: any = '8'
+export const F_TMR_NOLCMP_HI_A_POS: any = '8'
+/**
+Non-Overlapping Low Compare value for Timer B controls the time between the falling edge of PWM Phase A and the next rising edge of PWM Phase A-Prime.*/
+export const F_TMR_NOLCMP_LO_B: any = '8'
+export const F_TMR_NOLCMP_LO_B_POS: any = '8'
+/**
+Non-Overlapping High Compare value for Timer B controls the time between the falling edge of PWM Phase A-Prime and the next rising edge of PWM Phase A.*/
+export const F_TMR_NOLCMP_HI_B: any = '8'
+export const F_TMR_NOLCMP_HI_B_POS: any = '8'
+
+// -------- REGISTER CTRL1 -------- //
+
+/**
+Timer Configuration Register.*/
+/**
+Timer Clock Select for Timer A*/
+export const F_TMR_CTRL1_CLKSEL_A: any = '2'
+export const F_TMR_CTRL1_CLKSEL_A_POS: any = '2'
+/**
+Timer A Enable Status*/
+export const F_TMR_CTRL1_CLKEN_A: any = '1'
+export const F_TMR_CTRL1_CLKEN_A_POS: any = '1'
+/**
+CLK_TMR Ready Flag for Timer A*/
+export const F_TMR_CTRL1_CLKRDY_A: any = '1'
+export const F_TMR_CTRL1_CLKRDY_A_POS: any = '1'
+/**
+Event Select for Timer A*/
+export const F_TMR_CTRL1_EVENT_SEL_A: any = '3'
+export const F_TMR_CTRL1_EVENT_SEL_A_POS: any = '3'
+/**
+Negative Edge Trigger for Event for Timer A*/
+export const F_TMR_CTRL1_NEGTRIG_A: any = '1'
+export const F_TMR_CTRL1_NEGTRIG_A_POS: any = '1'
+/**
+Interrupt Enable for Timer A*/
+export const F_TMR_CTRL1_IE_A: any = '1'
+export const F_TMR_CTRL1_IE_A_POS: any = '1'
+/**
+Capture Event Select for Timer A*/
+export const F_TMR_CTRL1_CAPEVENT_SEL_A: any = '2'
+export const F_TMR_CTRL1_CAPEVENT_SEL_A_POS: any = '2'
+/**
+Software Capture Event for Timer A*/
+export const F_TMR_CTRL1_SW_CAPEVENT_A: any = '1'
+export const F_TMR_CTRL1_SW_CAPEVENT_A_POS: any = '1'
+/**
+Wake-Up Enable for Timer A*/
+export const F_TMR_CTRL1_WE_A: any = '1'
+export const F_TMR_CTRL1_WE_A_POS: any = '1'
+/**
+OUT_OE_O Enable for Modes 0, 1,and 5 for Timer A*/
+export const F_TMR_CTRL1_OUTEN_A: any = '1'
+export const F_TMR_CTRL1_OUTEN_A_POS: any = '1'
+/**
+PWM_CKB_EN_O Enable for Modes other than Mode 3 for Timer A*/
+export const F_TMR_CTRL1_OUTBEN_A: any = '1'
+export const F_TMR_CTRL1_OUTBEN_A_POS: any = '1'
+/**
+Timer Clock Select for Timer B*/
+export const F_TMR_CTRL1_CLKSEL_B: any = '2'
+export const F_TMR_CTRL1_CLKSEL_B_POS: any = '2'
+/**
+Timer B Enable Status*/
+export const F_TMR_CTRL1_CLKEN_B: any = '1'
+export const F_TMR_CTRL1_CLKEN_B_POS: any = '1'
+/**
+CLK_TMR Ready Flag for Timer B*/
+export const F_TMR_CTRL1_CLKRDY_B: any = '1'
+export const F_TMR_CTRL1_CLKRDY_B_POS: any = '1'
+/**
+Event Select for Timer B*/
+export const F_TMR_CTRL1_EVENT_SEL_B: any = '3'
+export const F_TMR_CTRL1_EVENT_SEL_B_POS: any = '3'
+/**
+Negative Edge Trigger for Event for Timer B*/
+export const F_TMR_CTRL1_NEGTRIG_B: any = '1'
+export const F_TMR_CTRL1_NEGTRIG_B_POS: any = '1'
+/**
+Interrupt Enable for Timer B*/
+export const F_TMR_CTRL1_IE_B: any = '1'
+export const F_TMR_CTRL1_IE_B_POS: any = '1'
+/**
+Capture Event Select for Timer B*/
+export const F_TMR_CTRL1_CAPEVENT_SEL_B: any = '2'
+export const F_TMR_CTRL1_CAPEVENT_SEL_B_POS: any = '2'
+/**
+Software Capture Event for Timer B*/
+export const F_TMR_CTRL1_SW_CAPEVENT_B: any = '1'
+export const F_TMR_CTRL1_SW_CAPEVENT_B_POS: any = '1'
+/**
+Wake-Up Enable for Timer B*/
+export const F_TMR_CTRL1_WE_B: any = '1'
+export const F_TMR_CTRL1_WE_B_POS: any = '1'
+/**
+Cascade two 16-bit timers into one 32-bit timer. Only available when C_TMR16=0 adn C_DUALTMR16=1.*/
+export const F_TMR_CTRL1_CASCADE: any = '1'
+export const F_TMR_CTRL1_CASCADE_POS: any = '1'
+
+// -------- REGISTER WKFL -------- //
+
+/**
+Timer Wakeup Status Register.*/
+/**
+Wake-Up Flag for Timer A*/
+export const F_TMR_WKFL_A: any = '1'
+export const F_TMR_WKFL_A_POS: any = '1'
+/**
+Wake-Up Flag for Timer B*/
+export const F_TMR_WKFL_B: any = '1'
+export const F_TMR_WKFL_B_POS: any = '1'
+
 // -------- PERIPHERAL UART -------- //
 
 export interface UART_t {
@@ -1892,6 +2264,7 @@ export const GPIO2 = {} as GPIO_t
 export const GPIO3 = {} as GPIO_t
 export const ICC0 = {} as ICC_t
 export const LPGCR = {} as LPGCR_t
+export const TMR0 = {} as TMR_t
 export const RTC = {} as RTC_t
 export const UART0 = {} as UART_t
 export const UART3 = {} as UART_t

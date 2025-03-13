@@ -31,6 +31,7 @@ export namespace em$meta {
     }
 
     export function em$generate() {
+        let len = intr_list.length + 2
         let out = $outfile('em.arch.arm/intr.cpp')
         out.addFrag(`
                         |-> //
@@ -45,7 +46,7 @@ export namespace em$meta {
                         |-> 
                         |-> extern "C" void DEFAULT_isr$$( void );
                         |-> 
-                        |-> extern "C" const intvec_elem  __attribute__((section(".intvec"))) __vector_table[35] = {
+                        |-> extern "C" const intvec_elem  __attribute__((section(".intvec"))) __vector_table[${len}] = {
                         |->     { .ptr = (void*)&__stack_top__ },
                         |->     { .fxn = em__start },
         `)

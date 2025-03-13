@@ -95,6 +95,7 @@ const PERI_CLS_MAP = new Map<string, string>([
     ['GPIO3', 'GPIO'],
     ['ICC0', 'ICC'],
     ['LPGCR', 'LPGCR'],
+    ['TMR0', 'TMR'],
     ['RTC', 'RTC'],
     ['UART0', 'UART'],
     ['UART3', 'UART'],

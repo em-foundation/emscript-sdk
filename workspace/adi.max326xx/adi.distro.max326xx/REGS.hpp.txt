@@ -7,6 +7,7 @@
 #include "../../adi.max326xx/adi.distro.max326xx/inc/icc_regs.h"
 #include "../../adi.max326xx/adi.distro.max326xx/inc/lpgcr_regs.h"
 #include "../../adi.max326xx/adi.distro.max326xx/inc/rtc_regs.h"
+#include "../../adi.max326xx/adi.distro.max326xx/inc/tmr_regs.h"
 #include "../../adi.max326xx/adi.distro.max326xx/inc/uart_regs.h"
 
 #define MXC_GPIO_GET_BASE(i) \

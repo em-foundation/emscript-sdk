@@ -13,10 +13,12 @@ import * as GpioT from '@adi.mcu.max326xx/GpioT.em'
 import * as Idle from '@adi.mcu.max326xx/Idle.em'
 import * as LedT from '@em.utils/LedT.em'
 import * as Mcu from '@adi.mcu.max326xx/Mcu.em'
-import * as OneShot from '@adi.mcu.max326xx/OneShotN.em'
+import * as OneShot from '@adi.mcu.max326xx/OneShotTmr0.em'
 import * as Poller from '@em.mcu/Poller.em'
 import * as Uptimer from '@adi.mcu.max326xx/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
+
+export { OneShot }
 
 export const AppLed = $clone(LedT)
 export const AppLedPin = $clone(GpioT)
@@ -53,6 +55,7 @@ export function em$configure(): void {
     AppLedPin.pin_num.$$ = brd.pins.appLed
     AppOutPin.pin_num.$$ = brd.pins.appOut
     BoardController.Led.$$ = SysLed
+    BusyWait.scalar.$$ = 5
     Common.BusyWait.$$ = BusyWait
     Common.ConsoleUart.$$ = ConsoleUart
     Common.GlobalInterrupts.$$ = GlobalInterrupts
