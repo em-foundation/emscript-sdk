@@ -71,7 +71,7 @@ function onButtonPressed() {
         prints_after_rate_change = 0
     } else {
         // a short press (min_press_time_ms < press time < max_press_time_ms)
-        rotateRate()
+        rotateRate(true)
     }
 }
 
@@ -105,9 +105,10 @@ function printTime(rawTime: TimeTypes.RawTime) {
     )
 }
 
-function rotateRate() {
+function rotateRate(fromButton: bool_t) {
     divided_by = divided_by >= MAX_DIVIDED_BY || divided_by < 1 ? 1 : divided_by * 2
-    printf`Rate change ticker: Setting rate to %dx\n`(divided_by)
+    const from = fromButton ? t$`Short button press` : t$`Rate change ticker`
+    printf`%s: Setting rate to %dx\n`(from, divided_by)
     startLedTickers()
     printStatus()
     prints_after_rate_change = 0
@@ -144,7 +145,7 @@ function startPrintTicker() {
 function startRateChangeTicker() {
     ticker_rate_change.$$.$$.start(
         TimeTypes.Secs24p8_initMsecs(TICKER_RATE_CHANGE_PERIOD_MS),
-        $cb(rotateRate)
+        $cb(tickCbRateChange)
     )
 }
 
@@ -190,6 +191,10 @@ function tickCbPrint() {
     }
     last_count_app = count_app
     last_count_sys = count_sys
+}
+
+function tickCbRateChange() {
+    rotateRate(false)
 }
 
 function tickCbSys() {
