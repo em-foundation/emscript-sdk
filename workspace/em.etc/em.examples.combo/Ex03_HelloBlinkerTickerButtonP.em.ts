@@ -13,6 +13,7 @@ const MAX_PRESS_TIME_MS = 2000
 const MIN_PRESS_TIME_MS = 10
 const TICKER_APP_PERIOD_MS = 2000
 const TICKER_PRINT_PERIOD_MS = 5000
+const TICKER_RATE_CHANGE_PERIOD_MS = 1 * TimeTypes.SECONDS_PER_MINUTE * TimeTypes.MILLISECONDS_PER_SECOND
 const TICKER_SYS_PERIOD_MS = 1500
 
 // app resources
@@ -21,12 +22,14 @@ const led_app = $delegate(BoardC.AppLed)
 const led_sys = $delegate(BoardC.SysLed)
 const ticker_app = $config<TickerMgr.Obj>()
 const ticker_print = $config<TickerMgr.Obj>()
+const ticker_rate_change = $config<TickerMgr.Obj>()
 const ticker_sys = $config<TickerMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
         ticker_app.$$ = TickerMgr.em$meta.create()
         ticker_print.$$ = TickerMgr.em$meta.create()
+        ticker_rate_change.$$ = TickerMgr.em$meta.create()
         ticker_sys.$$ = TickerMgr.em$meta.create()
     }
 }
@@ -44,9 +47,10 @@ let prints_after_rate_change = 0
 let total_errors = 0
 
 export function em$run() {
-    printf`\nEx01_TickerP program startup\n\n`()
+    printf`\nEx03_HelloBlinkerTickerButtonP program startup\n\n`()
     startLedTickers()
     startPrintTicker()
+    startRateChangeTicker()
     startButton()
     printStatus()
     FiberMgr.run()
@@ -64,15 +68,11 @@ function onButtonPressed() {
         stopLedTickers()
         last_count_app = 0
         last_count_sys = 0
+        prints_after_rate_change = 0
     } else {
         // a short press (min_press_time_ms < press time < max_press_time_ms)
-        divided_by =
-            divided_by >= MAX_DIVIDED_BY || divided_by < 1 ? 1 : divided_by * 2
-        printf`Short button press: Setting rate to %dx\n`(divided_by)
-        startLedTickers()
-        printStatus()
+        rotateRate()
     }
-    prints_after_rate_change = 0
 }
 
 function printStatus() {
@@ -105,6 +105,14 @@ function printTime(rawTime: TimeTypes.RawTime) {
     )
 }
 
+function rotateRate() {
+    divided_by = divided_by >= MAX_DIVIDED_BY || divided_by < 1 ? 1 : divided_by * 2
+    printf`Rate change ticker: Setting rate to %dx\n`(divided_by)
+    startLedTickers()
+    printStatus()
+    prints_after_rate_change = 0
+}
+
 function startButton() {
     button.$$.onPressed(
         $cb(onButtonPressed),
@@ -130,6 +138,13 @@ function startPrintTicker() {
     ticker_print.$$.$$.start(
         TimeTypes.Secs24p8_initMsecs(TICKER_PRINT_PERIOD_MS),
         $cb(tickCbPrint)
+    )
+}
+
+function startRateChangeTicker() {
+    ticker_rate_change.$$.$$.start(
+        TimeTypes.Secs24p8_initMsecs(TICKER_RATE_CHANGE_PERIOD_MS),
+        $cb(rotateRate)
     )
 }
 
