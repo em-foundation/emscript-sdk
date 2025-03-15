@@ -1,6 +1,7 @@
 import em from '@$$emscript'
 export const $U = em.$declare('COMPOSITE')
 
+import * as AlarmMgr from '@em.utils/AlarmMgr.em'
 import * as BoardController from '@em.utils/BoardController.em'
 import * as BusyWait from '@adi.mcu.max326xx/BusyWait.em'
 import * as Console from '@em.lang/Console.em'
@@ -17,6 +18,7 @@ import * as OneShot from '@adi.mcu.max326xx/OneShotTmr0.em'
 import * as Poller from '@em.mcu/Poller.em'
 import * as Uptimer from '@adi.mcu.max326xx/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
+import * as WakeupTimer from '@adi.mcu.max326xx/WakeupTimerRtc.em'
 
 export { OneShot }
 
@@ -50,6 +52,7 @@ export function em$configure(): void {
     const ConsoleUart = brd.useLpUart ? ConsoleUart3 : ConsoleUart0
     $using(BoardController)
     $using(Console)
+    AlarmMgr.WakeupTimer.$$ = WakeupTimer
     AppLed.Pin.$$ = AppLedPin
     AppLed.active_low.$$ = brd.activeLowLeds
     AppLedPin.pin_num.$$ = brd.pins.appLed
