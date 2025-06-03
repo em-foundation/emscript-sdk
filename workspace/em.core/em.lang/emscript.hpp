@@ -1,6 +1,7 @@
 #ifndef emscript__M
 #define emscript__M
 
+#include <cstring>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -17,10 +18,12 @@ namespace em {
     using i8 = int8_t;
     using i16 = int16_t;
     using i32 = int32_t;
+    using i64 = int64_t;
 
     using u8 = uint8_t;
     using u16 = uint16_t;
     using u32 = uint32_t;
+    using u64 = uint64_t;
 
     using arg_t = uint32_t;
 
@@ -39,6 +42,7 @@ namespace em {
         T* $start;
         u16 $len;
         constexpr frame_t(T* start, u16 len) : $start (start), $len (len) {}
+        constexpr frame_t() : $start (null), $len (0) {}
         T &operator[](u16 index) { return *($start + index); }
         const T &operator[](u16 index) const { return *($start + index); }
         frame_t<T> $frame(i16 beg, u16 len = 0) { return create($start, $len, beg, len); }
@@ -49,8 +53,8 @@ namespace em {
             Iterator &operator++() { ++current; return *this; }
             bool operator!=(const Iterator &other) const { return current != other.current; }
         };
-        constexpr Iterator begin() { return Iterator($start); }
-        constexpr Iterator end() { return Iterator($start + $len); }
+        constexpr Iterator begin() const { return Iterator($start); }
+        constexpr Iterator end() const { return Iterator($start + $len); }
 
     };
 
@@ -95,10 +99,18 @@ namespace em {
     };
 
     template <typename T>
-    range_t<T>$range(T stop, T start = 0, T step = 1) {
+    range_t<T>$range(T stop) {
+        return range_t<T>(stop, 0, 1);
+    }
+    template <typename T>
+    range_t<T>$range(T start, T stop, T step = 1) {
         return range_t<T>(stop, start, step);
     }
 
+    template <typename T>
+    u16 $sizeof() {
+        return sizeof(T);
+    }
 
     template <typename T> struct ref_t {
         T* $$;
@@ -106,6 +118,7 @@ namespace em {
         T& operator*() const { return *$$; }
         T* operator->() const { return $$; }
         operator arg_t() const { return (arg_t)($$); }
+        operator void*() const { return (void*)($$); }
         explicit operator bool() const { return $$ != null; }
         bool operator==(null_t) const { return $$ == null; }
         bool operator!=(null_t) const { return $$ != null; }
@@ -116,12 +129,18 @@ namespace em {
         return ref_t<T>(&lval);
     }    
 
+    template <typename T>
+    constexpr ref_t<T> $ref(T* val) { // Template the factory function and pass by reference
+        return ref_t<T>(val);
+    }    
+
     template <typename T, u16 N> struct table_ro {
         T $$[N];
         static constexpr u16 $len = N;
         inline const T &operator[](u16 index) const { return $$[index]; }
-        const frame_t<T> $frame(i16 beg, u16 len = 0) const { return frame_t<T>::create($$, $len, beg, len); }
+        const frame_t<T> $frame(i16 beg, u16 len = 0) const { return frame_t<T>::create((T*)$$, $len, beg, len); }
         operator frame_t<T>() const { return $frame(0, 0); }
+        ptr_t<T> $ptr() const { return ptr_t<T>((T*)$$); }
         struct Iterator {
             const T *current;
             constexpr Iterator(const T *ptr) : current(ptr) {}
@@ -141,6 +160,18 @@ namespace em {
         frame_t<T> $frame(i16 beg, u16 len = 0) { return frame_t<T>::create($$, $len, beg, len); }
         operator frame_t<T>() { return $frame(0, 0); }
         ptr_t<T> $ptr() { return ptr_t<T>(&$$[0]); }
+    };
+
+    template <typename T, u16 N = 0> struct vec_t {
+        T $$[N];
+        static constexpr u16 $len = N;
+        inline T &operator[](u16 index) { return $$[index]; }
+        inline const T &operator[](u16 index) const { return $$[index]; }
+        frame_t<T> $frame(i16 beg, u16 len = 0) { return frame_t<T>::create($$, $len, beg, len); }
+        operator frame_t<T>() { return $frame(0, 0); }
+        operator index_t<T>() { return index_t<T>(&$$[0]); }
+        ptr_t<T> $ptr() { return ptr_t<T>(&$$[0]); }
+        static vec_t $make() { return vec_t(); }
     };
 
     template <typename T, u16 N> struct factory {
@@ -186,6 +217,10 @@ namespace em {
 
 
     template <typename T> using volatile_t = volatile T;
+
+    static inline volatile u16 *$reg16(u32 addr) {
+        return (volatile u16 *)addr;
+    }
 
     static inline volatile u32 *$reg32(u32 addr) {
         return (volatile u32 *)addr;

@@ -1,0 +1,14 @@
+import em from '@$$emscript'
+export const $U = em.$declare('MODULE')
+
+import * as Dev from '@em.rf.core/Dev.em'
+
+export namespace em$meta { }
+
+//>> ---- em$targ ---- <<//
+
+var params = Dev.Params.$make()
+
+export function getParams(): ref_t<Dev.Params> {
+    return $ref(params)
+}

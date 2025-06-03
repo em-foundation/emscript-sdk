@@ -38,9 +38,12 @@ export function disable() {
 
 export function enable(thresh: u32, handler: Handler) {
     cur_hlr = handler
+    $R.RTC.CTRL.$$ &= ~$R.F_RTC_CTRL_EN
+    while ($R.RTC.CTRL.$$ & $R.F_RTC_CTRL_BUSY) { } // KEEP
     $R.RTC.SSECA.$$ = thresh
-    while ($R.RTC.CTRL.$$ & $R.F_RTC_CTRL_BUSY) { }
     $R.RTC.CTRL.$$ |= $R.F_RTC_CTRL_SSEC_ALARM_IE
+    while ($R.RTC.CTRL.$$ & $R.F_RTC_CTRL_BUSY) { } // KEEP
+    $R.RTC.CTRL.$$ |= $R.F_RTC_CTRL_EN
 }
 
 export function getRawTime(): TimeTypes.RawTime {
@@ -63,6 +66,7 @@ export function toThresh(ticks: u32): u32 {
 }
 
 export function RTC_isr$$() {
+    IntrVec.NVIC_clear(e$`RTC_IRQn`)
     const hlr = cur_hlr
     disable()
     if (hlr != $null) hlr()

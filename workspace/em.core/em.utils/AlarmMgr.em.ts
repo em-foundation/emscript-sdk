@@ -16,11 +16,14 @@ class Alarm extends $struct {
     _fiber: FiberMgr.Obj
     _thresh: Thresh
     _dt_secs: Secs24p8
-    cancel: () => void
-    isActive: () => bool_t
-    wakeup: (delta: Secs24p8) => void
-    wakeupAligned: (delta: Secs24p8) => void
 }
+interface Alarm {
+    cancel(this: Alarm): void
+    isActive(this: Alarm): bool_t
+    wakeup(this: Alarm, delta: Secs24p8): void
+    wakeupAligned(this: Alarm, delta: Secs24p8): void
+}
+
 let AlarmFac = $factory(Alarm.$make())
 
 export namespace em$meta {
@@ -55,32 +58,42 @@ function dispatch(delta: Secs24p8) {
         }
     }
     cur_alarm = nxt_alarm // $null if no candidates found
-    if (cur_alarm)
+    if (cur_alarm) {
+        const id = <arg_t>cur_alarm
+        // $['%%>'](<u8>id)
         WakeupTimer.$$.enable(cur_alarm.$$._thresh, $cb(wakeupHandler))
+    }
 }
 
 function setup(alarm: Obj, delta: Secs24p8) {
     alarm.$$._thresh = WakeupTimer.$$.secsToThresh(delta)
     alarm.$$._dt_secs = delta
-    dispatch(0)
+    if (cur_alarm == $null || cur_alarm.$$._dt_secs > delta) {
+        //        if (cur_alarm) {
+        //            $['%%>'](<u8>0xAA)
+        //            $['%%>'](cur_alarm.$$._dt_secs)
+        //            $['%%>'](delta)
+        //        }
+        dispatch(0)
+    }
 }
 
 function wakeupHandler() {
     dispatch(cur_alarm.$$._dt_secs)
 }
 
-function Alarm__cancel(self: Obj) {
-    self.$$._dt_secs = 0 // make inactive
+Alarm.prototype.cancel = function (this: Alarm) {
+    this._dt_secs = 0 // make inactive
 }
 
-function Alarm__isActive(self: Obj): bool_t {
-    return self.$$._dt_secs != 0
+Alarm.prototype.isActive = function (this: Alarm): bool_t {
+    return this._dt_secs != 0
 }
 
-function Alarm__wakeup(self: Obj, delta: Secs24p8) {
-    setup(self, delta)
+Alarm.prototype.wakeup = function (this: Alarm, delta: Secs24p8) {
+    setup($ref(this), delta)
 }
 
-function Alarm__wakeupAligned(self: Obj, delta: Secs24p8) {
-    setup(self, WakeupTimer.$$.secsAligned(delta))
+Alarm.prototype.wakeupAligned = function (this: Alarm, delta: Secs24p8) {
+    setup($ref(this), WakeupTimer.$$.secsAligned(delta))
 }

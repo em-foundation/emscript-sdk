@@ -22,3 +22,17 @@ MAX32655FTHR_SAL:
         sysDbgC:    0x108   ## P1.8
         sysDbgD:    0x109   ## P1.9
         sysLed:     0x012   ## P0.18
+
+MAX32655_EVKIT:
+    activeLowLeds:  true
+    sysOscSrc: 'IPO'
+    useLpUart: false
+    pins:
+        appBut:     0x013   ## P0.19
+        appLed:     0x019   ## P0.25
+        appOut:     0x001   ## P0.1
+        sysDbgA:    0x002   ## P0.2
+        sysDbgB:    0x003   ## P0.3
+        sysDbgC:    0x004   ## P0.4
+        sysDbgD:    0x005   ## P0.5
+        sysLed:     0x018   ## P0.24

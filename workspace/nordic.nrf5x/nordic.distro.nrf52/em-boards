@@ -1,0 +1,11 @@
+NRF52_DK :
+    activeLowLeds:  true
+    pins:
+        appBut:     13
+        appLed:     17
+        appOut:     6
+        sysDbgA:    22
+        sysDbgB:    23
+        sysDbgC:    24
+        sysDbgD:    25
+        sysLed:     20

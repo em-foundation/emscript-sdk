@@ -30,7 +30,27 @@ export function RawTime_ZERO(): RawTime {
 }
 
 export function RawSubsToMsecs(subs: u32): u32 {
-    return ((subs >> 16) * 1000) / 65536
+    const scale = 8
+    return ((subs >> 16) * (1_000 / scale)) / (65536 / scale)
+}
+
+export function RawSubsToUsecs(subs: u32): u32 {
+    const scale = 64
+    return ((subs >> 16) * (1_000_000 / scale)) / (65536 / scale)
+}
+
+export function RawTimeToSecs24p8(raw_time: RawTime): Secs24p8 {
+    return (raw_time.secs << 8) | (raw_time.subs >> 24)
+}
+
+export function RawTimeToTimeParts(raw_time: RawTime): TimeParts {
+    let time_parts = TimeParts.$make()
+    time_parts.days = raw_time.secs / SECONDS_PER_DAY
+    time_parts.hours = (raw_time.secs % SECONDS_PER_DAY) / SECONDS_PER_HOUR
+    time_parts.minutes = (raw_time.secs % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE
+    time_parts.seconds = raw_time.secs % SECONDS_PER_MINUTE
+    time_parts.milliseconds = RawSubsToMsecs(raw_time.subs)
+    return time_parts
 }
 
 export function Secs24p8_initMsecs(msecs: u32): Secs24p8 {
@@ -41,12 +61,12 @@ export function Secs24p8_ZERO(): Secs24p8 {
     return 0
 }
 
-export function RawTimeToTimeParts(rawTime: RawTime): TimeParts {
-    let time_parts = TimeParts.$make()
-    time_parts.days = rawTime.secs / SECONDS_PER_DAY
-    time_parts.hours = (rawTime.secs % SECONDS_PER_DAY) / SECONDS_PER_HOUR
-    time_parts.minutes = (rawTime.secs % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE
-    time_parts.seconds = rawTime.secs % SECONDS_PER_MINUTE
-    time_parts.milliseconds = RawSubsToMsecs(rawTime.subs)
-    return time_parts
+export function Secs24p8ToUsecs(s24p8: Secs24p8): u64 {
+    const scale = 64
+    return (s24p8 * (1_000_000 / scale)) / (256 / scale)
+}
+
+export function UsecsToRawSubs(usecs: u32): u32 {
+    const scale = 64
+    return (usecs * (65536 / scale) / (1_000_000 / scale)) << 16
 }

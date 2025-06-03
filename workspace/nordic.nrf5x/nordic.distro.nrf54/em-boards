@@ -1,0 +1,11 @@
+NRF54L15_DK :
+    activeLowLeds:  false
+    pins:
+        appBut:     0x10D   ## P1.13
+        appLed:     0x209   ## P2.9
+        appOut:     0x000   ## P0.0
+        sysDbgA:    0x001   ## P0.1
+        sysDbgB:    0x003   ## P0.3
+        sysDbgC:    0x002   ## P0.2
+        sysDbgD:    0x004   ## P0.4
+        sysLed:     0x10E   ## P1.14

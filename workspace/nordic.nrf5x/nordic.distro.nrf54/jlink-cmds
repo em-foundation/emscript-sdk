@@ -1,0 +1,9 @@
+Device nRF54L15_M33
+SelectInterface SWD
+Speed 4000
+Halt
+Erase
+LoadFile .out/main.out.hex
+Reset
+Go
+Exit

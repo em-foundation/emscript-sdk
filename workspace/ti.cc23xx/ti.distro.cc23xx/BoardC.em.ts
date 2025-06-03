@@ -16,13 +16,14 @@ import * as GpioT from '@ti.mcu.cc23xx/GpioT.em'
 import * as Idle from '@ti.mcu.cc23xx/Idle.em'
 import * as LedT from '@em.utils/LedT.em'
 import * as Mcu from '@ti.mcu.cc23xx/Mcu.em'
-import * as Poller from '@em.mcu/Poller.em'
 import * as OneShot from '@ti.mcu.cc23xx/OneShotGpt3.em'
+import * as Poller from '@em.mcu/Poller.em'
+import * as RadioDriver from '@ti.radio.cc23xx/RadioDriver.em'
 import * as Uptimer from '@ti.mcu.cc23xx/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
 import * as WakeupTimer from '@ti.mcu.cc23xx/WakeupTimerRtc.em'
 
-export { OneShot }
+export { OneShot, RadioDriver }
 
 export const AppBut = $clone(ButtonT)
 export const AppButEdge = $clone(EdgeT)
@@ -60,6 +61,7 @@ export const DEFAULTS = {
 }
 
 export function em$configure(): void {
+    if (em.isBareMetal()) return
     const brd = $board(DEFAULTS)
     $using(BoardController)
     $using(Console)

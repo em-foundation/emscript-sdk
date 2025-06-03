@@ -13,9 +13,12 @@ class Ticker extends $struct {
     _fiber: FiberMgr.Obj
     _rate: TimeTypes.Secs24p8
     _tick_cb: Callback
-    start: (rate: TimeTypes.Secs24p8, tick_cb: Callback) => void
-    stop: () => void
 }
+interface Ticker {
+    start(this: Ticker, rate: TimeTypes.Secs24p8, tick_cb: Callback): void
+    stop(this: Ticker): void
+}
+
 let TickerFac = $factory(Ticker.$make())
 
 export namespace em$meta {
@@ -36,13 +39,13 @@ function alarmFB(a: arg_t) {
     ticker.$$._alarm.$$.wakeupAligned(ticker.$$._rate)
 }
 
-function Ticker__start(self: Obj, rate: TimeTypes.Secs24p8, tick_cb: Callback) {
-    self.$$._rate = rate
-    self.$$._tick_cb = tick_cb
-    self.$$._alarm.$$.wakeupAligned(rate)
+Ticker.prototype.start = function (this: Ticker, rate: TimeTypes.Secs24p8, tick_cb: Callback) {
+    this._rate = rate
+    this._tick_cb = tick_cb
+    this._alarm.$$.wakeupAligned(rate)
 }
 
-function Ticker__stop(self: Obj) {
-    self.$$._alarm.$$.cancel()
-    self.$$._tick_cb = $null
+Ticker.prototype.stop = function (this: Ticker) {
+    this._alarm.$$.cancel()
+    this._tick_cb = $null
 }

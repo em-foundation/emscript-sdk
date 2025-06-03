@@ -12,7 +12,7 @@ const max_cnt = $config<u16>(1020)
 
 export function em$run() {
     AppLed.$$.on()
-    for (let cnt of $range(max_cnt.$$, min_cnt.$$)) {
+    for (let cnt of $range(min_cnt.$$, max_cnt.$$)) {
         $['%%d+']
         Common.BusyWait.$$.wait(500_000)
         $['%%d-']

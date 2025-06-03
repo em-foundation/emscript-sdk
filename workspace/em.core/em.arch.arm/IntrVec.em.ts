@@ -1,7 +1,12 @@
 import em from '@$$emscript'
 export const $U = em.$declare('MODULE')
 
+import * as IsrI from '@em.arch.arm/IsrI.em'
+
+export const IsrDefault = $proxy<IsrI.$I>()
+
 export namespace em$meta {
+    //
     const NO_VEC = '<NA>'
 
     const core_intrs = [
@@ -26,7 +31,6 @@ export namespace em$meta {
     const used_set = new Set<string>()
 
     export function em$init() {
-        $U.used()
         for (let name of core_intrs) addIntr(name)
     }
 
@@ -77,19 +81,21 @@ export namespace em$meta {
     }
 }
 
+//>> ---- em$targ ---- <<//
+
 export function em$startup() {
     e$`SCB->VTOR = (uint32_t)(&__vector_table)`
 }
 
-export function NVIC_clear(irqN: u8) {
+export function NVIC_clear(irqN: u16) {
     e$`NVIC_ClearPendingIRQ((IRQn_Type)irqN)`
 }
 
-export function NVIC_disable(irqN: u8) {
+export function NVIC_disable(irqN: u16) {
     e$`NVIC_DisableIRQ((IRQn_Type)irqN)`
 }
 
-export function NVIC_enable(irqN: u8) {
+export function NVIC_enable(irqN: u16) {
     e$`NVIC_EnableIRQ((IRQn_Type)irqN)`
 }
 
@@ -102,15 +108,8 @@ export function PRIMASK_set(m: u32) {
 }
 
 export function DEFAULT_isr$$() {
-    $['%%b:'](3)
-    let vnum = <u32>e$`__get_IPSR()`
-    $['%%>'](vnum)
-    let fp = <ptr_t<u32>>e$`__get_MSP()`
-    $['%%>'](fp.$cur())
-    for (let _ of $range(8)) {
-        $['%%b']
-        $['%%>'](fp.$$)
-        fp.$inc()
-    }
+    IsrDefault.$$.exec()
     fail()
 }
+
+function emptyIsr() { }

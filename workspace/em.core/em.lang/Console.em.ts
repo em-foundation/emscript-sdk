@@ -56,8 +56,8 @@ e$`static inline void wr(em::i16 data) { wrU16((em::u16)data); }`
 e$`static inline void wr(em::u32 data) { wrU32(data); }`
 e$`static inline void wr(em::i32 data) { wrU32((em::u32)data); }`
 
-const Args = $array($u32(), 6)
-const NumBuf = $array($u8(), 10)
+class Args extends $vector<u32> { $len = 6 }
+class NumBuf extends $vector<u8> { $len = 10 }
 
 function c2d(ch: u8): u8 {
     return ch - c$`0`

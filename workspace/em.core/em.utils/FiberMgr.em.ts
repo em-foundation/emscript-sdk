@@ -10,16 +10,21 @@ class Fiber extends $struct {
     link: ref_t<Fiber>
     body: Body
     arg: arg_t
-    post: () => void
+}
+interface Fiber {
+    post(this: Fiber): void
 }
 
 class List extends $struct {
     head: ref_t<Fiber>
     tail: ref_t<Fiber>
-    empty: () => bool_t
-    give: (elem: ref_t<Fiber>) => void
-    take: () => ref_t<Fiber>
 }
+interface List {
+    empty(this: List): bool_t
+    give(this: List, elem: ref_t<Fiber>): void
+    take(this: List): ref_t<Fiber>
+}
+
 let FiberFac = $factory(Fiber.$make())
 
 let ready_list = List.$make()
@@ -52,30 +57,30 @@ export function run() {
     }
 }
 
-function Fiber__post(self: ref_t<Fiber>): void {
+Fiber.prototype.post = function (this: Fiber): void {
     let key = Common.GlobalInterrupts.$$.disable()
-    if (self.$$.link == $null) ready_list.give(self)
+    if (this.link == $null) ready_list.give($ref(this))
     Common.GlobalInterrupts.$$.restore(key)
 }
 
-function List__empty(self: ref_t<List>): bool_t {
-    return self.$$.head == $null
+List.prototype.empty = function (this: List): bool_t {
+    return this.head == $null
 }
 
-function List__give(self: ref_t<List>, elem: ref_t<Fiber>): void {
-    if (self.$$.empty()) {
-        self.$$.head = elem
+List.prototype.give = function (this: List, elem: ref_t<Fiber>): void {
+    if (this.empty()) {
+        this.head = elem
     } else {
-        self.$$.tail.$$.link = elem
+        this.tail.$$.link = elem
     }
-    self.$$.tail = elem
+    this.tail = elem
     elem.$$.link = $null
 }
 
-function List__take(self: ref_t<List>): ref_t<Fiber> {
-    let e = self.$$.head
-    self.$$.head = e.$$.link
+List.prototype.take = function (this: List): ref_t<Fiber> {
+    let e = this.head
+    this.head = e.$$.link
     e.$$.link = $null
-    if (self.$$.head == $null) self.$$.tail = $null
+    if (this.head == $null) this.tail = $null
     return e
 }

@@ -12,6 +12,8 @@ namespace em {
     const __ARRAY__ = null
     // #region
 
+    // TODO -- remove $array
+
     export function $array<T>(proto: T, len: number): em$ArrayProto<T> {
         return new em$ArrayProto(proto, len)
     }
@@ -29,7 +31,7 @@ namespace em {
     }
     class em$ArrayVal<T> implements frame_t<T> {
         $len: number
-        private items: globalThis.Array<T>;
+        private items: globalThis.Array<T>
         [index: number]: T
         constructor(len: number, defaultVal: T) {
             this.$len = len
@@ -101,6 +103,12 @@ namespace em {
         const bobj = (yobj as Record<string, Object>)[brd] as T
         let res = clone(proto) as T
         return deepAssign(res, bobj)
+    }
+
+
+    export function isBareMetal(): boolean {
+        const brd: string = $property('em.lang.BoardKind', '')
+        return brd == '<bare-metal>'
     }
 
     // #endregion
@@ -320,10 +328,7 @@ namespace em {
     class em$ptr<T> implements ptr_t<T> {
         [index: number]: T
         __em$class = 'em$ptr'
-        constructor(
-            private arr: T[],
-            private idx: u16 = 0
-        ) {
+        constructor(private arr: T[], private idx: u16 = 0) {
             return new globalThis.Proxy(this, {
                 get(target, prop) {
                     if (typeof prop === 'string' && !isNaN(Number(prop))) {
@@ -370,14 +375,17 @@ namespace em {
     }
 
     class em$frame<T> implements frame_t<T> {
+        __em$class = 'em$frame'
+        __$type: string
         private items: T[]
         $start: u16
         $len: number;
         [index: number]: T
-        constructor(arr: T[], start: u16, len: u16 = 0) {
+        constructor(arr: T[], start: u16, len: u16, $type: string = '') {
             this.items = arr
             this.$start = start
             this.$len = len
+            this.__$type = $type
             return new globalThis.Proxy(this, {
                 get(target, prop) {
                     if (typeof prop === 'string' && !isNaN(Number(prop))) {
@@ -415,6 +423,10 @@ namespace em {
         }
     }
 
+    export function $frame<T>(arr: T[], $type?: never): frame_t<T> {
+        return new em$frame<T>(arr, 0, 0, <string>($type as unknown))
+    }
+
     function frame$create<T>(
         arr: T[],
         start: u16,
@@ -425,25 +437,38 @@ namespace em {
         len = len == 0 ? arr.length - start : len
         return new em$frame<T>(arr, start, len)
     }
-
     const __PARAM__ = null
     // #region
 
     class em$config_t<T> {
         private $$em$config: string = 'config'
-        private val: T | null = null
-        constructor(val?: T) {
-            this.val = val === undefined ? null : val
+        private _val: T | undefined
+        private _type: string
+        private _uid: string
+        constructor(v: T | undefined, t: string, u: string) {
+            this._val = v
+            this._type = t
+            this._uid = u
         }
+        _$$init() {
+            if (this._val == undefined) {
+                this._val = defaultAux(this._type, this._uid) as T
+            }
+        }
+
         get $$(): T {
-            return this.val!
+            return this._val!
         }
         set $$(v: T) {
-            this.val = v
+            this._val = v
         }
     }
-    export function $config<T>(val?: T): em$config_t<T> & Boxed<T> {
-        return new em$config_t<T>(val)
+    export function $config<T>(val?: T, $type?: never, $uid?: never): em$config_t<T> & Boxed<T> {
+        if ($uid !== undefined) {
+            return new em$config_t<T>(val, $type as unknown as string, $uid as unknown as string)
+        } else {
+            return new em$config_t<T>(undefined, val as string, $type as unknown as string)
+        }
     }
 
     // #endregion
@@ -498,6 +523,132 @@ namespace em {
 
     // #endregion
 
+    const __RTT__ = null
+    // #region
+
+    const typeDefaults: ReadonlyMap<string, any> = new Map<string, any>([
+        ['bool_t', false],
+        ['cb_t', $cb$null()],
+        ['i8', 0],
+        ['i16', 0],
+        ['i32', 0],
+        ['i64', 0],
+        ['ptr_t', null],
+        ['ref_t', null],
+        ['u8', 0],
+        ['u16', 0],
+        ['u32', 0],
+        ['u64', 0],
+    ])
+
+    function defaultAux(type: string, uid: string): any {
+        if (type === 'unknown') {
+            return undefined
+        }
+        if (type.match(/^\w+$/)) {
+            const val = typeDefaults.get(type)
+            if (val !== undefined) {
+                return val
+            }
+            type = `@${uid}:${type}`
+        }
+        let tn: string | undefined
+        while (true) {
+            const m = type.match(/^\@(.+)\:(\w+)$/)
+            if (!m) break
+            uid = m[1]
+            tn = m[2]
+            type = $$tdefs.get(type.slice(1)) ?? 'unknown'
+        }
+        if (type.match(/^\w+$/)) {
+            return defaultAux(type, uid)
+        }
+        if (type.startsWith('[')) {
+
+        }
+        if (type.match(/^\[|\{/) && tn) {
+            const uobj = $$units.get(uid)!
+            if (tn in uobj) {
+                return uobj[tn].$make()
+            }
+        }
+        return undefined
+    }
+
+
+    export function $default<T>($type?: never, $uid?: never): T {
+        return defaultAux($type as unknown as string, $uid as unknown as string) as T
+    }
+
+    const typeSizes: ReadonlyMap<string, number> = new Map([
+        ['bool_t', 1],
+        ['cb_t', 4],
+        ['i8', 1],
+        ['i16', 2],
+        ['i32', 4],
+        ['i64', 8],
+        ['ptr_t', 4],
+        ['ref_t', 4],
+        ['u8', 1],
+        ['u16', 2],
+        ['u32', 4],
+        ['u64', 8],
+    ])
+
+    function sizeofAux(type: string, uid: string, align: number): [number, number] {
+        if (type.match(/^\w+$/)) {
+            const sz = typeSizes.get(type)
+            if (sz) {
+                return [sz, sz]
+            }
+            type = `@${uid}:${type}`
+        }
+        let tn: string | undefined
+        while (true) {
+            const m = type.match(/^\@(.+)\:(\w+)$/)
+            if (!m) break
+            uid = m[1]
+            tn = m[2]
+            type = $$tdefs.get(type.slice(1)) ?? 'unknown'
+        }
+        if (type.match(/^\w+$/)) {
+            return sizeofAux(type, uid, align)
+        }
+        if (type.startsWith('[') && tn) {
+            const uobj = $$units.get(uid)!
+            if (tn in uobj) {
+                const [sz, al] = sizeofAux(type.slice(1), uid, align)
+                return [(new uobj[tn]).$len * sz, al]
+            }
+        }
+        if (type.startsWith('{')) {
+            let size = 0
+            let d = 0
+            for (const ft of type.slice(1).split(',')) {
+                const [sz, al] = sizeofAux(ft, uid, align)
+                d = size % al
+                if (d != 0) {
+                    size += al - d
+                }
+                size += sz
+                align = Math.max(al, align)
+            }
+            d = size % align
+            if (d != 0) {
+                size += align - d
+            }
+            return [size, align]
+        }
+        return [Number.NaN, align]
+    }
+
+    export function $sizeof<T>($type?: never, $uid?: never): u16 {
+        const [sz, al] = sizeofAux($type as unknown as string, $uid as unknown as string, -1)
+        return sz
+    }
+
+    // #endregion
+
     const __SCALAR__ = null
     // #region
 
@@ -505,9 +656,11 @@ namespace em {
     export type i8 = number & { __i8?: never }
     export type i16 = number & { __i16?: never }
     export type i32 = number & { __i32?: never }
+    export type i64 = number & { __i64?: never }
     export type u8 = number & { __u8?: never }
     export type u16 = number & { __u16?: never }
     export type u32 = number & { __u32?: never }
+    export type u64 = number & { __u64?: never }
 
     export class em$Scalar<T> {
         $memory: MemInfo
@@ -545,6 +698,9 @@ namespace em {
     export function $i32(val: i32 = 0): Contained<i32> & em$Scalar<i32> {
         return new em$Scalar('i32', val, 4)
     }
+    export function $i64(val: i64 = 0): Contained<i64> & em$Scalar<i64> {
+        return new em$Scalar('i64', val, 8)
+    }
     export function $u8(val: u8 = 0): Contained<u8> & em$Scalar<u8> {
         return new em$Scalar('u8', val, 1)
     }
@@ -553,6 +709,9 @@ namespace em {
     }
     export function $u32(val: u32 = 0): Contained<u32> & em$Scalar<u32> {
         return new em$Scalar('u32', val, 4)
+    }
+    export function $u64(val: u64 = 0): Contained<u64> & em$Scalar<u64> {
+        return new em$Scalar('u64', val, 8)
     }
 
     // #endregion
@@ -567,6 +726,7 @@ namespace em {
             console.log('*** bad call to $make()')
             return new this()
         }
+        static $$ = $struct.prototype
     }
     // #endregion
 
@@ -578,7 +738,7 @@ namespace em {
     class em$table_t<T> {
         private $$em$config: string = 'table'
         private elems: T[] = []
-        constructor(readonly access: TableAccess) { }
+        constructor(readonly access: TableAccess, readonly elem_cnt: u16 = 0, readonly tab_align: u16 = 0) { }
         get $len(): u16 {
             return this.elems.length
         }
@@ -608,7 +768,7 @@ namespace em {
             }
         }
     }
-    export function $table<T>(access: TableAccess = 'rw'): table_t<T> {
+    export function $table<T>(access: TableAccess = 'rw', elem_cnt: u16 = 0, tab_align: u16 = 0): table_t<T> {
         const handler = {
             get(targ: any, prop: string | symbol) {
                 if (typeof prop == 'symbol') return targ[prop]
@@ -626,7 +786,7 @@ namespace em {
                 return true
             },
         }
-        return new globalThis.Proxy(new em$table_t(access), handler)
+        return new globalThis.Proxy(new em$table_t(access, elem_cnt, tab_align), handler)
     }
 
     // #endregion
@@ -708,6 +868,8 @@ namespace em {
         (...args: A): void
     }
 
+    export type dim_t<T, N extends number> = T[]
+
     export interface frame_t<T> extends index_t<T> {
         $len: u16
         $frame(beg: i16, len: u16): frame_t<T>
@@ -731,9 +893,11 @@ namespace em {
 
     export interface $Reg {
         $$: number
+        $h: number
         $: $Reg[]
     }
 
+    export let $reg16: index_t<u16>
     export let $reg32: index_t<u32>
 
     export type ArrayLike<T> = index_t<T> & { $len: u16 }
@@ -793,13 +957,17 @@ namespace em {
     type UnitKind = 'MODULE' | 'INTERFACE' | 'COMPOSITE' | 'TEMPLATE'
 
     export class Unit {
+        private _aux_c: boolean = false
+        private _aux_h: boolean = false
         private _used: boolean = false
         constructor(
             readonly uid: string,
             readonly kind: UnitKind
         ) { }
-        used() {
-            this._used = true
+        auxC() { this._aux_c = true }
+        auxH() { this._aux_h = true }
+        used(b?: boolean) {
+            this._used = b ?? true
         }
     }
 
@@ -817,7 +985,7 @@ namespace em {
     // #endregion
 
     const __UTILS__ = null
-    // #
+    // #region
 
     export function e$(sa: TemplateStringsArray): any {
         return 0
@@ -831,20 +999,21 @@ namespace em {
         return val
     }
 
+    export function $range(stop: number): Iterable<number>
+    export function $range(start: number, stop: number, step?: number): Iterable<number>
     export function* $range(
-        stop: number,
-        start: number = 0,
-        step: number = 1
+        a: number,
+        b?: number,
+        c?: number
     ): Iterable<number> {
+        const start = (b === undefined) ? 0 : a
+        const stop = (b === undefined) ? a : b
+        const step = (c === undefined) ? 1 : c
         if (step > 0) {
             for (let i = start; i < stop; i += step) yield i
         } else {
             for (let i = start; i > stop; i += step) yield i
         }
-    }
-
-    export function $sizeof<T>(required?: undefined) {
-        return 0
     }
 
     class em$BoxedVal<T> {
@@ -1063,24 +1232,94 @@ namespace em {
     }
 
     // #endregion
+
+    const __VECTOR__ = null
+    // #region
+
+    export class vec_t<T> {
+        constructor(readonly len: number) { }
+    }
+
+    export class $vector<T> implements frame_t<T> {
+        __em$class = 'em$vector'
+        $len: u16
+        [index: number]: T
+        private _elem_rtt: string
+        private items: globalThis.Array<T>
+        static $make<T>(this: { new(): T }): T {
+            const handler = {
+                get(targ: any, prop: string | symbol) {
+                    if (typeof prop == 'symbol') return targ[prop]
+                    const idx = Number(prop)
+                    if (!isNaN(idx)) return targ.items[idx]
+                    switch (prop) {
+                        default:
+                            return targ[prop]
+                    }
+                },
+                set(targ: any, prop: string | symbol, val: any) {
+                    const idx = Number(prop)
+                    if (isNaN(idx)) return false
+                    targ.items[idx] = val
+                    return true
+                },
+            }
+            let o = new this() as any
+            o.items = Array.from({ length: o.$len })
+            const [t, u] = (o._elem_rtt as string).split('|')
+            for (let i = 0; i < o.$len; i++) {
+                o.items[i] = defaultAux(t, u)
+            }
+            return new globalThis.Proxy(o, handler)
+        }
+        [Symbol.iterator](): Iterator<ref_t<T>> {
+            // TODO combine with FRAME
+            let idx = 0
+            let items = this.items
+            return {
+                next(): IteratorResult<ref_t<T>> {
+                    if (idx < items.length) {
+                        let cur = idx
+                        idx += 1
+                        return { value: new em$ptr<T>(items, cur), done: false }
+                    } else {
+                        return { value: undefined as any, done: true }
+                    }
+                },
+            }
+        }
+        $frame(beg: i16, len: u16 = 0) {
+            return frame$create<T>(this.items, 0, beg, len)
+        }
+        $ptr(): ptr_t<T> {
+            return new em$ptr<T>(this.items)
+        }
+    }
+
+    // #endregion
 }
+
 
 declare global {
     type arg_t = em.arg_t
     type bool_t = em.bool_t
     type cb_t<A extends any[] = []> = em.cb_t<A>
+    type dim_t<T, N extends number> = em.dim_t<T, N>
     type frame_t<T> = em.frame_t<T>
     type index_t<T> = em.index_t<T>
     type i8 = em.i8
     type i16 = em.i16
     type i32 = em.i32
+    type i64 = em.i64
     type ptr_t<T> = em.ptr_t<T>
     type ref_t<T> = em.ref_t<T>
     type struct_t<T extends { [key: string]: any }> = em.struct_t<T>
     type u8 = em.u8
     type u16 = em.u8
     type u32 = em.u32
+    type u64 = em.u64
     type text_t = em.text_t
+    type vec_t<T, N extends number> = typeof em.vec_t
     type volatile_t<T> = em.volatile_t<T>
     const $: typeof em.$
     const $array: typeof em.$array
@@ -1090,12 +1329,15 @@ declare global {
     const $cb: typeof em.$cb
     const $cb$null: typeof em.$cb$null
     const $clone: typeof em.$clone
+    const $default: typeof em.$default
     const $delegate: typeof em.$delegate
     const $factory: typeof em.$factory
+    const $frame: typeof em.$frame
     const $implements: typeof em.$implements
     const $i8: typeof em.$i8
     const $i16: typeof em.$i16
     const $i32: typeof em.$i32
+    const $i64: typeof em.$i64
     const $null: any
     const $outfile: typeof em.$outfile
     const $config: typeof em.$config
@@ -1104,18 +1346,23 @@ declare global {
     const $range: typeof em.$range
     const $ref: typeof em.$ref
     const $sizeof: typeof em.$sizeof
+    const $sprintf: typeof sprintf
     const $struct: typeof em.$struct
     const $table: typeof em.$table
     const $u8: typeof em.$u8
     const $u16: typeof em.$u16
     const $u32: typeof em.$u32
+    const $u64: typeof em.$u64
     const $using: typeof em.$using
+    const $vector: typeof em.$vector
     const fail: typeof em.fail
     const halt: typeof em.halt
     const printf: typeof em.printf
     const c$: typeof em.c$
     const e$: typeof em.e$
     const t$: typeof em.t$
+    const $$tdefs: Map<string, string>
+    const $$units: Map<string, any>
 }
 
 Object.assign(globalThis, {
@@ -1127,12 +1374,15 @@ Object.assign(globalThis, {
     $cb: em.$cb,
     $cb$null: em.$cb$null,
     $clone: em.$clone,
+    $default: em.$default,
     $delegate: em.$delegate,
     $factory: em.$factory,
+    $frame: em.$frame,
     $implements: em.$implements,
     $i8: em.$i8,
     $i16: em.$i16,
     $i32: em.$i32,
+    $i64: em.$i64,
     $null: null as any,
     $outfile: em.$outfile,
     $config: em.$config,
@@ -1141,18 +1391,22 @@ Object.assign(globalThis, {
     $range: em.$range,
     $ref: em.$ref,
     $sizeof: em.$sizeof,
+    $sprintf: sprintf,
     $struct: em.$struct,
     $table: em.$table,
     $using: em.$using,
+    $vector: em.$vector,
     $u8: em.$u8,
     $u16: em.$u16,
     $u32: em.$u32,
+    $u64: em.$u64,
     fail: em.fail,
     halt: em.halt,
     printf: em.printf,
     c$: em.c$,
     e$: em.e$,
     t$: em.t$,
+    vec_t: em.vec_t
 })
 
 export default em
