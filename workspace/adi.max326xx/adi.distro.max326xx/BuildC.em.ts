@@ -224,9 +224,7 @@ export function em$generate() {
       : (process.platform === 'linux')
         ? `/media/${userInfo().username}/DAPLINK/`
         : 'Volumes/daplink'
-    const ext = (process.platform === 'win32')
-      ? '.exe'
-      : ''
+    out = $outfile('load.sh', 0o755)
     out.addText(`cp -f .out/main.out.hex ${dst}\n`)
     // const openocd = `${tools}/openocd`
     // const exec = `${openocd}/openocd${ext}`
