@@ -219,33 +219,25 @@ export function em$generate() {
     `)
     out.close()
     //
-    out = $outfile('load.sh', 0o755)
-    let dst: string
-    switch (process.platform) {
-        case 'win32': {
-            dst = findDrive('DAPLINK')
-            break
-        }
-        case 'linux': {
-            dst = `/media/${userInfo().username}/DAPLINK/`
-            break
-        }
-        default: {
-            dst = 'Volumes/daplink'
-            break
-        }
-    }
-
-    const openocd = `${tools}/openocd`
-    const exec = `${openocd}/openocd.exe`
-    const scripts = `${openocd}/scripts`
-    const inter = 'interface/cmsis-dap.cfg'
-    const targ = 'target/max32655.cfg'
-    out = $outfile('load.sh', 0o755)
-    out.addText(`${exec} -s ${scripts} -f ${inter} -f ${targ} -c "program ./.out/main.out verify reset exit"`)
-    out.close()
-    out = $outfile('debug.sh', 0o755)
-    out.addText(`${exec} -s ${scripts} -f ${inter} -f ${targ}`)
+    const dst = (process.platform === 'win32')
+      ? findDrive('DAPLINK')
+      : (process.platform === 'linux')
+        ? `/media/${userInfo().username}/DAPLINK/`
+        : 'Volumes/daplink'
+    const ext = (process.platform === 'win32')
+      ? '.exe'
+      : ''
+    out.addText(`cp -f .out/main.out.hex ${dst}\n`)
+    // const openocd = `${tools}/openocd`
+    // const exec = `${openocd}/openocd${ext}`
+    // const scripts = `${openocd}/scripts`
+    // const inter = 'interface/cmsis-dap.cfg'
+    // const targ = 'target/max32655.cfg'
+    // out = $outfile('load.sh', 0o755)
+    // out.addText(`${exec} -s ${scripts} -f ${inter} -f ${targ} -c "program ./.out/main.out verify reset exit"`)
+    // out.close()
+    // out = $outfile('debug.sh', 0o755)
+    // out.addText(`${exec} -s ${scripts} -f ${inter} -f ${targ}`)
     out.close()
 }
 

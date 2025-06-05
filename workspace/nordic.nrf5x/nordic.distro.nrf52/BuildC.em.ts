@@ -151,8 +151,11 @@ export function em$generate() {
     `)
     out.close()
     //
+    const ext = (process.platform === 'win32')
+      ? '.exe'
+      : ''
     out = $outfile('load.sh', 0o755)
-    const exec = `${tools}/segger-jlink/JLink.exe`
+    const exec = `${tools}/segger-jlink/JLink${ext}`
     out.addText(`${exec} -CommandFile ../nordic.nrf5x/nordic.distro.nrf52/jlink-cmds`)
     out.close()
 }
