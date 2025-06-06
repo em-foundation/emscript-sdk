@@ -40,7 +40,6 @@ export namespace em$template {
     }
 
     export function get(): bool_t {
-        printf`get %08x\n`($R.P[pn].IN.$$)
         return $R.P[pn].IN.$$ & mask ? true : false
     }
 
