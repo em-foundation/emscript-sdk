@@ -219,7 +219,7 @@ export function em$generate() {
     `)
     out.close()
     //
-    if (false) { // copy method
+    if (true) { // copy method
         const dst = (process.platform === 'win32')
         ? findDrive('DAPLINK')
         : (process.platform === 'linux')
