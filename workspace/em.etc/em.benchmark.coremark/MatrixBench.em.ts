@@ -32,6 +32,8 @@ export namespace em$meta {
     }
 }
 
+//>> ---- em$targ ---- <<//
+
 export function kind(): Utils.Kind {
     return Utils.Kind.MATRIX
 }

@@ -10,6 +10,10 @@ const AppLed = $delegate(BoardC.AppLed)
 
 const iterations = $config<u16>(10)
 
+export namespace em$meta { }
+
+//>> ---- em$targ ---- <<//
+
 export function em$startup() {
     CoreBench.setup()
 }

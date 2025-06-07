@@ -5,6 +5,10 @@ import * as Utils from '@em.benchmark.coremark/Utils.em'
 
 export type sum_t = Utils.sum_t
 
+export namespace em$meta { }
+
+//>> ---- em$targ ---- <<//
+
 export function add16(val: i16, crc: sum_t): sum_t {
     const v = val
     crc = update(v, crc)

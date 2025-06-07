@@ -22,11 +22,12 @@ export namespace em$meta {
         for (let _ of $range(Kind.ZZZ_)) crc_tab.$add(0)
         for (let _ of $range(NUM_SEEDS)) seed_tab.$add(0)
     }
-
     export function bindSeed(idx: u8, val: seed_t) {
         seed_tab[idx - 1] = val
     }
 }
+
+//>> ---- em$targ ---- <<//
 
 export function bindCrc(kind: Kind, crc: sum_t) {
     if (crc_tab[kind] == 0) crc_tab[kind] = crc

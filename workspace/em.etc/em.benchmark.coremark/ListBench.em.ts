@@ -43,70 +43,14 @@ export namespace em$meta {
     }
 }
 
-function find(list: ref_t<Elem>, data: ref_t<Data>): ref_t<Elem> {
-    let elem = list
-    if (data.$$.idx >= 0) {
-        while (elem && elem.$$.data.$$.idx != data.$$.idx) {
-            elem = elem.$$.next
-        }
-    } else {
-        while (
-            elem &&
-            <i16>((<u16>elem.$$.data.$$.val) & 0xff) != data.$$.val
-        ) {
-            elem = elem.$$.next
-        }
-    }
-    return elem
-}
-
-function idxCompare(a: ref_t<Data>, b: ref_t<Data>): i32 {
-    a.$$.val = <i16>(
-        (((<u16>a.$$.val) & 0xff00) | (0x00ff & (<u16>(a.$$.val >> 8))))
-    )
-    b.$$.val = <i16>(
-        (((<u16>b.$$.val) & 0xff00) | (0x00ff & (<u16>(b.$$.val >> 8))))
-    )
-    return a.$$.idx - b.$$.idx
-}
+//>> ---- em$targ ---- <<//
 
 export function kind(): Utils.Kind {
     return Utils.Kind.LIST
 }
 
-function pr(list: ref_t<Elem>, name: text_t) {
-    let sz = 0
-    printf`%s\n[`(name)
-    for (let e = list; e != null; e = e.$$.next) {
-        let pre = sz++ % 8 == 0 ? t$`\n    ` : t$``
-        printf`%s(%04x,%04x)`(pre, e.$$.data.$$.idx, <u16>e.$$.data.$$.val)
-    }
-    printf`\n], size = %d\n`(sz)
-}
-
 export function print() {
     pr(curHead, t$`current`)
-}
-
-function remove(item: ref_t<Elem>): ref_t<Elem> {
-    let ret = item.$$.next
-    let tmp = item.$$.data
-    item.$$.data = ret.$$.data
-    ret.$$.data = tmp
-    item.$$.next = item.$$.next.$$.next
-    ret.$$.next = ElemFac.$null()
-    return ret
-}
-
-function reverse(list: ref_t<Elem>): ref_t<Elem> {
-    let next = ElemFac.$null()
-    while (list) {
-        let tmp = list.$$.next
-        list.$$.next = next
-        next = list
-        list = tmp
-    }
-    return next
 }
 
 export function run(arg: i16): Utils.sum_t {
@@ -179,6 +123,66 @@ export function setup() {
     e.$$.data.$$.idx = 0x7fff
     e.$$.data.$$.val = 0xffff
     curHead = sort(curHead, idxCompare)
+}
+
+// private
+
+function find(list: ref_t<Elem>, data: ref_t<Data>): ref_t<Elem> {
+    let elem = list
+    if (data.$$.idx >= 0) {
+        while (elem && elem.$$.data.$$.idx != data.$$.idx) {
+            elem = elem.$$.next
+        }
+    } else {
+        while (
+            elem &&
+            <i16>((<u16>elem.$$.data.$$.val) & 0xff) != data.$$.val
+        ) {
+            elem = elem.$$.next
+        }
+    }
+    return elem
+}
+
+function idxCompare(a: ref_t<Data>, b: ref_t<Data>): i32 {
+    a.$$.val = <i16>(
+        (((<u16>a.$$.val) & 0xff00) | (0x00ff & (<u16>(a.$$.val >> 8))))
+    )
+    b.$$.val = <i16>(
+        (((<u16>b.$$.val) & 0xff00) | (0x00ff & (<u16>(b.$$.val >> 8))))
+    )
+    return a.$$.idx - b.$$.idx
+}
+
+function pr(list: ref_t<Elem>, name: text_t) {
+    let sz = 0
+    printf`%s\n[`(name)
+    for (let e = list; e != null; e = e.$$.next) {
+        let pre = sz++ % 8 == 0 ? t$`\n    ` : t$``
+        printf`%s(%04x,%04x)`(pre, e.$$.data.$$.idx, <u16>e.$$.data.$$.val)
+    }
+    printf`\n], size = %d\n`(sz)
+}
+
+function remove(item: ref_t<Elem>): ref_t<Elem> {
+    let ret = item.$$.next
+    let tmp = item.$$.data
+    item.$$.data = ret.$$.data
+    ret.$$.data = tmp
+    item.$$.next = item.$$.next.$$.next
+    ret.$$.next = ElemFac.$null()
+    return ret
+}
+
+function reverse(list: ref_t<Elem>): ref_t<Elem> {
+    let next = ElemFac.$null()
+    while (list) {
+        let tmp = list.$$.next
+        list.$$.next = next
+        next = list
+        list = tmp
+    }
+    return next
 }
 
 function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {

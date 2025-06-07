@@ -65,12 +65,93 @@ export namespace em$meta {
     }
 }
 
-function isDigit(ch: u8): bool_t {
-    return ch >= c$`0` && ch <= c$`9`
-}
+//>> ---- em$targ ---- <<//
 
 export function kind(): Utils.Kind {
     return Utils.Kind.STATE
+}
+
+export function print() {
+    let p = membuf.$ptr()
+    let cnt = 0
+    printf`\n%c`(c$`"`)
+    while (p.$$) {
+        if (cnt++ % 8 == 0) {
+            printf`\n    `()
+        }
+        while (true) {
+            let c = p.$$
+            p.$inc()
+            if (c == c$`,`) break
+            printf`%c`(c)
+        }
+        printf`, `()
+    }
+    printf`\n%c, count = %d\n`(c$`"`, cnt)
+}
+
+export function run(arg: i16): Utils.sum_t {
+    if (arg < 0x22) arg = 0x22
+    let finalCnt = StateCnt.$make()
+    let transCnt = StateCnt.$make()
+    for (let i of $range(NUM_STATES)) finalCnt[i] = transCnt[i] = 0
+    scan(finalCnt, transCnt)
+    scramble(Utils.getSeed(1), arg)
+    scan(finalCnt, transCnt)
+    scramble(Utils.getSeed(2), arg)
+    let crc = Utils.getCrc(Utils.Kind.FINAL)
+    for (let i of $range(NUM_STATES)) {
+        crc = Crc.addU32(finalCnt[i], crc)
+        crc = Crc.addU32(transCnt[i], crc)
+    }
+    return crc
+}
+
+export function setup() {
+    let seed = Utils.getSeed(1)
+    let p = membuf.$ptr()
+    let total = 0
+    let pat = t$``
+    let plen = 0
+    while (total + plen + 1 < memsize.$$ - 1) {
+        if (plen) {
+            for (let i of $range(plen)) {
+                p.$$ = pat[i]
+                p.$inc()
+            }
+            p.$$ = c$`,`
+            p.$inc()
+            total += plen + 1
+        }
+        switch (++seed & 0x7) {
+            case 0:
+            case 1:
+            case 2:
+                pat = intPat[(seed >> 3) & 0x3]
+                plen = intPatLen.$$
+                break
+            case 3:
+            case 4:
+                pat = fltPat[(seed >> 3) & 0x3]
+                plen = fltPatLen.$$
+                break
+            case 5:
+            case 6:
+                pat = sciPat[(seed >> 3) & 0x3]
+                plen = sciPatLen.$$
+                break
+            case 7:
+                pat = errPat[(seed >> 3) & 0x3]
+                plen = errPatLen.$$
+                break
+        }
+    }
+}
+
+// private
+
+function isDigit(ch: u8): bool_t {
+    return ch >= c$`0` && ch <= c$`9`
 }
 
 function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
@@ -160,42 +241,6 @@ function ord(state: State): u8 {
     return <u8>state
 }
 
-export function print() {
-    let p = membuf.$ptr()
-    let cnt = 0
-    printf`\n%c`(c$`"`)
-    while (p.$$) {
-        if (cnt++ % 8 == 0) {
-            printf`\n    `()
-        }
-        while (true) {
-            let c = p.$$
-            p.$inc()
-            if (c == c$`,`) break
-            printf`%c`(c)
-        }
-        printf`, `()
-    }
-    printf`\n%c, count = %d\n`(c$`"`, cnt)
-}
-
-export function run(arg: i16): Utils.sum_t {
-    if (arg < 0x22) arg = 0x22
-    let finalCnt = StateCnt.$make()
-    let transCnt = StateCnt.$make()
-    for (let i of $range(NUM_STATES)) finalCnt[i] = transCnt[i] = 0
-    scan(finalCnt, transCnt)
-    scramble(Utils.getSeed(1), arg)
-    scan(finalCnt, transCnt)
-    scramble(Utils.getSeed(2), arg)
-    let crc = Utils.getCrc(Utils.Kind.FINAL)
-    for (let i of $range(NUM_STATES)) {
-        crc = Crc.addU32(finalCnt[i], crc)
-        crc = Crc.addU32(transCnt[i], crc)
-    }
-    return crc
-}
-
 function scan(finalCnt: index_t<u32>, transCnt: index_t<u32>) {
     let str = membuf.$ptr()
     let cnt = <u32>0
@@ -210,46 +255,5 @@ function scramble(seed: Utils.seed_t, step: u32) {
     for (let idx = 0; idx < memsize.$$; idx += step) {
         // TODO: use $range
         if (membuf[idx] != c$`,`) membuf[idx] ^= <u8>seed
-    }
-}
-
-export function setup() {
-    let seed = Utils.getSeed(1)
-    let p = membuf.$ptr()
-    let total = 0
-    let pat = t$``
-    let plen = 0
-    while (total + plen + 1 < memsize.$$ - 1) {
-        if (plen) {
-            for (let i of $range(plen)) {
-                p.$$ = pat[i]
-                p.$inc()
-            }
-            p.$$ = c$`,`
-            p.$inc()
-            total += plen + 1
-        }
-        switch (++seed & 0x7) {
-            case 0:
-            case 1:
-            case 2:
-                pat = intPat[(seed >> 3) & 0x3]
-                plen = intPatLen.$$
-                break
-            case 3:
-            case 4:
-                pat = fltPat[(seed >> 3) & 0x3]
-                plen = fltPatLen.$$
-                break
-            case 5:
-            case 6:
-                pat = sciPat[(seed >> 3) & 0x3]
-                plen = sciPatLen.$$
-                break
-            case 7:
-                pat = errPat[(seed >> 3) & 0x3]
-                plen = errPatLen.$$
-                break
-        }
     }
 }
