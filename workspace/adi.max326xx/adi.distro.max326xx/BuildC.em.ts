@@ -219,24 +219,31 @@ export function em$generate() {
     `)
     out.close()
     //
-    const dst = (process.platform === 'win32')
-      ? findDrive('DAPLINK')
-      : (process.platform === 'linux')
-        ? `/media/${userInfo().username}/DAPLINK/`
-        : 'Volumes/daplink'
-    out = $outfile('load.sh', 0o755)
-    out.addText(`cp -f .out/main.out.hex ${dst}\n`)
-    // const openocd = `${tools}/openocd`
-    // const exec = `${openocd}/openocd${ext}`
-    // const scripts = `${openocd}/scripts`
-    // const inter = 'interface/cmsis-dap.cfg'
-    // const targ = 'target/max32655.cfg'
-    // out = $outfile('load.sh', 0o755)
-    // out.addText(`${exec} -s ${scripts} -f ${inter} -f ${targ} -c "program ./.out/main.out verify reset exit"`)
-    // out.close()
-    // out = $outfile('debug.sh', 0o755)
-    // out.addText(`${exec} -s ${scripts} -f ${inter} -f ${targ}`)
-    out.close()
+    if (false) { // copy method
+        const dst = (process.platform === 'win32')
+        ? findDrive('DAPLINK')
+        : (process.platform === 'linux')
+            ? `/media/${userInfo().username}/DAPLINK/`
+            : 'Volumes/daplink'
+        out = $outfile('load.sh', 0o755)
+        out.addText(`cp -f .out/main.out.hex ${dst}\n`)
+        out.close()
+    } else { // openocd method
+        const ext = (process.platform === 'win32')
+          ? '.exe'
+          : ''
+        const openocddir = `${tools}/openocd`
+        const exec = `${openocddir}/openocd${ext}`
+        const scriptsdir = `${openocddir}/scripts`
+        const inter = 'interface/cmsis-dap.cfg'
+        const targ = 'target/max32655.cfg'
+        out = $outfile('load.sh', 0o755)
+        out.addText(`${exec} -s ${scriptsdir} -f ${inter} -f ${targ} -c "program ./.out/main.out verify reset exit"`)
+        out.close()
+        out = $outfile('debug.sh', 0o755)
+        out.addText(`${exec} -s ${scriptsdir} -f ${inter} -f ${targ}`)
+        out.close()
+    }
 }
 
 import * as ChildProc from 'child_process'
