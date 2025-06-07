@@ -219,7 +219,8 @@ export function em$generate() {
     `)
     out.close()
     //
-    if (true) { // copy method
+    const boardKind: string = $property('em.lang.BoardKind', '')
+    if (boardKind === 'MAX32655FTHR_SAL') { // copy method
         const dst = (process.platform === 'win32')
         ? findDrive('DAPLINK')
         : (process.platform === 'linux')
