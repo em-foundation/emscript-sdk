@@ -68,6 +68,19 @@ function doPause() {
     e$`asm volatile ("wfi")`
     $['%%b+']
     IntrVec.PRIMASK_set(0)
+
+}
+
+export function exec() {
+    if (cur_pause_only) {
+        doPause()
+    } else {
+        doSleep()
+    }
+}
+
+export function setPauseOnly(pause_only: bool_t) {
+    cur_pause_only = pause_only
 }
 
 function doSleep() {
