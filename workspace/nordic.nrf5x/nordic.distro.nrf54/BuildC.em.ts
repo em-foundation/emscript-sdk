@@ -1,6 +1,4 @@
 import em from '@$$emscript'
-import { userInfo } from 'os'
-import { execSync } from 'child_process'
 export const $U = em.$declare('COMPOSITE')
 
 import * as ArmStartupC from '@em.arch.arm/StartupC.em'
@@ -384,22 +382,9 @@ export function em$generate() {
     `)
     out.close()
     //
-    const ext = (process.platform === 'win32')
-      ? '.exe'
-      : (process.platform === 'linux')
-        ? 'Exe'
-        : ''
+    const ext = (process.platform === 'win32') ? '.exe' : 'Exe'
     out = $outfile('load.sh', 0o755)
     const exec = `${tools}/segger-jlink/JLink${ext}`
     out.addText(`${exec} -CommandFile ../nordic.nrf5x/nordic.distro.nrf54/jlink-cmds`)
     out.close()
-}
-
-import * as ChildProc from 'child_process'
-
-function findDrive(label: string): string {
-    const cmd = `wmic logicaldisk where "VolumeName='${label}'" get DeviceID`
-    const stdout = String(ChildProc.execSync(cmd, { stdio: ['pipe', 'pipe', 'ignore'] }))
-    const lines = stdout.trim().split('\n')
-    return lines.length < 2 ? '/dev/null' : `/${lines[1].slice(0, 1)}`
 }

@@ -1,6 +1,4 @@
 import em from '@$$emscript'
-import { userInfo } from 'os'
-import { execSync } from 'child_process'
 export const $U = em.$declare('COMPOSITE')
 
 import * as ArmStartupC from '@em.arch.arm/StartupC.em'
@@ -12,6 +10,9 @@ import * as LinkerC from '@em.build.segger/LinkerC.em'
 import * as REGS from '@adi.distro.max326xx/REGS.em'
 import * as StartupC from '@adi.distro.max326xx/StartupC.em'
 import * as TargC from '@em.lang/TargC.em'
+
+import * as ChildProc from 'child_process'
+import * as Os from 'os'
 
 const NVIC_INTRS = [
     'PF',
@@ -219,35 +220,14 @@ export function em$generate() {
     `)
     out.close()
     //
-    const boardKind: string = $property('em.lang.BoardKind', '')
-    if (boardKind === 'MAX32655FTHR_SAL') { // copy method
-        const dst = (process.platform === 'win32')
-        ? findDrive('DAPLINK')
-        : (process.platform === 'linux')
-            ? `/media/${userInfo().username}/DAPLINK/`
-            : 'Volumes/daplink'
-        out = $outfile('load.sh', 0o755)
-        out.addText(`cp -f .out/main.out.hex ${dst}\n`)
-        out.close()
-    } else { // openocd method
-        const ext = (process.platform === 'win32')
-          ? '.exe'
-          : ''
-        const openocddir = `${tools}/openocd`
-        const exec = `${openocddir}/openocd${ext}`
-        const scriptsdir = `${openocddir}/scripts`
-        const inter = 'interface/cmsis-dap.cfg'
-        const targ = 'target/max32655.cfg'
-        out = $outfile('load.sh', 0o755)
-        out.addText(`${exec} -s ${scriptsdir} -f ${inter} -f ${targ} -c "program ./.out/main.out verify reset exit"`)
-        out.close()
-        out = $outfile('debug.sh', 0o755)
-        out.addText(`${exec} -s ${scriptsdir} -f ${inter} -f ${targ}`)
-        out.close()
-    }
+    const dst =
+        process.platform === 'win32' ? findDrive('DAPLINK')
+            : process.platform === 'linux' ? `/media/${Os.userInfo().username}/DAPLINK/`
+                : '/Volumes/DAPLINK'
+    out = $outfile('load.sh', 0o755)
+    out.addText(`cp -f .out/main.out.hex ${dst}\n`)
+    out.close()
 }
-
-import * as ChildProc from 'child_process'
 
 function findDrive(label: string): string {
     const cmd = `wmic logicaldisk where "VolumeName='${label}'" get DeviceID`

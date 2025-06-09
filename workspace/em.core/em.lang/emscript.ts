@@ -86,6 +86,42 @@ namespace em {
 
     // #endregion
 
+    const __CONFIG__ = null
+    // #region
+
+    class em$config_t<T> {
+        private $$em$config: string = 'config'
+        private _val: T | undefined
+        private _type: string
+        private _uid: string
+        constructor(v: T | undefined, t: string, u: string) {
+            this._val = v
+            this._type = t
+            this._uid = u
+        }
+        _$$init() {
+            if (this._val == undefined) {
+                this._val = defaultAux(this._type, this._uid) as T
+            }
+        }
+
+        get $$(): T {
+            return this._val!
+        }
+        set $$(v: T) {
+            this._val = v
+        }
+    }
+    export function $config<T>(val?: T, $type?: never, $uid?: never): em$config_t<T> & Boxed<T> {
+        if ($uid !== undefined) {
+            return new em$config_t<T>(val, $type as unknown as string, $uid as unknown as string)
+        } else {
+            return new em$config_t<T>(undefined, val as string, $type as unknown as string)
+        }
+    }
+
+    // #endregion
+
     const __DEBUG__ = null
     // #region
 
@@ -344,38 +380,40 @@ namespace em {
         len = len == 0 ? arr.length - start : len
         return new em$frame<T>(arr, start, len)
     }
+
+    // #endregion
+
     const __PARAM__ = null
     // #region
 
-    class em$config_t<T> {
-        private $$em$config: string = 'config'
-        private _val: T | undefined
-        private _type: string
-        private _uid: string
-        constructor(v: T | undefined, t: string, u: string) {
-            this._val = v
-            this._type = t
-            this._uid = u
-        }
-        _$$init() {
-            if (this._val == undefined) {
-                this._val = defaultAux(this._type, this._uid) as T
-            }
-        }
-
-        get $$(): T {
-            return this._val!
-        }
-        set $$(v: T) {
-            this._val = v
-        }
+    type em$param_t<T> = T & {
+        $set(v: T): void
     }
-    export function $config<T>(val?: T, $type?: never, $uid?: never): em$config_t<T> & Boxed<T> {
-        if ($uid !== undefined) {
-            return new em$config_t<T>(val, $type as unknown as string, $uid as unknown as string)
-        } else {
-            return new em$config_t<T>(undefined, val as string, $type as unknown as string)
-        }
+
+    export function $param<T>(initial: T): em$param_t<T> {
+        let value = initial
+        let prx = new Proxy({} as any, {
+            get(_, prop) {
+                if (prop === '$set') return (v: T) => { value = v }
+                if (prop === '$$em$config') return 'param'
+                if (prop === Symbol.toPrimitive) return () => value
+                if (prop === 'valueOf') return () => value
+                if (prop === 'toString') return () => String(value)
+                return (value as any)[prop]
+            },
+            set(_, prop, val) {
+                if (typeof value === 'object' && value !== null)
+                    return Reflect.set(value, prop, val)
+                return false
+            }
+        })
+        Object.defineProperty(prx, '$$em$config', {
+            value: 'param',
+            enumerable: false,
+            writable: false,
+            configurable: false
+        })
+        return prx
     }
 
     // #endregion
@@ -1086,6 +1124,7 @@ declare global {
     const $implements: typeof em.$implements
     const $null: any
     const $outfile: typeof em.$outfile
+    const $param: typeof em.$param
     const $property: typeof em.$property
     const $proxy: typeof em.$proxy
     const $range: typeof em.$range
@@ -1121,6 +1160,7 @@ Object.assign(globalThis, {
     $implements: em.$implements,
     $null: null as any,
     $outfile: em.$outfile,
+    $param: em.$param,
     $property: em.$property,
     $proxy: em.$proxy,
     $range: em.$range,
