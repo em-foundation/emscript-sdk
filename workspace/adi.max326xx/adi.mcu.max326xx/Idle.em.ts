@@ -71,18 +71,6 @@ function doPause() {
 
 }
 
-export function exec() {
-    if (cur_pause_only) {
-        doPause()
-    } else {
-        doSleep()
-    }
-}
-
-export function setPauseOnly(pause_only: bool_t) {
-    cur_pause_only = pause_only
-}
-
 function doSleep() {
     for (let cb of sleep_enter_tab) cb()
     $['%%b:'](2)
