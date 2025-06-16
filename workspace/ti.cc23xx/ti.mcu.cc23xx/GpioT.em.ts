@@ -12,19 +12,18 @@ export namespace em$template {
 
     export namespace em$meta {
         export function pinId(): i16 {
-            return pin_num.$$
+            return pin_num
         }
     }
 
-    const pn = pin_num.$$
-    const mask = 1 << pn
+    const mask = 1 << pin_num
 
     export function clear(): void {
         $R.GPIO.DOUTCLR31_0.$$ = mask
     }
 
     export function functionSelect(select: u8): void {
-        $R.IOC.IOC0.$[pn].$$ = select
+        $R.IOC.IOC0.$[pin_num].$$ = select
     }
 
     export function get(): bool_t {
@@ -43,21 +42,21 @@ export namespace em$template {
 
     export function makeInput(): void {
         $R.GPIO.DOECLR31_0.$$ = mask
-        $R.IOC.IOC0.$[pn].$$ |= $R.IOC_IOC0_INPEN
+        $R.IOC.IOC0.$[pin_num].$$ |= $R.IOC_IOC0_INPEN
     }
 
     export function makeOutput(): void {
         $R.GPIO.DOESET31_0.$$ = mask
-        $R.IOC.IOC0.$[pn].$$ &= ~$R.IOC_IOC0_INPEN
+        $R.IOC.IOC0.$[pin_num].$$ &= ~$R.IOC_IOC0_INPEN
     }
 
     export function pinId(): i16 {
-        return pn
+        return pin_num
     }
 
     export function reset(): void {
         $R.GPIO.DOECLR31_0.$$ = mask
-        $R.IOC.IOC0.$[pn].$$ = 0
+        $R.IOC.IOC0.$[pin_num].$$ = 0
     }
 
     export function set(): void {
@@ -66,17 +65,17 @@ export namespace em$template {
 
     export function setInternalPulldown(enable: bool_t): void {
         if (enable) {
-            $R.IOC.IOC0.$[pn].$$ |= $R.IOC_IOC0_PULLCTL_PULL_DOWN
+            $R.IOC.IOC0.$[pin_num].$$ |= $R.IOC_IOC0_PULLCTL_PULL_DOWN
         } else {
-            $R.IOC.IOC0.$[pn].$$ &= ~$R.IOC_IOC0_PULLCTL_PULL_DOWN
+            $R.IOC.IOC0.$[pin_num].$$ &= ~$R.IOC_IOC0_PULLCTL_PULL_DOWN
         }
     }
 
     export function setInternalPullup(enable: bool_t): void {
         if (enable) {
-            $R.IOC.IOC0.$[pn].$$ |= $R.IOC_IOC0_PULLCTL_PULL_UP
+            $R.IOC.IOC0.$[pin_num].$$ |= $R.IOC_IOC0_PULLCTL_PULL_UP
         } else {
-            $R.IOC.IOC0.$[pn].$$ &= ~$R.IOC_IOC0_PULLCTL_PULL_UP
+            $R.IOC.IOC0.$[pin_num].$$ &= ~$R.IOC_IOC0_PULLCTL_PULL_UP
         }
     }
 

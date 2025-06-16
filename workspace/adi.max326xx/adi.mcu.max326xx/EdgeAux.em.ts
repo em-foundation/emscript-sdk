@@ -11,7 +11,7 @@ export class HandlerInfo extends $struct {
     mask: u32
 }
 
-const handler_info_tab = $table<HandlerInfo>('ro')
+const handler_info_tab = $table<HandlerInfo>()
 
 export namespace em$meta {
     export function em$construct() {
@@ -19,7 +19,7 @@ export namespace em$meta {
     }
 
     export function addHandlerInfo(hi: HandlerInfo) {
-        handler_info_tab.$add(hi)
+        handler_info_tab.$$add(hi)
     }
 }
 

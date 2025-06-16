@@ -10,7 +10,7 @@ export class HandlerInfo extends $struct {
     handler: EdgeI.Handler
 }
 
-const handler_info_tab = $table<HandlerInfo>('ro')
+const handler_info_tab = $table<HandlerInfo>()
 
 export namespace em$meta {
     export function em$construct() {
@@ -19,7 +19,7 @@ export namespace em$meta {
 
     export function addHandlerInfo(hi: HandlerInfo): u8 {
         const chan = <u8>handler_info_tab.$len
-        handler_info_tab.$add(hi)
+        handler_info_tab.$$add(hi)
         return chan
     }
 }

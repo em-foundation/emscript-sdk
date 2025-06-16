@@ -4,42 +4,43 @@ export const $U = em.$declare('MODULE')
 import * as Crc from '@em.benchmark.coremark/Crc.em'
 import * as Utils from '@em.benchmark.coremark/Utils.em'
 
-export const memsize = $config<u16>(666)
+export const memsize = $config<u16>()
 
 export class Data extends $struct {
     val: i16
     idx: i16
 }
-let DataFac = $factory(Data.$make())
 
 class Elem extends $struct {
-    next: ref_t<Elem>
-    data: ref_t<Data>
+    next: $$<Elem>
+    data: $$<Data>
 }
-let ElemFac = $factory(Elem.$make())
 
-type Comparator = (a: ref_t<Data>, b: ref_t<Data>) => i32
+var data_tab = $table<Data>()
+var elem_tab = $table<Elem>()
 
-const maxElems = $config<u16>(0)
+type Comparator = (a: $$<Data>, b: $$<Data>) => i32
 
-let curHead_c = $config<ref_t<Elem>>()
-let curHead: ref_t<Elem>
+const maxElems = $config<u16>()
+
+let curHead_c = $config<$$<Elem>>()
+let curHead: $$<Elem>
 
 export namespace em$meta {
     export function em$construct() {
         let itemSize = 16 + $sizeof<Data>()
-        maxElems.$$ = Math.round(memsize.$$ / itemSize) - 3
-        curHead = ElemFac.$create()
-        curHead.$$.data = DataFac.$create()
+        maxElems.$$val = Math.round(memsize / itemSize) - 3
+        curHead = elem_tab.$$add()
+        curHead.$$.data = data_tab.$$add()
         let p = curHead
-        for (let _ of $range(maxElems.$$ - 1)) {
-            let q = (p.$$.next = ElemFac.$create())
-            q.$$.data = DataFac.$create()
+        for (let _ of $range(maxElems - 1)) {
+            let q = (p.$$.next = elem_tab.$$add())
+            q.$$.data = data_tab.$$add()
             p = q
         }
-        p.$$.data = DataFac.$create()
-        p.$$.next = ElemFac.$null()
-        curHead_c.$$ = curHead
+        p.$$.data = data_tab.$$add()
+        p.$$.next = elem_tab.$null()
+        curHead_c.$$val = curHead
     }
 }
 
@@ -101,10 +102,10 @@ export function run(arg: i16): Utils.sum_t {
 }
 
 export function setup() {
-    curHead = curHead_c.$$
+    curHead = curHead_c
     let seed = Utils.getSeed(1)
     let ki = 1
-    let kd = maxElems.$$ - 3
+    let kd = maxElems - 3
     let e = curHead
     e.$$.data.$$.idx = 0
     e.$$.data.$$.val = 0x8080
@@ -113,7 +114,7 @@ export function setup() {
         let dat = (pat << 3) | (kd & 0x7)
         e.$$.data.$$.val = <i16>((dat << 8) | dat)
         kd -= 1
-        if (ki < maxElems.$$ / 5) {
+        if (ki < maxElems / 5) {
             e.$$.data.$$.idx = ki++
         } else {
             pat = <u16>(seed ^ ki++)
@@ -127,7 +128,7 @@ export function setup() {
 
 // private
 
-function find(list: ref_t<Elem>, data: ref_t<Data>): ref_t<Elem> {
+function find(list: $$<Elem>, data: $$<Data>): $$<Elem> {
     let elem = list
     if (data.$$.idx >= 0) {
         while (elem && elem.$$.data.$$.idx != data.$$.idx) {
@@ -144,7 +145,7 @@ function find(list: ref_t<Elem>, data: ref_t<Data>): ref_t<Elem> {
     return elem
 }
 
-function idxCompare(a: ref_t<Data>, b: ref_t<Data>): i32 {
+function idxCompare(a: $$<Data>, b: $$<Data>): i32 {
     a.$$.val = <i16>(
         (((<u16>a.$$.val) & 0xff00) | (0x00ff & (<u16>(a.$$.val >> 8))))
     )
@@ -154,7 +155,7 @@ function idxCompare(a: ref_t<Data>, b: ref_t<Data>): i32 {
     return a.$$.idx - b.$$.idx
 }
 
-function pr(list: ref_t<Elem>, name: text_t) {
+function pr(list: $$<Elem>, name: text_t) {
     let sz = 0
     printf`%s\n[`(name)
     for (let e = list; e != null; e = e.$$.next) {
@@ -164,18 +165,18 @@ function pr(list: ref_t<Elem>, name: text_t) {
     printf`\n], size = %d\n`(sz)
 }
 
-function remove(item: ref_t<Elem>): ref_t<Elem> {
+function remove(item: $$<Elem>): $$<Elem> {
     let ret = item.$$.next
     let tmp = item.$$.data
     item.$$.data = ret.$$.data
     ret.$$.data = tmp
     item.$$.next = item.$$.next.$$.next
-    ret.$$.next = ElemFac.$null()
+    ret.$$.next = elem_tab.$null()
     return ret
 }
 
-function reverse(list: ref_t<Elem>): ref_t<Elem> {
-    let next = ElemFac.$null()
+function reverse(list: $$<Elem>): $$<Elem> {
+    let next = elem_tab.$null()
     while (list) {
         let tmp = list.$$.next
         list.$$.next = next
@@ -185,13 +186,13 @@ function reverse(list: ref_t<Elem>): ref_t<Elem> {
     return next
 }
 
-function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
+function sort(list: $$<Elem>, cmp: Comparator): $$<Elem> {
     let insize = <i32>1
-    let q: ref_t<Elem>
-    let e: ref_t<Elem>
+    let q: $$<Elem>
+    let e: $$<Elem>
     while (true) {
         let p = list
-        let tail = (list = ElemFac.$null())
+        let tail = (list = elem_tab.$null())
         let nmerges = <i32>0 // count number of merges we do in this pass
         while (p) {
             nmerges++ // there exists a merge to be done
@@ -240,7 +241,7 @@ function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
             // now p has stepped `insize` places along, and q has too
             p = q
         }
-        tail.$$.next = ElemFac.$null()
+        tail.$$.next = elem_tab.$null()
         // If we have done only one merge, we're finished
         if (nmerges <= 1) break // allow for nmerges==0, the empty list case
         // Otherwise repeat, merging lists twice the size
@@ -249,7 +250,7 @@ function sort(list: ref_t<Elem>, cmp: Comparator): ref_t<Elem> {
     return list
 }
 
-function unremove(removed: ref_t<Elem>, modified: ref_t<Elem>) {
+function unremove(removed: $$<Elem>, modified: $$<Elem>) {
     let tmp = removed.$$.data
     removed.$$.data = modified.$$.data
     modified.$$.data = tmp
@@ -262,7 +263,7 @@ function unremove(removed: ref_t<Elem>, modified: ref_t<Elem>) {
 import * as Bench0 from '@em.benchmark.coremark/StateBench.em'
 import * as Bench1 from '@em.benchmark.coremark/MatrixBench.em'
 
-function valCalc(pval: ref_t<i16>): i16 {
+function valCalc(pval: $$<i16>): i16 {
     let val = <u16>pval.$$
     let optype = (<u8>(val >> 7)) & 1
     if (optype) return <i16>(val & 0x007f)
@@ -293,7 +294,7 @@ function valCalc(pval: ref_t<i16>): i16 {
     return <i16>ret
 }
 
-function valCompare(a: ref_t<Data>, b: ref_t<Data>): i32 {
+function valCompare(a: $$<Data>, b: $$<Data>): i32 {
     let val1 = valCalc($ref(a.$$.val))
     let val2 = valCalc($ref(b.$$.val))
     return val1 - val2

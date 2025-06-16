@@ -14,23 +14,23 @@ const sys_ticker = $config<TickerMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
-        app_ticker.$$ = TickerMgr.em$meta.create()
-        sys_ticker.$$ = TickerMgr.em$meta.create()
+        app_ticker.$$val = TickerMgr.em$meta.create()
+        sys_ticker.$$val = TickerMgr.em$meta.create()
     }
 }
 
 export function em$run() {
-    app_ticker.$$.$$.start(TimeTypes.Secs24p8_initMsecs(1_000), $cb(appTickCb))
-    sys_ticker.$$.$$.start(TimeTypes.Secs24p8_initMsecs(1_500), $cb(sysTickCb))
+    app_ticker.$$.start(TimeTypes.Secs24p8_initMsecs(1_000), $cb(appTickCb))
+    sys_ticker.$$.start(TimeTypes.Secs24p8_initMsecs(1_500), $cb(sysTickCb))
     FiberMgr.run()
 }
 
 function appTickCb() {
     $['%%c']
-    AppLed.$$.wink(100)
+    AppLed.wink(100)
 }
 
 function sysTickCb() {
     $['%%d']
-    SysLed.$$.wink(100)
+    SysLed.wink(100)
 }

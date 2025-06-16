@@ -3,7 +3,7 @@ export const $U = em.$declare('COMPOSITE')
 
 import * as AlarmMgr from '@em.utils/AlarmMgr.em'
 import * as BoardController from '@em.utils/BoardController.em'
-import * as BusyWait from '@nordic.mcu.nrf54/BusyWait.em'
+import * as BusyWait from '@em.utils/BusyWait.em'
 import * as ButtonT from '@em.utils/ButtonT.em'
 import * as Console from '@em.lang/Console.em'
 import * as Common from '@em.mcu/Common.em'
@@ -56,36 +56,36 @@ export function em$configure(): void {
     const brd = $board(DEFAULTS)
     $using(BoardController)
     $using(Console)
-    AlarmMgr.WakeupTimer.$$ = WakeupTimer
-    AppBut.Edge.$$ = AppButEdge
-    AppButEdge.Pin.$$ = AppButPin
-    AppButEdge.pin_num.$$ = AppButPin.pin_num.$$ = brd.pins.appBut
-    AppLed.Pin.$$ = AppLedPin
-    AppLed.active_low.$$ = brd.activeLowLeds
-    AppLedPin.pin_num.$$ = brd.pins.appLed
-    AppOutPin.pin_num.$$ = brd.pins.appOut
-    BoardController.Led.$$ = SysLed
-    // BoardController.ready_delay_usecs.$$ = 1_000_000
-    BusyWait.scalar.$$ = 26
-    Common.BusyWait.$$ = BusyWait
-    Common.ConsoleUart.$$ = ConsoleUart
-    Common.GlobalInterrupts.$$ = GlobalInterrupts
-    Common.Idle.$$ = Idle
-    Common.Mcu.$$ = Mcu
-    Common.Uptimer.$$ = Uptimer
-    Common.UsCounter.$$ = UsCounter
-    ConsoleUart.TxPin.$$ = AppOutPin
-    DbgA.pin_num.$$ = brd.pins.sysDbgA
-    DbgB.pin_num.$$ = brd.pins.sysDbgB
-    DbgC.pin_num.$$ = brd.pins.sysDbgC
-    DbgD.pin_num.$$ = brd.pins.sysDbgD
-    Debug.DbgA.$$ = DbgA
-    Debug.DbgB.$$ = DbgB
-    Debug.DbgC.$$ = DbgC
-    Debug.DbgD.$$ = DbgD
-    Poller.OneShot.$$ = OneShot
-    SysLed.Pin.$$ = SysLedPin
-    SysLed.active_low.$$ = brd.activeLowLeds
-    SysLedPin.pin_num.$$ = brd.pins.sysLed
-    UsCounter.MHZ.$$ = 128
+    AlarmMgr.WakeupTimer.$$dlg = WakeupTimer
+    AppBut.Edge.$$dlg = AppButEdge
+    AppButEdge.Pin.$$dlg = AppButPin
+    AppButEdge.pin_num.$$val = AppButPin.pin_num.$$val = brd.pins.appBut
+    AppLed.Pin.$$dlg = AppLedPin
+    AppLed.active_low.$$val = brd.activeLowLeds
+    AppLedPin.pin_num.$$val = brd.pins.appLed
+    AppOutPin.pin_num.$$val = brd.pins.appOut
+    BoardController.Led.$$dlg = SysLed
+    // BoardController.ready_delay_usecs.$$dlg = 1_000_000
+    BusyWait.scalar.$$val = 26
+    Common.BusyWait.$$dlg = BusyWait
+    Common.ConsoleUart.$$dlg = ConsoleUart
+    Common.GlobalInterrupts.$$dlg = GlobalInterrupts
+    Common.Idle.$$dlg = Idle
+    Common.Mcu.$$dlg = Mcu
+    Common.Uptimer.$$dlg = Uptimer
+    Common.UsCounter.$$dlg = UsCounter
+    ConsoleUart.TxPin.$$dlg = AppOutPin
+    DbgA.pin_num.$$val = brd.pins.sysDbgA
+    DbgB.pin_num.$$val = brd.pins.sysDbgB
+    DbgC.pin_num.$$val = brd.pins.sysDbgC
+    DbgD.pin_num.$$val = brd.pins.sysDbgD
+    Debug.DbgA.$$dlg = DbgA
+    Debug.DbgB.$$dlg = DbgB
+    Debug.DbgC.$$dlg = DbgC
+    Debug.DbgD.$$dlg = DbgD
+    Poller.OneShot.$$dlg = OneShot
+    SysLed.Pin.$$dlg = SysLedPin
+    SysLed.active_low.$$val = brd.activeLowLeds
+    SysLedPin.pin_num.$$val = brd.pins.sysLed
+    UsCounter.MHZ.$$val = 128
 }

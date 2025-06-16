@@ -10,7 +10,7 @@ export const DbgC = $proxy<GpioI.$I>()
 export const DbgD = $proxy<GpioI.$I>()
 
 function delay() {
-    Common.BusyWait.$$.wait(1)
+    Common.BusyWait.wait(1)
 }
 
 export function mark(id: u8, val: u8) {
@@ -24,16 +24,16 @@ export function mark(id: u8, val: u8) {
 export function minus(id: u8) {
     switch (id) {
         case 0:
-            DbgA.$$.set()
+            DbgA.set()
             break
         case 1:
-            DbgB.$$.set()
+            DbgB.set()
             break
         case 2:
-            DbgC.$$.set()
+            DbgC.set()
             break
         case 3:
-            DbgD.$$.set()
+            DbgD.set()
             break
     }
 }
@@ -41,16 +41,16 @@ export function minus(id: u8) {
 export function plus(id: u8) {
     switch (id) {
         case 0:
-            DbgA.$$.clear()
+            DbgA.clear()
             break
         case 1:
-            DbgB.$$.clear()
+            DbgB.clear()
             break
         case 2:
-            DbgC.$$.clear()
+            DbgC.clear()
             break
         case 3:
-            DbgD.$$.clear()
+            DbgD.clear()
             break
     }
 }
@@ -63,19 +63,19 @@ export function pulse(id: u8) {
 }
 
 export function reset() {
-    DbgA.$$.reset()
-    DbgB.$$.reset()
-    DbgC.$$.reset()
-    DbgD.$$.reset()
+    DbgA.reset()
+    DbgB.reset()
+    DbgC.reset()
+    DbgD.reset()
 }
 
 export function startup() {
-    DbgA.$$.makeOutput()
-    DbgA.$$.set()
-    DbgB.$$.makeOutput()
-    DbgB.$$.set()
-    DbgC.$$.makeOutput()
-    DbgC.$$.set()
-    DbgD.$$.makeOutput()
-    DbgD.$$.set()
+    DbgA.makeOutput()
+    DbgA.set()
+    DbgB.makeOutput()
+    DbgB.set()
+    DbgC.makeOutput()
+    DbgC.set()
+    DbgD.makeOutput()
+    DbgD.set()
 }

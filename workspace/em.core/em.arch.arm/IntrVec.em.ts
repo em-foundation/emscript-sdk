@@ -108,7 +108,7 @@ export function PRIMASK_set(m: u32) {
 }
 
 export function DEFAULT_isr$$() {
-    IsrDefault.$$.exec()
+    IsrDefault.exec()
     fail()
 }
 

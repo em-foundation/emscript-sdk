@@ -38,7 +38,7 @@ export function put(data: u8) {
 
 function sleepEnter() {
     $R.UARTE30.ENABLE.$$ = $R.UARTE_ENABLE_ENABLE_Disabled
-    TxPin.$$.reset()
+    TxPin.reset()
 }
 
 function sleepLeave() {

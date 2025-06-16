@@ -11,18 +11,18 @@ const min_cnt = $config<u16>(1000)
 const max_cnt = $config<u16>(1020)
 
 export function em$run() {
-    AppLed.$$.on()
-    for (let cnt of $range(min_cnt.$$, max_cnt.$$)) {
+    AppLed.on()
+    for (let cnt of $range(min_cnt, max_cnt)) {
         $['%%d+']
-        Common.BusyWait.$$.wait(500_000)
+        Common.BusyWait.wait(500_000)
         $['%%d-']
-        AppLed.$$.toggle()
-        if (!dbg_flag.$$) continue
-        if (cnt > (min_cnt.$$ + max_cnt.$$) / 2) halt()
+        AppLed.toggle()
+        if (!dbg_flag) continue
+        if (cnt > (min_cnt + max_cnt) / 2) halt()
         let bits11 = <u8>(cnt & 0x3)
         $['%%c:'](bits11)
         $['%%>'](bits11)
         printf`cnt = %d (0x%04x), bits11 = %d\n`(cnt, cnt, bits11)
     }
-    AppLed.$$.off()
+    AppLed.off()
 }

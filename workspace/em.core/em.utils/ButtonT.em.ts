@@ -17,8 +17,8 @@ export namespace em$template {
 
     export namespace em$meta {
         export function em$construct() {
-            debounceF.$$ = FiberMgr.em$meta.create($cb(debounceFB))
-            Edge.$$.em$meta.setDetectHandler($cb(buttonHandler))
+            debounceF.$$val = FiberMgr.em$meta.create($cb(debounceFB))
+            Edge.em$meta.setDetectHandler($cb(buttonHandler))
         }
     }
 
@@ -28,13 +28,13 @@ export namespace em$template {
     let cur_min = 0
 
     export function em$startup() {
-        Edge.$$.init(true)
-        Edge.$$.setDetectFalling()
+        Edge.init(true)
+        Edge.setDetectFalling()
     }
 
     function buttonHandler() {
-        Edge.$$.clearDetect()
-        if (cur_fxn != $null) debounceF.$$.$$.post()
+        Edge.clearDetect()
+        if (cur_fxn != $null) debounceF.$$.post()
     }
 
     function debounceFB(a: arg_t) {
@@ -49,7 +49,7 @@ export namespace em$template {
     }
 
     export function isPressed(): bool_t {
-        return !Edge.$$.getState()
+        return !Edge.getState()
     }
 
     export function onPressed(
@@ -61,9 +61,9 @@ export namespace em$template {
         cur_max = max_dur_ms
         cur_min = min_dur_ms
         if (handler == $null) {
-            Edge.$$.disableDetect()
+            Edge.disableDetect()
         } else {
-            Edge.$$.enableDetect()
+            Edge.enableDetect()
         }
     }
 }

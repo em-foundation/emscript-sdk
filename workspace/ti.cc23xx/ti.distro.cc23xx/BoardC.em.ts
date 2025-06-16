@@ -3,7 +3,7 @@ export const $U = em.$declare('COMPOSITE')
 
 import * as AlarmMgr from '@em.utils/AlarmMgr.em'
 import * as BoardController from '@em.utils/BoardController.em'
-import * as BusyWait from '@ti.mcu.cc23xx/BusyWait.em'
+import * as BusyWait from '@em.utils/BusyWait.em'
 import * as ButtonT from '@em.utils/ButtonT.em'
 import * as Console from '@em.lang/Console.em'
 import * as Common from '@em.mcu/Common.em'
@@ -66,39 +66,40 @@ export function em$configure(): void {
     $using(BoardController)
     $using(Console)
     $using(ExtFlashDisabler)
-    AlarmMgr.WakeupTimer.$$ = WakeupTimer
-    AppBut.Edge.$$ = AppButEdge
-    AppButEdge.Pin.$$ = AppButPin
-    AppButEdge.pin_num.$$ = AppButPin.pin_num.$$ = brd.pins.appBut
-    AppLed.Pin.$$ = AppLedPin
-    AppLedPin.pin_num.$$ = brd.pins.appLed
-    AppOutPin.pin_num.$$ = brd.pins.appOut
-    BoardController.Led.$$ = SysLed
-    Common.BusyWait.$$ = BusyWait
-    Common.ConsoleUart.$$ = ConsoleUart0
-    Common.GlobalInterrupts.$$ = GlobalInterrupts
-    Common.Idle.$$ = Idle
-    Common.Mcu.$$ = Mcu
-    Common.Uptimer.$$ = Uptimer
-    Common.UsCounter.$$ = UsCounter
-    ConsoleUart0.TxPin.$$ = AppOutPin
-    DbgA.pin_num.$$ = brd.pins.sysDbgA
-    DbgB.pin_num.$$ = brd.pins.sysDbgB
-    DbgC.pin_num.$$ = brd.pins.sysDbgC
-    DbgD.pin_num.$$ = brd.pins.sysDbgD
-    Debug.DbgA.$$ = DbgA
-    Debug.DbgB.$$ = DbgB
-    Debug.DbgC.$$ = DbgC
-    Debug.DbgD.$$ = DbgD
-    ExtFlashDisabler.CLK.$$ = FlashCLK
-    ExtFlashDisabler.CS.$$ = FlashCS
-    ExtFlashDisabler.PICO.$$ = FlashPICO
-    ExtFlashDisabler.POCI.$$ = FlashPOCI
-    FlashCLK.pin_num.$$ = brd.pins.extFlashCLK
-    FlashCS.pin_num.$$ = brd.pins.extFlashCS
-    FlashPICO.pin_num.$$ = brd.pins.extFlashPICO
-    FlashPOCI.pin_num.$$ = brd.pins.extFlashPOCI
-    Poller.OneShot.$$ = OneShot
-    SysLed.Pin.$$ = SysLedPin
-    SysLedPin.pin_num.$$ = brd.pins.sysLed
+    AlarmMgr.WakeupTimer.$$dlg = WakeupTimer
+    AppBut.Edge.$$dlg = AppButEdge
+    AppButEdge.Pin.$$dlg = AppButPin
+    AppButEdge.pin_num.$$val = AppButPin.pin_num.$$val = brd.pins.appBut
+    AppLed.Pin.$$dlg = AppLedPin
+    AppLedPin.pin_num.$$val = brd.pins.appLed
+    AppOutPin.pin_num.$$val = brd.pins.appOut
+    BoardController.Led.$$dlg = SysLed
+    BusyWait.scalar.$$val = 6
+    Common.BusyWait.$$dlg = BusyWait
+    Common.ConsoleUart.$$dlg = ConsoleUart0
+    Common.GlobalInterrupts.$$dlg = GlobalInterrupts
+    Common.Idle.$$dlg = Idle
+    Common.Mcu.$$dlg = Mcu
+    Common.Uptimer.$$dlg = Uptimer
+    Common.UsCounter.$$dlg = UsCounter
+    ConsoleUart0.TxPin.$$dlg = AppOutPin
+    DbgA.pin_num.$$val = brd.pins.sysDbgA
+    DbgB.pin_num.$$val = brd.pins.sysDbgB
+    DbgC.pin_num.$$val = brd.pins.sysDbgC
+    DbgD.pin_num.$$val = brd.pins.sysDbgD
+    Debug.DbgA.$$dlg = DbgA
+    Debug.DbgB.$$dlg = DbgB
+    Debug.DbgC.$$dlg = DbgC
+    Debug.DbgD.$$dlg = DbgD
+    ExtFlashDisabler.CLK.$$dlg = FlashCLK
+    ExtFlashDisabler.CS.$$dlg = FlashCS
+    ExtFlashDisabler.PICO.$$dlg = FlashPICO
+    ExtFlashDisabler.POCI.$$dlg = FlashPOCI
+    FlashCLK.pin_num.$$val = brd.pins.extFlashCLK
+    FlashCS.pin_num.$$val = brd.pins.extFlashCS
+    FlashPICO.pin_num.$$val = brd.pins.extFlashPICO
+    FlashPOCI.pin_num.$$val = brd.pins.extFlashPOCI
+    Poller.OneShot.$$dlg = OneShot
+    SysLed.Pin.$$dlg = SysLedPin
+    SysLedPin.pin_num.$$val = brd.pins.sysLed
 }

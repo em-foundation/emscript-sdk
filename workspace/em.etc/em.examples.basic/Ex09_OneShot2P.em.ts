@@ -12,27 +12,27 @@ const blinkF = $config<FiberMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
-        blinkF.$$ = FiberMgr.em$meta.create($cb(blinkFB))
+        blinkF.$$val = FiberMgr.em$meta.create($cb(blinkFB))
     }
 }
 
 let count = 5
 
 export function em$run() {
-    blinkF.$$.$$.post()
+    blinkF.$$.post()
     FiberMgr.run()
 }
 
 function blinkFB(a: arg_t) {
     $['%%d']
     if (--count == 0) halt()
-    AppLed.$$.on()
-    Common.BusyWait.$$.wait(5_000)
-    AppLed.$$.off()
-    OneShot.$$.enable(100, $cb(handler), 0)
+    AppLed.on()
+    Common.BusyWait.wait(5_000)
+    AppLed.off()
+    OneShot.enable(100, $cb(handler), 0)
 }
 
 function handler(arg: arg_t) {
     $['%%c']
-    blinkF.$$.$$.post()
+    blinkF.$$.post()
 }

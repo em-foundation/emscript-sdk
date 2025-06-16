@@ -85,12 +85,12 @@ export function writePkt(pkt: frame_t<u8>) {
 }
 
 function writeFifoPtr(value: u32, regAddr: u32) {
-    const key = Common.GlobalInterrupts.$$.disable()
+    const key = Common.GlobalInterrupts.disable()
     em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD] = <u16>((($R.LRFDPBE_BASE + $R.LRFDPBE_O_FSTAT) & 0x0FFF) >> 2)
     // delay
     em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD]
     em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD]
     em.$reg32[regAddr] = value
     em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD] = <u16>((($R.LRFDPBE_BASE + $R.LRFDPBE_O_FCMD) & 0x0FFF) >> 2)
-    Common.GlobalInterrupts.$$.restore(key)
+    Common.GlobalInterrupts.restore(key)
 }

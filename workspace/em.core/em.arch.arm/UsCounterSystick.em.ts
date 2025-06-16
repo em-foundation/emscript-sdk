@@ -10,7 +10,7 @@ const MAX = <u32>0x00ff_ffff
 let cur_thresh = <u32>0
 
 export function set(time_us: u32) {
-    cur_thresh = MAX - time_us * MHZ.$$
+    cur_thresh = MAX - time_us * MHZ
     start()
 }
 
@@ -29,7 +29,7 @@ export function start() {
 export function stop(): u32 {
     let lr = <u32>e$`SysTick->LOAD`
     let vr = <u32>e$`SysTick->VAL`
-    let dt = (((lr - vr) << 1) / MHZ.$$) >> 1
+    let dt = (((lr - vr) << 1) / MHZ) >> 1
     e$`SysTick->CTRL = 0`
     return dt
 }

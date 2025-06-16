@@ -17,7 +17,7 @@ export namespace em$meta {
     const PCLK_FREQ = 50_000_000
 
     export function em$construct() {
-        clkdiv.$$ = Math.round(PCLK_FREQ / baud.$$)
+        clkdiv.$$val = Math.round(PCLK_FREQ / baud)
         Idle.em$meta.addSleepEnter($cb(sleepEnter))
         Idle.em$meta.addSleepLeave($cb(sleepLeave))
     }
@@ -38,14 +38,14 @@ export function put(data: u8): void {
 
 function sleepEnter() {
     $R.GCR.PCLKDIS0.$$ |= $R.F_GCR_PCLKDIS0_UART0
-    TxPin.$$.reset()
+    TxPin.reset()
 }
 
 function sleepLeave() {
-    TxPin.$$.makeOutput()
-    TxPin.$$.functionSelect(1)
+    TxPin.makeOutput()
+    TxPin.functionSelect(1)
     $R.GCR.PCLKDIS0.$$ &= ~$R.F_GCR_PCLKDIS0_UART0
-    $R.UART0.CLKDIV.$$ = clkdiv.$$
+    $R.UART0.CLKDIV.$$ = clkdiv
     $R.UART0.CTRL.$$ |=
         $R.S_UART_CTRL_CHAR_SIZE_8BITS |
         $R.S_UART_CTRL_BCLKSRC_PERIPHERAL_CLOCK |

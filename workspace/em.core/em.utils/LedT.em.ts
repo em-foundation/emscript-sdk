@@ -10,12 +10,12 @@ export namespace em$template {
     export const $U = em.$declare('MODULE', LedI)
 
     export const Pin = $proxy<GpioI.$I>()
-    export const active_low = $config<bool_t>(false)
+    export const active_low = $config<bool_t>()
 
     export namespace em$meta {
         export function em$construct() {
-            Common.Idle.$$.em$meta.addSleepEnter($cb(sleepEnter))
-            Common.Idle.$$.em$meta.addSleepLeave($cb(sleepLeave))
+            Common.Idle.em$meta.addSleepEnter($cb(sleepEnter))
+            Common.Idle.em$meta.addSleepLeave($cb(sleepLeave))
         }
     }
 
@@ -26,23 +26,23 @@ export namespace em$template {
     }
 
     export function off(): void {
-        if (active_low.$$) {
-            Pin.$$.set()
+        if (active_low) {
+            Pin.set()
         } else {
-            Pin.$$.clear()
+            Pin.clear()
         }
     }
 
     export function on(): void {
-        if (active_low.$$) {
-            Pin.$$.clear()
+        if (active_low) {
+            Pin.clear()
         } else {
-            Pin.$$.set()
+            Pin.set()
         }
     }
 
     export function toggle(): void {
-        Pin.$$.toggle()
+        Pin.toggle()
     }
 
     export function wink(msecs: u32): void {
@@ -52,11 +52,11 @@ export namespace em$template {
     }
 
     function sleepEnter() {
-        Pin.$$.reset()
+        Pin.reset()
     }
 
     function sleepLeave() {
-        Pin.$$.makeOutput()
+        Pin.makeOutput()
         off()
     }
 }

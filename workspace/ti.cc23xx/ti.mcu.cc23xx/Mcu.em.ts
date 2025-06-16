@@ -10,7 +10,7 @@ const use_sram = $config<bool_t>()
 
 export namespace em$meta {
     export function em$construct() {
-        use_sram.$$ = $property('em.lang.BootFlash', false)
+        use_sram.$$val = $property('em.lang.BootFlash', false)
     }
 }
 
@@ -23,7 +23,7 @@ export function startup(): void {
         $R.CKMD_IMSET_HFXTFAULT |
         $R.CKMD_IMSET_TRACKREFLOSS |
         $R.CKMD_IMSET_LFCLKGOOD
-    if (use_sram.$$) {
+    if (use_sram) {
         $R.CLKCTL.IDLECFG.$$ = 1
         $R.VIMS.CCHCTRL.$$ = 0
     }

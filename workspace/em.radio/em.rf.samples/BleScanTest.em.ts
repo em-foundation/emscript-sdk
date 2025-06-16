@@ -13,15 +13,18 @@ export const RadioDriver = $delegate(BoardC.RadioDriver)
 const alarm = $config<AlarmMgr.Obj>()
 const fiber = $config<FiberMgr.Obj>()
 
-var pktbuf = $table<u8>('rw', 25)
+var pktbuf = $table<u8>()
 
 export namespace em$meta {
+    export function em$init() {
+        for (const _ of $range(25)) pktbuf.$$add(0)
+    }
     export function em$configure() {
-        Config.phy.$$ = Config.Phy.BLE_1M
+        Config.phy.$$val = Config.Phy.BLE_1M
     }
     export function em$construct() {
-        fiber.$$ = FiberMgr.em$meta.create($cb(fiberF))
-        alarm.$$ = AlarmMgr.em$meta.create(fiber.$$)
+        fiber.$$val = FiberMgr.em$meta.create($cb(fiberF))
+        alarm.$$val = AlarmMgr.em$meta.create(fiber)
     }
 }
 
@@ -31,17 +34,17 @@ const CHAN = 17
 const RATE = 1000
 
 export function em$run() {
-    fiber.$$.$$.post()
+    fiber.$$.post()
     FiberMgr.run()
 }
 
 function fiberF(_: arg_t) {
-    RadioDriver.$$.enable()
-    RadioDriver.$$.startRx(pktbuf.$frame(0), CHAN)
-    RadioDriver.$$.waitReady()
-    AppLed.$$.wink(5)
+    RadioDriver.enable()
+    RadioDriver.startRx(CHAN, 0)
+    RadioDriver.waitReady()
+    AppLed.wink(5)
     for (const b of pktbuf.$frame(0)) printf`%02x `(b)
     printf`\n`()
-    RadioDriver.$$.disable()
-    alarm.$$.$$.wakeup(TimeTypes.Secs24p8_initMsecs(RATE))
+    RadioDriver.disable()
+    alarm.$$.wakeup(TimeTypes.Secs24p8_initMsecs(RATE))
 }

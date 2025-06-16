@@ -21,7 +21,7 @@ export function em$startup(): void {
 }
 
 export function flush(): void {
-    while ($R.UART0.FR.$$ & $R.UART_FR_BUSY) {}
+    while ($R.UART0.FR.$$ & $R.UART_FR_BUSY) { }
 }
 
 export function put(data: u8): void {
@@ -31,14 +31,14 @@ export function put(data: u8): void {
 
 function sleepEnter() {
     $R.CLKCTL.CLKENCLR0.$$ = $R.CLKCTL_CLKENCLR0_UART0
-    TxPin.$$.reset()
+    TxPin.reset()
 }
 
 function sleepLeave() {
     $R.CLKCTL.CLKENSET0.$$ = $R.CLKCTL_CLKENSET0_UART0
-    TxPin.$$.makeOutput()
-    TxPin.$$.set()
-    TxPin.$$.functionSelect(2)
+    TxPin.makeOutput()
+    TxPin.set()
+    TxPin.functionSelect(2)
     $R.UART0.CTL.$$ &= ~$R.UART_CTL_UARTEN
     $R.UART0.IBRD.$$ = 26
     $R.UART0.FBRD.$$ = 3

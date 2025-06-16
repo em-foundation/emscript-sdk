@@ -41,7 +41,7 @@ export function em$configure() {
     $using(REGS)
     $using(StartupC)
     $using(TargC)
-    IntrVec.IsrDefault.$$ = em.isBareMetal() ? IsrEmpty : IsrDebug
+    IntrVec.IsrDefault.$$dlg = em.isBareMetal() ? IsrEmpty : IsrDebug
     for (let name of NVIC_INTRS) IntrVec.em$meta.addIntr(name)
 }
 

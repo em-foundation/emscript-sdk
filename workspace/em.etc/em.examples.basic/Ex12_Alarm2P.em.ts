@@ -13,15 +13,15 @@ const blinkF = $config<FiberMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
-        blinkF.$$ = FiberMgr.em$meta.create($cb(blinkFB))
-        alarm.$$ = AlarmMgr.em$meta.create(blinkF.$$)
+        blinkF.$$val = FiberMgr.em$meta.create($cb(blinkFB))
+        alarm.$$val = AlarmMgr.em$meta.create(blinkF)
     }
 }
 
 let counter = <u32>0
 
 export function em$run() {
-    blinkF.$$.$$.post()
+    blinkF.$$.post()
     FiberMgr.run()
 }
 
@@ -29,6 +29,6 @@ function blinkFB(a: arg_t) {
     $['%%c']
     counter += 1
     let msecs = (counter & 0x1) != 0 ? 100 : 5
-    AppLed.$$.wink(msecs)
-    alarm.$$.$$.wakeupAligned(TimeTypes.Secs24p8_initMsecs(1_500))
+    AppLed.wink(msecs)
+    alarm.$$.wakeupAligned(TimeTypes.Secs24p8_initMsecs(1_500))
 }

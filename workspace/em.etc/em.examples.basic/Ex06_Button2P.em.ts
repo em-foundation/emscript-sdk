@@ -12,31 +12,31 @@ const blinkF = $config<FiberMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
-        AppButEdge.$$.em$meta.setDetectHandler($cb(handler))
-        blinkF.$$ = FiberMgr.em$meta.create($cb(blinkFB))
+        AppButEdge.em$meta.setDetectHandler($cb(handler))
+        blinkF.$$val = FiberMgr.em$meta.create($cb(blinkFB))
     }
 }
 
 export function em$startup() {
-    AppButEdge.$$.init(true)
-    AppButEdge.$$.setDetectFalling()
+    AppButEdge.init(true)
+    AppButEdge.setDetectFalling()
 }
 
 export function em$run() {
-    AppButEdge.$$.enableDetect()
+    AppButEdge.enableDetect()
     FiberMgr.run()
 }
 
 function blinkFB(a: arg_t) {
     $['%%d']
-    AppLed.$$.on()
-    Common.BusyWait.$$.wait(5_000)
-    AppLed.$$.off()
-    AppButEdge.$$.enableDetect()
+    AppLed.on()
+    Common.BusyWait.wait(5_000)
+    AppLed.off()
+    AppButEdge.enableDetect()
 }
 
 function handler() {
     $['%%c']
-    AppButEdge.$$.clearDetect()
-    blinkF.$$.$$.post()
+    AppButEdge.clearDetect()
+    blinkF.$$.post()
 }

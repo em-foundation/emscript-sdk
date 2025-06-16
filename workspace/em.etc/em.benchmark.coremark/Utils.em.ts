@@ -14,13 +14,13 @@ export enum Kind {
 export type seed_t = em.u16
 export type sum_t = em.u16
 
-let crc_tab = $table<sum_t>('rw')
-const seed_tab = $table<seed_t>('ro')
+let crc_tab = $table<sum_t>()
+const seed_tab = $table<seed_t>()
 
 export namespace em$meta {
     export function em$init() {
-        for (let _ of $range(Kind.ZZZ_)) crc_tab.$add(0)
-        for (let _ of $range(NUM_SEEDS)) seed_tab.$add(0)
+        for (let _ of $range(Kind.ZZZ_)) crc_tab.$$add(0)
+        for (let _ of $range(NUM_SEEDS)) seed_tab.$$add(0)
     }
     export function bindSeed(idx: u8, val: seed_t) {
         seed_tab[idx - 1] = val

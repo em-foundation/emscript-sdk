@@ -12,11 +12,11 @@ export namespace em$template {
 
     export namespace em$meta {
         export function pinId(): i16 {
-            return pin_num.$$
+            return pin_num
         }
     }
 
-    const pid = pin_num.$$ & 0xff
+    const pid = pin_num & 0xff
     const mask = 1 << pid
 
     export function clear(): void {

@@ -14,8 +14,8 @@ export enum Modulation {
 }
 
 export type BufPtr = ptr_t<u8>
-export type Profile = cb_t<[ref_t<Params>]>
-export type Train = cb_t<[BufPtr, ref_t<BufPtr>]>
+export type Profile = cb_t<[$$<Params>]>
+export type Train = cb_t<[BufPtr, $$<BufPtr>]>
 
 export class Params extends $struct {
     // bleAccAdr: u32

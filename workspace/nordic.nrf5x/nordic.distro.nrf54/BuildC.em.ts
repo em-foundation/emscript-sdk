@@ -291,7 +291,7 @@ export function em$configure() {
     $using(REGS)
     $using(StartupC)
     $using(TargC)
-    IntrVec.IsrDefault.$$ = IsrDefault
+    IntrVec.IsrDefault.$$dlg = IsrDefault
     for (let name of NVIC_INTRS) IntrVec.em$meta.addIntr(name)
 }
 

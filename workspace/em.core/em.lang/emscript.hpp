@@ -33,6 +33,23 @@ namespace em {
     auto $null = nullptr;
     typedef decltype(nullptr) null_t;
 
+    template <typename T> struct ref_t {
+        T* $$;
+        constexpr ref_t(T* lval = null) : $$ (lval) {}
+        T& operator*() const { return *$$; }
+        T* operator->() const { return $$; }
+        operator arg_t() const { return (arg_t)($$); }
+        operator void*() const { return (void*)($$); }
+        explicit operator bool() const { return $$ != null; }
+        bool operator==(null_t) const { return $$ == null; }
+        bool operator!=(null_t) const { return $$ != null; }
+    };
+
+    template <typename T>
+    constexpr ref_t<T> $ref(T& lval) { // Template the factory function and pass by reference
+        return ref_t<T>(&lval);
+    }    
+
     template <typename T> struct frame_t {
         static frame_t<T> create(T arr[], u16 dim, i16 beg, u16 len) {
             auto idx = (u16)((beg < 0) ? dim + beg : beg);
@@ -55,7 +72,6 @@ namespace em {
         };
         constexpr Iterator begin() const { return Iterator($start); }
         constexpr Iterator end() const { return Iterator($start + $len); }
-
     };
 
     template <typename T> struct index_t {
@@ -77,6 +93,7 @@ namespace em {
         constexpr ptr_t(T* v = null) : p_ (v) {}
         constexpr ptr_t(u32 a) : p_((T*)a) {}
         T& operator*() const { return *p_; }
+        T* operator->() const { return p_; }
         T &operator[](u16 index) { return *(p_ + index); }
         const T &operator[](u16 index) const { return *(p_ + index); }
         operator arg_t() const { return (arg_t)(p_); }
@@ -112,23 +129,6 @@ namespace em {
         return sizeof(T);
     }
 
-    template <typename T> struct ref_t {
-        T* $$;
-        constexpr ref_t(T* lval = null) : $$ (lval) {}
-        T& operator*() const { return *$$; }
-        T* operator->() const { return $$; }
-        operator arg_t() const { return (arg_t)($$); }
-        operator void*() const { return (void*)($$); }
-        explicit operator bool() const { return $$ != null; }
-        bool operator==(null_t) const { return $$ == null; }
-        bool operator!=(null_t) const { return $$ != null; }
-    };
-
-    template <typename T>
-    constexpr ref_t<T> $ref(T& lval) { // Template the factory function and pass by reference
-        return ref_t<T>(&lval);
-    }    
-
     template <typename T>
     constexpr ref_t<T> $ref(T* val) { // Template the factory function and pass by reference
         return ref_t<T>(val);
@@ -140,6 +140,7 @@ namespace em {
         inline const T &operator[](u16 index) const { return $$[index]; }
         const frame_t<T> $frame(i16 beg, u16 len = 0) const { return frame_t<T>::create((T*)$$, $len, beg, len); }
         operator frame_t<T>() const { return $frame(0, 0); }
+        ref_t<T> $null() { return ref_t<T>(); }
         ptr_t<T> $ptr() const { return ptr_t<T>((T*)$$); }
         struct Iterator {
             const T *current;
@@ -159,7 +160,17 @@ namespace em {
         inline const T &operator[](u16 index) const { return $$[index]; }
         frame_t<T> $frame(i16 beg, u16 len = 0) { return frame_t<T>::create($$, $len, beg, len); }
         operator frame_t<T>() { return $frame(0, 0); }
+        ref_t<T> $null() { return ref_t<T>(); }
         ptr_t<T> $ptr() { return ptr_t<T>(&$$[0]); }
+        struct Iterator {
+            T* ptr;
+            constexpr Iterator(T *ptr) : ptr(ptr) {}
+            ref_t<T> operator*() const { return ref_t<T>(ptr); }
+            Iterator &operator++() { ++ptr; return *this; }
+            bool operator!=(const Iterator &other) const { return ptr != other.ptr; }
+        };
+        constexpr Iterator begin() { return Iterator(&$$[0]); }
+        constexpr Iterator end() { return Iterator(&$$[$len]); }
     };
 
     template <typename T, u16 N = 0> struct vec_t {
@@ -172,26 +183,6 @@ namespace em {
         operator index_t<T>() { return index_t<T>(&$$[0]); }
         ptr_t<T> $ptr() { return ptr_t<T>(&$$[0]); }
         static vec_t $make() { return vec_t(); }
-    };
-
-    template <typename T, u16 N> struct factory {
-        T $$[N];
-        static constexpr u16 $len = N;
-        inline const T &operator[](u16 index) const { return $$[index]; }
-        inline T &operator[](u16 index) { return $$[index]; }
-        frame_t<T> $frame(i16 beg, u16 len = 0) { return frame_t<T>::create($$, $len, beg, len); }
-        operator frame_t<T>() { return $frame(0, 0); }
-        ref_t<T> $null() { return ref_t<T>(); }
-        ptr_t<T> $ptr() { return ptr_t<T>(&$$[0]); }
-        struct Iterator {
-            T* ptr;
-            constexpr Iterator(T *ptr) : ptr(ptr) {}
-            ref_t<T> operator*() const { return ref_t<T>(ptr); }
-            Iterator &operator++() { ++ptr; return *this; }
-            bool operator!=(const Iterator &other) const { return ptr != other.ptr; }
-        };
-        constexpr Iterator begin() { return Iterator(&$$[0]); }
-        constexpr Iterator end() { return Iterator(&$$[$len]); }
     };
 
     struct text_t {

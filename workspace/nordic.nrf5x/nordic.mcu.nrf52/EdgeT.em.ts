@@ -19,12 +19,12 @@ export namespace em$template {
         export function setDetectHandler(h: EdgeI.Handler) {
             let hi = Aux.HandlerInfo.$make()
             hi.handler = h
-            pin_chan.$$ = Aux.em$meta.addHandlerInfo(hi)
+            pin_chan.$$val = Aux.em$meta.addHandlerInfo(hi)
         }
     }
 
-    const pc = pin_chan.$$
-    const pid = pin_num.$$ & 0xff
+    const pc = <u8>pin_chan
+    const pid = pin_num & 0xff
     const mask = 1 << pid
     const int_en = 1 << pc
 
@@ -41,12 +41,12 @@ export namespace em$template {
     }
 
     export function getState(): bool_t {
-        return Pin.$$.get()
+        return Pin.get()
     }
 
     export function init(pullup: bool_t) {
-        Pin.$$.makeInput()
-        Pin.$$.setInternalPullup(pullup)
+        Pin.makeInput()
+        Pin.setInternalPullup(pullup)
         $R.GPIOTE.CONFIG[pc].$$ =
             ($R.GPIOTE_CONFIG_MODE_Event << $R.GPIOTE_CONFIG_MODE_Pos) |
             (pid << $R.GPIOTE_CONFIG_PSEL_Pos)

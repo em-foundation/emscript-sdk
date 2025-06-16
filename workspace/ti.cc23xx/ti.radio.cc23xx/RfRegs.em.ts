@@ -9,15 +9,15 @@ class Desc extends $struct {
     inc: u8
 }
 
-const desc_tab = $table<Desc>('ro')
-const val_tab = $table<u16>('ro')
+const desc_tab = $table<Desc>()
+const val_tab = $table<u16>()
 
 import * as Fs from 'fs'
 
 export namespace em$meta {
 
     export function em$construct() {
-        const phy_name = Config.Phy[Config.phy.$$].toLowerCase()
+        const phy_name = Config.Phy[Config.phy].toLowerCase()
         if (phy_name == 'none') return
         const regs = Fs.readFileSync(`ti.cc23xx/ti.radio.cc23xx/regs_${phy_name}.txt`, 'utf-8')
         let pre_flag = true
@@ -70,20 +70,20 @@ export namespace em$meta {
         }
         finalize() {
             this.flush()
-            desc_tab.$add(this.cur_desc)
+            desc_tab.$$add(this.cur_desc)
         }
         private flush() {
             const diff = (this.cur_addr - this.prev_addr) >> (this.cur_desc.inc / 2)
             if (diff > 1) {
                 for (const _ of $range(1, diff)) {
                     this.cur_serial += 1
-                    val_tab.$add(0)
+                    val_tab.$$add(0)
                     this.cur_desc.cnt += 1
                 }
             }
             this.cur_serial += 1
             // if (this.cur_addr > 0x6000) console.log($sprintf('[%04x] = %04x (%d)', this.cur_addr, this.cur_val, this.cur_val))
-            val_tab.$add(this.cur_val)
+            val_tab.$$add(this.cur_val)
             this.cur_val = 0
             this.cur_desc.cnt += 1
         }

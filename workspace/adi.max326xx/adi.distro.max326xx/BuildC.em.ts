@@ -129,7 +129,7 @@ export function em$configure() {
     $using(REGS)
     $using(StartupC)
     $using(TargC)
-    IntrVec.IsrDefault.$$ = em.isBareMetal() ? IsrEmpty : IsrDebug
+    IntrVec.IsrDefault.$$dlg = em.isBareMetal() ? IsrEmpty : IsrDebug
     for (let name of NVIC_INTRS) IntrVec.em$meta.addIntr(name)
 }
 
@@ -223,7 +223,7 @@ export function em$generate() {
     const dst =
         process.platform === 'win32' ? findDrive('DAPLINK')
             : process.platform === 'linux' ? `/media/${Os.userInfo().username}/DAPLINK/`
-                : '/Volumes/DAPLINK'
+                : 'Volumes/daplink'
     out = $outfile('load.sh', 0o755)
     out.addText(`cp -f .out/main.out.hex ${dst}\n`)
     out.close()

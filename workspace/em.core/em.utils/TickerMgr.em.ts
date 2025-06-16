@@ -6,7 +6,7 @@ import * as FiberMgr from '@em.utils/FiberMgr.em'
 import * as TimeTypes from '@em.utils/TimeTypes.em'
 
 export type Callback = cb_t<[]>
-export type Obj = ref_t<Ticker>
+export type Obj = $$<Ticker>
 
 class Ticker extends $struct {
     _alarm: AlarmMgr.Obj
@@ -19,12 +19,12 @@ interface Ticker {
     stop(this: Ticker): void
 }
 
-let TickerFac = $factory(Ticker.$make())
+var ticker_tab = $table<Ticker>()
 
 export namespace em$meta {
     export function create(): Obj {
-        let ticker = TickerFac.$create()
-        let fiber = FiberMgr.em$meta.create($cb(alarmFB), TickerFac.$len - 1)
+        let ticker = ticker_tab.$$add()
+        let fiber = FiberMgr.em$meta.create($cb(alarmFB), ticker_tab.$len - 1)
         let alarm = AlarmMgr.em$meta.create(fiber)
         ticker.$$._alarm = alarm
         ticker.$$._fiber = fiber
@@ -33,7 +33,7 @@ export namespace em$meta {
 }
 
 function alarmFB(a: arg_t) {
-    let ticker = $ref(TickerFac[<u16>a])
+    let ticker = $ref(ticker_tab[<u16>a])
     if (ticker.$$._tick_cb == $null) return
     ticker.$$._tick_cb()
     ticker.$$._alarm.$$.wakeupAligned(ticker.$$._rate)

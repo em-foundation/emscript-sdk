@@ -17,12 +17,12 @@ export namespace em$template {
         export function setDetectHandler(h: EdgeI.Handler) {
             let hi = Aux.HandlerInfo.$make()
             hi.handler = h
-            hi.mask = 1 << pin_num.$$
+            hi.mask = 1 << pin_num
             Aux.em$meta.addHandlerInfo(hi)
         }
     }
 
-    const pid = pin_num.$$ & 0xff
+    const pid = pin_num & 0xff
     const mask = 1 << pid
 
     export function clearDetect(): void {
@@ -38,12 +38,12 @@ export namespace em$template {
     }
 
     export function getState(): bool_t {
-        return Pin.$$.get()
+        return Pin.get()
     }
 
     export function init(pullup: bool_t) {
-        Pin.$$.makeInput()
-        Pin.$$.setInternalPullup(pullup)
+        Pin.makeInput()
+        Pin.setInternalPullup(pullup)
         $R.GPIO0.INTMODE.$$ |= mask
     }
 

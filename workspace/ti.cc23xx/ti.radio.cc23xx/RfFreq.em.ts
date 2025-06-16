@@ -11,13 +11,13 @@ class Shape extends $struct {
     coeff: frame_t<u8>
 }
 
-const BLE_1M_SHAPE = $config<Shape>(Shape.$make())
+const BLE_1M_SHAPE = $config<Shape>()
 
 export namespace em$meta {
     export function em$construct() {
-        BLE_1M_SHAPE.$$.scale = 0x0FDE2
-        BLE_1M_SHAPE.$$.freqdev = 0x0003D090
-        BLE_1M_SHAPE.$$.coeff = $frame<u8>([0x01, 0x02, 0x05, 0x0A, 0x14, 0x22, 0x37, 0x52, 0x71, 0x91, 0xB0, 0xCB, 0xE0, 0xEE, 0xF8, 0xFD, 0xFF])
+        BLE_1M_SHAPE.$$val.scale = 0x0FDE2
+        BLE_1M_SHAPE.$$val.freqdev = 0x0003D090
+        BLE_1M_SHAPE.$$val.coeff = $frame<u8>([0x01, 0x02, 0x05, 0x0A, 0x14, 0x22, 0x37, 0x52, 0x71, 0x91, 0xB0, 0xCB, 0xE0, 0xEE, 0xF8, 0xFD, 0xFF])
     }
 }
 
@@ -122,7 +122,7 @@ export function program(frequency: u32) {
     switch (Config.getPhy()) {
         case Config.Phy.BLE_1M:
         case Config.Phy.PROP_1M:
-            programShape(BLE_1M_SHAPE.$$, invSynthFreq << 4)
+            programShape(BLE_1M_SHAPE, invSynthFreq << 4)
             break
     }
 }

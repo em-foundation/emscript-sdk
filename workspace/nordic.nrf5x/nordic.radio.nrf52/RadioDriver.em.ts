@@ -61,7 +61,7 @@ export function enable() {
         default: fail()
     }
     $R.RADIO.SHORTS.$$ = $R.RADIO_SHORTS_READY_START_Msk | $R.RADIO_SHORTS_END_DISABLE_Msk
-    // Common.BusyWait.$$.wait(10) // TODO: needed for SRAM setup
+    // Common.BusyWait.wait(10) // TODO: needed for SRAM setup
     HfXtal.wait()
     setState(State.READY)
 }

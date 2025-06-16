@@ -1,7 +1,7 @@
 import em from '@$$emscript'
 export const $U = em.$declare('MODULE')
 
-import * as BusyWait from '@ti.mcu.cc23xx/BusyWait.em'
+import * as BusyWait from '@em.utils/BusyWait.em'
 import * as GpioI from '@em.hal/GpioI.em'
 
 export const CS = $proxy<GpioI.$I>()
@@ -13,37 +13,37 @@ const SD_CMD = <u8>0xb9
 
 export function em$startup() {
     $['%%c+']
-    CS.$$.makeOutput()
-    CLK.$$.makeOutput()
-    PICO.$$.makeOutput()
-    POCI.$$.makeInput()
+    CS.makeOutput()
+    CLK.makeOutput()
+    PICO.makeOutput()
+    POCI.makeInput()
     // attention
-    CS.$$.set()
+    CS.set()
     BusyWait.wait(1)
-    CS.$$.clear()
+    CS.clear()
     BusyWait.wait(1)
-    CS.$$.set()
+    CS.set()
     BusyWait.wait(50)
     // shutdown command
-    CS.$$.clear()
+    CS.clear()
     for (let i of $range(8)) {
-        CLK.$$.clear()
+        CLK.clear()
         const bv = (SD_CMD >> (7 - i)) & 0x01
         if (bv == 0) {
-            PICO.$$.clear()
+            PICO.clear()
         } else {
-            PICO.$$.set()
+            PICO.set()
         }
-        CLK.$$.set()
+        CLK.set()
         BusyWait.wait(1)
     }
-    CLK.$$.clear()
-    CS.$$.set()
+    CLK.clear()
+    CS.set()
     BusyWait.wait(50)
     //
-    CS.$$.reset()
-    CLK.$$.reset()
-    PICO.$$.reset()
-    POCI.$$.reset()
+    CS.reset()
+    CLK.reset()
+    PICO.reset()
+    POCI.reset()
     $['%%c-']
 }

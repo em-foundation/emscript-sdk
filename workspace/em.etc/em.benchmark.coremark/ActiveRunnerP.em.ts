@@ -19,19 +19,19 @@ export function em$startup() {
 }
 
 export function em$run() {
-    AppLed.$$.on()
-    Common.BusyWait.$$.wait(1_000_000)
-    AppLed.$$.off()
-    Common.UsCounter.$$.start()
+    AppLed.on()
+    Common.BusyWait.wait(1_000_000)
+    AppLed.off()
+    Common.UsCounter.start()
     $['%%d+']
-    for (let _ of $range(iterations.$$)) {
+    for (let _ of $range(iterations)) {
         CoreBench.run(0)
     }
     $['%%d-']
-    let usecs = Common.UsCounter.$$.stop()
-    AppLed.$$.on()
-    Common.BusyWait.$$.wait(1_000_000)
-    AppLed.$$.off()
+    let usecs = Common.UsCounter.stop()
+    AppLed.on()
+    Common.BusyWait.wait(1_000_000)
+    AppLed.off()
     printf`usecs = %d\n`(usecs)
     printf`list crc = %04x\n`(Utils.getCrc(Utils.Kind.LIST))
     printf`matrix crc = %04x\n`(Utils.getCrc(Utils.Kind.MATRIX))

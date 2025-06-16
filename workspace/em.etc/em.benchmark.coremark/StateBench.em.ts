@@ -4,7 +4,7 @@ export const $U = em.$declare('MODULE')
 import * as Crc from '@em.benchmark.coremark/Crc.em'
 import * as Utils from '@em.benchmark.coremark/Utils.em'
 
-export const memsize = $config<u16>(0)
+export const memsize = $config<u16>()
 
 const NUM_STATES = 8
 
@@ -19,49 +19,49 @@ enum State {
     SCIENTIFIC,
 }
 
-const intPat = $table<text_t>('ro')
-const fltPat = $table<text_t>('ro')
-const sciPat = $table<text_t>('ro')
-const errPat = $table<text_t>('ro')
+const intPat = $table<text_t>()
+const fltPat = $table<text_t>()
+const sciPat = $table<text_t>()
+const errPat = $table<text_t>()
 
-const intPatLen = $config<u16>(0)
-const fltPatLen = $config<u16>(0)
-const sciPatLen = $config<u16>(0)
-const errPatLen = $config<u16>(0)
+const intPatLen = $config<u16>()
+const fltPatLen = $config<u16>()
+const sciPatLen = $config<u16>()
+const errPatLen = $config<u16>()
 
 class StateCnt extends $vector<u32> { $len = NUM_STATES }
 
-let membuf = $table<u8>('rw')
+let membuf = $table<u8>()
 
 export namespace em$meta {
     export function em$init() {
-        intPat.$add(t$`5012`)
-        intPat.$add(t$`1234`)
-        intPat.$add(t$`-874`)
-        intPat.$add(t$`+122`)
-        intPatLen.$$ = intPat[0].$len
+        intPat.$$add(t$`5012`)
+        intPat.$$add(t$`1234`)
+        intPat.$$add(t$`-874`)
+        intPat.$$add(t$`+122`)
+        intPatLen.$$val = intPat[0].$len
         //
-        fltPat.$add(t$`35.54400`)
-        fltPat.$add(t$`.1234500`)
-        fltPat.$add(t$`-110.700`)
-        fltPat.$add(t$`+0.64400`)
-        fltPatLen.$$ = fltPat[0].$len
+        fltPat.$$add(t$`35.54400`)
+        fltPat.$$add(t$`.1234500`)
+        fltPat.$$add(t$`-110.700`)
+        fltPat.$$add(t$`+0.64400`)
+        fltPatLen.$$val = fltPat[0].$len
         //
-        sciPat.$add(t$`5.500e+3`)
-        sciPat.$add(t$`-.123e-2`)
-        sciPat.$add(t$`-87e+832`)
-        sciPat.$add(t$`+0.6e-12`)
-        sciPatLen.$$ = sciPat[0].$len
+        sciPat.$$add(t$`5.500e+3`)
+        sciPat.$$add(t$`-.123e-2`)
+        sciPat.$$add(t$`-87e+832`)
+        sciPat.$$add(t$`+0.6e-12`)
+        sciPatLen.$$val = sciPat[0].$len
         //
-        errPat.$add(t$`T0.3e-1F`)
-        errPat.$add(t$`-T.T++Tq`)
-        errPat.$add(t$`1T3.4e4z`)
-        errPat.$add(t$`34.0e-T^`)
-        errPatLen.$$ = errPat[0].$len
+        errPat.$$add(t$`T0.3e-1F`)
+        errPat.$$add(t$`-T.T++Tq`)
+        errPat.$$add(t$`1T3.4e4z`)
+        errPat.$$add(t$`34.0e-T^`)
+        errPatLen.$$val = errPat[0].$len
     }
 
     export function em$construct() {
-        for (let _ of $range(memsize.$$)) membuf.$add(0)
+        for (let _ of $range(memsize)) membuf.$$add(0)
     }
 }
 
@@ -113,7 +113,7 @@ export function setup() {
     let total = 0
     let pat = t$``
     let plen = 0
-    while (total + plen + 1 < memsize.$$ - 1) {
+    while (total + plen + 1 < memsize - 1) {
         if (plen) {
             for (let i of $range(plen)) {
                 p.$$ = pat[i]
@@ -128,21 +128,21 @@ export function setup() {
             case 1:
             case 2:
                 pat = intPat[(seed >> 3) & 0x3]
-                plen = intPatLen.$$
+                plen = intPatLen
                 break
             case 3:
             case 4:
                 pat = fltPat[(seed >> 3) & 0x3]
-                plen = fltPatLen.$$
+                plen = fltPatLen
                 break
             case 5:
             case 6:
                 pat = sciPat[(seed >> 3) & 0x3]
-                plen = sciPatLen.$$
+                plen = sciPatLen
                 break
             case 7:
                 pat = errPat[(seed >> 3) & 0x3]
-                plen = errPatLen.$$
+                plen = errPatLen
                 break
         }
     }
@@ -154,7 +154,7 @@ function isDigit(ch: u8): bool_t {
     return ch >= c$`0` && ch <= c$`9`
 }
 
-function nextState(pStr: ref_t<ptr_t<u8>>, transCnt: index_t<u32>): State {
+function nextState(pStr: $$<ptr_t<u8>>, transCnt: index_t<u32>): State {
     let str = pStr.$$
     let state = <State>State.START
     for (; str.$$ && state != State.INVALID; str.$inc()) {
@@ -252,7 +252,7 @@ function scan(finalCnt: index_t<u32>, transCnt: index_t<u32>) {
 }
 
 function scramble(seed: Utils.seed_t, step: u32) {
-    for (let idx = 0; idx < memsize.$$; idx += step) {
+    for (let idx = 0; idx < memsize; idx += step) {
         // TODO: use $range
         if (membuf[idx] != c$`,`) membuf[idx] ^= <u8>seed
     }

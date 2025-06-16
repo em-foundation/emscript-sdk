@@ -46,12 +46,12 @@ export function enable() {
     // PowerCC23X0_startHFXT()
     $R.CKMD.LDOCTL.$$ =
         $R.CKMD_LDOCTL_SWOVR | $R.CKMD_LDOCTL_STARTCTL | $R.CKMD_LDOCTL_START | $R.CKMD_LDOCTL_EN
-    Common.BusyWait.$$.wait(66);
+    Common.BusyWait.wait(66);
     $R.CKMD.LDOCTL.$$ =
         $R.CKMD_LDOCTL_SWOVR | $R.CKMD_LDOCTL_HFXTLVLEN | $R.CKMD_LDOCTL_EN
     $R.CKMD.AMPADCCTL.$$ =
         $R.CKMD_AMPADCCTL_SWOVR | $R.CKMD_AMPADCCTL_PEAKDETEN_ENABLE | $R.CKMD_AMPADCCTL_ADCEN_ENABLE;
-    Common.BusyWait.$$.wait(6);
+    Common.BusyWait.wait(6);
     $R.CKMD.ICLR.$$ = $R.CKMD_ICLR_ADCBIASUPD
     $R.CKMD.AMPADCCTL.$$ |= $R.CKMD_AMPADCCTL_SARSTRT
     $R.CKMD.AMPADCCTL.$$ &= ~$R.CKMD_AMPADCCTL_SARSTRT
@@ -93,6 +93,6 @@ export function CPUIRQ3_isr$$() {
     $R.CKMD.ICLR.$$ = mis
     $R.CKMD.IMCLR.$$ = mis
     osc_ready = (mis & $R.CKMD_MIS_AMPSETTLED) != 0
-    Common.BusyWait.$$.wait(1); // TODO -- needed for SRAM execution
+    Common.BusyWait.wait(1); // TODO -- needed for SRAM execution
 
 }

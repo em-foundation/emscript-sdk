@@ -34,11 +34,11 @@ export function put(data: u8) {
 
 function sleepEnter() {
     $R.UART0.ENABLE.$$ = $R.UART_ENABLE_ENABLE_Disabled
-    TxPin.$$.reset()
+    TxPin.reset()
 }
 
 function sleepLeave() {
-    $R.UART0.PSELTXD.$$ = TxPin.$$.pinId()
+    $R.UART0.PSELTXD.$$ = TxPin.pinId()
     $R.UART0.BAUDRATE.$$ = $R.UART_BAUDRATE_BAUDRATE_Baud115200
     $R.UART0.ENABLE.$$ = $R.UART_ENABLE_ENABLE_Enabled
     $R.UART0.TASKS_STARTTX.$$ = 1

@@ -38,26 +38,26 @@ const ADV_LEG_INIT = $config<AdvHdr>()
 
 export namespace em$meta {
     export function em$construct() {
-        ADV_LEG_INIT.$$.flagsLen = 2
-        ADV_LEG_INIT.$$.flagsCode = 0x1
-        ADV_LEG_INIT.$$.flagsVal = 0x6 // BR_EDR_NOT_SUPPORTED | LE_GENERAL_DISC_MODE
-        ADV_LEG_INIT.$$.manLen = 3
-        ADV_LEG_INIT.$$.manCode = 0xff
-        ADV_LEG_INIT.$$.manIdLo = MAN_ID_LO
-        ADV_LEG_INIT.$$.manIdHi = MAN_ID_HI
-        ADV_LEG_INIT.$$.advA[0] = 0xaa
-        ADV_LEG_INIT.$$.advA[1] = 0xaa
-        ADV_LEG_INIT.$$.advA[2] = 0xbb
-        ADV_LEG_INIT.$$.advA[3] = 0xbb
-        ADV_LEG_INIT.$$.advA[4] = 0xcc
-        ADV_LEG_INIT.$$.advA[5] = 0xcc
+        ADV_LEG_INIT.$$val.flagsLen = 2
+        ADV_LEG_INIT.$$val.flagsCode = 0x1
+        ADV_LEG_INIT.$$val.flagsVal = 0x6 // BR_EDR_NOT_SUPPORTED | LE_GENERAL_DISC_MODE
+        ADV_LEG_INIT.$$val.manLen = 3
+        ADV_LEG_INIT.$$val.manCode = 0xff
+        ADV_LEG_INIT.$$val.manIdLo = MAN_ID_LO
+        ADV_LEG_INIT.$$val.manIdHi = MAN_ID_HI
+        ADV_LEG_INIT.$$val.advA[0] = 0xaa
+        ADV_LEG_INIT.$$val.advA[1] = 0xaa
+        ADV_LEG_INIT.$$val.advA[2] = 0xbb
+        ADV_LEG_INIT.$$val.advA[3] = 0xbb
+        ADV_LEG_INIT.$$val.advA[4] = 0xcc
+        ADV_LEG_INIT.$$val.advA[5] = 0xcc
     }
 }
 
 //>> ---- em$targ ---- <<//
 
-function AdvHdr__init(self: ref_t<AdvHdr>, adv_type: u8): void {
-    const src = $ref(ADV_LEG_INIT.$$)
+function AdvHdr__init(self: $$<AdvHdr>, adv_type: u8): void {
+    const src = $ref(ADV_LEG_INIT)
     e$`memcpy(self, src, sizeof (AdvHdr))`
     self.$$.advType = adv_type
 }

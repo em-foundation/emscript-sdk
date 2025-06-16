@@ -10,7 +10,7 @@ const use_sram = $config<bool_t>()
 
 export namespace em$meta {
     export function em$construct() {
-        use_sram.$$ = $property('em.build.BootFlash', false)
+        use_sram.$$val = $property('em.build.BootFlash', false)
     }
 }
 
@@ -68,7 +68,7 @@ export function startup(): void {
     $['%%a:'](2)
     errata()
     e$`NRF_APPROTECT->DISABLE = NRF_UICR->APPROTECT`
-    if (!use_sram.$$) {
+    if (!use_sram) {
         $R.NVMC.ICACHECNF.$$ = 1
     }
     // $R.POWER.RAM[2].POWER.$$ = 0

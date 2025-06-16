@@ -9,6 +9,6 @@ export namespace em$meta { }
 
 var params = Dev.Params.$make()
 
-export function getParams(): ref_t<Dev.Params> {
+export function getParams(): $$<Dev.Params> {
     return $ref(params)
 }
