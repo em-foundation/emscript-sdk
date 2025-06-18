@@ -59,7 +59,8 @@ export function em$run() {
         printf`ERROR:  TICKER_SYS_PERIOD_MS too short\n`()
         halt()
     }
-    if (TICKER_PRINT_PERIOD_MS < TICKER_APP_PERIOD_MS || TICKER_PRINT_PERIOD_MS < TICKER_SYS_PERIOD_MS) {
+    if (TimeTypes.Secs30p2_initMsecs(TICKER_PRINT_PERIOD_MS) <= TimeTypes.Secs30p2_initMsecs(TICKER_APP_PERIOD_MS) ||
+        TimeTypes.Secs30p2_initMsecs(TICKER_PRINT_PERIOD_MS) <= TimeTypes.Secs30p2_initMsecs(TICKER_SYS_PERIOD_MS)) {
         printf`ERROR:  TICKER_PRINT_PERIOD_MS too short\n`()
         halt()
     }
