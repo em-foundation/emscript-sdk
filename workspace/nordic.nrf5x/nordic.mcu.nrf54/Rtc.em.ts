@@ -1,12 +1,13 @@
 import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+export const $U = em.$declare('MODULE', RtcI)
 
 import * as $R from '@nordic.distro.nrf54/REGS.em'
 
 import * as IntrVec from '@em.arch.arm/IntrVec.em'
-import * as TimeTypes from '@em.utils/TimeTypes.em'
+import * as RtcI from '@em.hal/RtcI.em'
+import * as T from '@em.utils/TimeTypes.em'
 
-export type Handler = cb_t<[]>
+export type Handler = RtcI.Handler
 
 export namespace em$meta {
     export function em$construct() {
@@ -29,7 +30,7 @@ export function disable() {
     $R.GRTC.INTENCLR0.$$ = 1
 }
 
-export function enable(thresh: u32, handler: Handler) {
+export function enable(thresh: T.RtcThresh, handler: Handler) {
     cur_hlr = handler
     const hi_lo = readHiLo()
     const lo_cc = thresh
@@ -41,15 +42,26 @@ export function enable(thresh: u32, handler: Handler) {
     $R.GRTC.INTENSET0.$$ = 1
 }
 
-export function getRawTime(): TimeTypes.RawTime {
-    let res = TimeTypes.RawTime.$make()
+export function getRawTime(): T.RawTime {
+    let res = T.RawTime.$make()
     const hi_low: u64 = readHiLo()
     res.secs = <u32>(hi_low / 1_000_000)
-    res.subs = TimeTypes.UsecsToRawSubs(<u32>(hi_low % 1_000_000))
+    res.subs = T.UsecsToRawSubs(<u32>(hi_low % 1_000_000))
     return res
 }
 
-export function readHiLo(): u64 {
+export function toThresh(secs: T.Secs30p2): T.RtcThresh {
+    return T.Secs30p2ToUsecs(secs)
+}
+
+export function GRTC_0_isr$$() {
+    IntrVec.NVIC_clear(e$`GRTC_0_IRQn`)
+    const hlr = cur_hlr
+    disable()
+    if (hlr != $null) hlr()
+}
+
+function readHiLo(): u64 {
     let lo: u32
     let hi: u32
     while (true) {
@@ -63,18 +75,4 @@ export function readHiLo(): u64 {
     }
     const hi_lo: u64 = (<u64>hi << 32) | lo
     return hi_lo
-}
-
-export function toThresh(delta: TimeTypes.Secs24p8): u32 {
-    const cur_usecs = readHiLo()
-    const del_usecs = TimeTypes.Secs24p8ToUsecs(delta)
-    const fut_usecs = cur_usecs + del_usecs
-    return <u32>fut_usecs
-}
-
-export function GRTC_0_isr$$() {
-    IntrVec.NVIC_clear(e$`GRTC_0_IRQn`)
-    const hlr = cur_hlr
-    disable()
-    if (hlr != $null) hlr()
 }

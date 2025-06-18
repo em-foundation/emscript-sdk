@@ -21,7 +21,9 @@ export class TimeParts extends $struct {
     milliseconds: u32
 }
 
+export type RtcThresh = u32
 export type Secs24p8 = u32
+export type Secs30p2 = u32
 
 export function RawTime_ZERO(): RawTime {
     let raw_time = RawTime.$make()
@@ -41,6 +43,10 @@ export function RawSubsToUsecs(subs: u32): u32 {
 
 export function RawTimeToSecs24p8(raw_time: RawTime): Secs24p8 {
     return (raw_time.secs << 8) | (raw_time.subs >> 24)
+}
+
+export function RawTimeToSecs30p2(raw_time: RawTime): Secs30p2 {
+    return (raw_time.secs << 2) | (raw_time.subs >> 30)
 }
 
 export function RawTimeToTimeParts(raw_time: RawTime): TimeParts {
@@ -64,6 +70,18 @@ export function Secs24p8_ZERO(): Secs24p8 {
 export function Secs24p8ToUsecs(s24p8: Secs24p8): u64 {
     const scale = 64
     return (s24p8 * (1_000_000 / scale)) / (256 / scale)
+}
+
+export function Secs30p2_initMsecs(msecs: u32): Secs30p2 {
+    return msecs / 250
+}
+
+export function Secs30p2_ZERO(): Secs30p2 {
+    return 0
+}
+
+export function Secs30p2ToUsecs(s30p2: Secs30p2): u64 {
+    return s30p2 * 250_000
 }
 
 export function UsecsToRawSubs(usecs: u32): u32 {

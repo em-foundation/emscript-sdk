@@ -18,9 +18,10 @@ import * as Mcu from '@nordic.mcu.nrf52/Mcu.em'
 import * as OneShot from '@nordic.mcu.nrf52/OneShotTimer0.em'
 import * as Poller from '@em.mcu/Poller.em'
 import * as RadioDriver from '@nordic.radio.nrf52/RadioDriver.em'
+import * as Rtc from '@nordic.mcu.nrf52/Rtc.em'
 import * as Uptimer from '@nordic.mcu.nrf52/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
-import * as WakeupTimer from '@nordic.mcu.nrf52/WakeupTimerRtc.em'
+// import * as WakeupTimer from '@nordic.mcu.nrf52/WakeupTimerRtc.em'
 
 export { OneShot, RadioDriver }
 
@@ -56,7 +57,7 @@ export function em$configure(): void {
     const brd = $board(DEFAULTS)
     $using(BoardController)
     $using(Console)
-    AlarmMgr.WakeupTimer.$$dlg = WakeupTimer
+    AlarmMgr.Rtc.$$dlg = Rtc
     AppBut.Edge.$$dlg = AppButEdge
     AppButEdge.Pin.$$dlg = AppButPin
     AppButEdge.pin_num.$$val = AppButPin.pin_num.$$val = brd.pins.appBut

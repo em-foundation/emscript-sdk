@@ -220,13 +220,31 @@ export function em$generate() {
     `)
     out.close()
     //
-    const dst =
-        process.platform === 'win32' ? findDrive('DAPLINK')
-            : process.platform === 'linux' ? `/media/${Os.userInfo().username}/DAPLINK/`
-                : 'Volumes/daplink'
-    out = $outfile('load.sh', 0o755)
-    out.addText(`cp -f .out/main.out.hex ${dst}\n`)
-    out.close()
+    const openocddir = $property('em.build.OpenOCD', '').replaceAll('\\', '/')
+    if (openocddir) {
+        const ext = (process.platform === 'win32')
+            ? '.exe'
+            : ''
+        const exec = `${openocddir}/openocd${ext}`
+        const scriptsdir = `${openocddir}/scripts`
+        const inter = 'interface/cmsis-dap.cfg'
+        const targ = 'target/max32655.cfg'
+        out = $outfile('load.sh', 0o755)
+        out.addText(`${exec} -s ${scriptsdir} -f ${inter} -f ${targ} -c "program ./.out/main.out verify reset exit"`)
+        out.close()
+        out = $outfile('debug.sh', 0o755)
+        out.addText(`${exec} -s ${scriptsdir} -f ${inter} -f ${targ}`)
+        out.close()
+
+    } else {
+        const dst =
+            process.platform === 'win32' ? findDrive('DAPLINK')
+                : process.platform === 'linux' ? `/media/${Os.userInfo().username}/DAPLINK/`
+                    : 'Volumes/daplink'
+        out = $outfile('load.sh', 0o755)
+        out.addText(`cp -f .out/main.out.hex ${dst}\n`)
+        out.close()
+    }
 }
 
 function findDrive(label: string): string {

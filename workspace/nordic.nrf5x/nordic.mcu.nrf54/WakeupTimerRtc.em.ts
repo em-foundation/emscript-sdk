@@ -20,7 +20,7 @@ export function enable(secs256: Secs24p8, handler: Handler) {
 
 export function secsAligned(secs: Secs24p8): Secs24p8 {
     const raw_time = Rtc.getRawTime()
-    const raw_secs = <Secs24p8>((raw_time.secs << 24) | (raw_time.subs >> 24))
+    const raw_secs = <Secs24p8>((raw_time.secs << 8) | (raw_time.subs >> 24))
     const res = secs - (raw_secs % secs)
     return res
 }

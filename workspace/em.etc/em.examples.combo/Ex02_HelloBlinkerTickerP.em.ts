@@ -92,28 +92,25 @@ function rotateRate() {
 }
 
 function startLedTickers() {
-    ticker_app.$$.start(
-        TimeTypes.Secs24p8_initMsecs(TICKER_APP_PERIOD_MS) / divided_by,
-        $cb(tickCbApp)
-    )
-    ticker_sys.$$.start(
-        TimeTypes.Secs24p8_initMsecs(TICKER_SYS_PERIOD_MS) / divided_by,
-        $cb(tickCbSys)
-    )
-    expected_count_app = (divided_by * TICKER_PRINT_PERIOD_MS) / TICKER_APP_PERIOD_MS
-    expected_count_sys = (divided_by * TICKER_PRINT_PERIOD_MS) / TICKER_SYS_PERIOD_MS
+    const app_period = TimeTypes.Secs30p2_initMsecs(TICKER_APP_PERIOD_MS / divided_by)
+    const sys_period = TimeTypes.Secs30p2_initMsecs(TICKER_SYS_PERIOD_MS / divided_by)
+    const print_period = TimeTypes.Secs30p2_initMsecs(TICKER_PRINT_PERIOD_MS)
+    ticker_app.$$.start(app_period, $cb(tickCbApp))
+    ticker_sys.$$.start(sys_period, $cb(tickCbSys))
+    expected_count_app = print_period / app_period
+    expected_count_sys = print_period / sys_period
 }
 
 function startPrintTicker() {
     ticker_print.$$.start(
-        TimeTypes.Secs24p8_initMsecs(TICKER_PRINT_PERIOD_MS),
+        TimeTypes.Secs30p2_initMsecs(TICKER_PRINT_PERIOD_MS),
         $cb(tickCbPrint)
     )
 }
 
 function startRateChangeTicker() {
     ticker_rate_change.$$.start(
-        TimeTypes.Secs24p8_initMsecs(TICKER_RATE_CHANGE_PERIOD_MS),
+        TimeTypes.Secs30p2_initMsecs(TICKER_RATE_CHANGE_PERIOD_MS),
         $cb(rotateRate)
     )
 }

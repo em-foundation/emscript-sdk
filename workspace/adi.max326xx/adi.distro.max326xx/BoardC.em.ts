@@ -18,6 +18,7 @@ import * as LedT from '@em.utils/LedT.em'
 import * as Mcu from '@adi.mcu.max326xx/Mcu.em'
 import * as OneShot from '@adi.mcu.max326xx/OneShotTmr0.em'
 import * as Poller from '@em.mcu/Poller.em'
+import * as Rtc from '@adi.mcu.max326xx/Rtc.em'
 import * as SysOsc from '@adi.mcu.max326xx/SysOsc.em'
 import * as Uptimer from '@adi.mcu.max326xx/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
@@ -62,7 +63,7 @@ export function em$configure(): void {
     const ConsoleUart = brd.useLpUart ? ConsoleUart3 : ConsoleUart0
     $using(BoardController)
     $using(Console)
-    AlarmMgr.WakeupTimer.$$dlg = WakeupTimer
+    AlarmMgr.Rtc.$$dlg = Rtc
     AppBut.Edge.$$dlg = AppButEdge
     AppButEdge.Pin.$$dlg = AppButPin
     AppButEdge.pin_num.$$val = AppButPin.pin_num.$$val = brd.pins.appBut

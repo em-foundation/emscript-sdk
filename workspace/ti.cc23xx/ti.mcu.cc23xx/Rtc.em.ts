@@ -1,10 +1,13 @@
 import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+export const $U = em.$declare('MODULE', RtcI)
 
 import * as $R from '@ti.distro.cc23xx/REGS.em'
 
 import * as IntrVec from '@em.arch.arm/IntrVec.em'
-import * as TimeTypes from '@em.utils/TimeTypes.em'
+import * as RtcI from '@em.hal/RtcI.em'
+import * as T from '@em.utils/TimeTypes.em'
+
+export type Handler = RtcI.Handler
 
 export namespace em$meta {
     export function em$construct() {
@@ -12,11 +15,9 @@ export namespace em$meta {
     }
 }
 
-export type Handler = cb_t<[]>
-
 const RES_BITS = <u8>20
 
-let cur_hlr = <Handler>$null
+var cur_hlr = <Handler>$null
 
 export function em$startup() {
     $R.CKMD.LFINCOVR.$$ = 0x8000_0000 + (1 << RES_BITS)
@@ -30,13 +31,13 @@ export function disable() {
     $R.RTC.IMCLR.$$ = $R.RTC_IMCLR_EV0
 }
 
-export function enable(thresh: u32, handler: Handler) {
+export function enable(thresh: T.RtcThresh, handler: Handler) {
     cur_hlr = handler
     $R.RTC.CH0CC8U.$$ = thresh
     $R.RTC.IMSET.$$ = $R.RTC_IMSET_EV0
 }
 
-export function getRawTime(): TimeTypes.RawTime {
+export function getRawTime(): T.RawTime {
     let lo: u32
     let hi: u32
     while (true) {
@@ -44,14 +45,14 @@ export function getRawTime(): TimeTypes.RawTime {
         hi = $R.RTC.TIME524M.$$
         if (lo == $R.RTC.TIME8U.$$) break
     }
-    let res = TimeTypes.RawTime.$make()
+    let res = T.RawTime.$make()
     res.secs = hi
     res.subs = lo << 16
     return res
 }
 
-export function toThresh(ticks: u32): u32 {
-    return $R.RTC.TIME8U.$$ + ticks
+export function toThresh(qsecs: T.Secs30p2): u32 {
+    return qsecs << 14
 }
 
 export function CPUIRQ0_isr$$() {
