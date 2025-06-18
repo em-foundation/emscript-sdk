@@ -30,7 +30,7 @@ export namespace em$meta {
 //>> ---- em$targ ---- <<//
 
 export function em$run() {
-    ticker.$$.start(TimeTypes.Secs24p8_initMsecs(1000), $cb(tickCb))
+    ticker.$$.start(TimeTypes.Secs30p2_initMsecs(1000), $cb(tickCb))
     FiberMgr.run()
 }
 

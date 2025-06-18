@@ -23,7 +23,7 @@ export function em$startup() {
 }
 
 export function em$run() {
-    ticker.$$.start(TimeTypes.Secs24p8_initMsecs(1_000), $cb(tickCB))
+    ticker.$$.start(TimeTypes.Secs30p2_initMsecs(1_000), $cb(tickCB))
     FiberMgr.run()
 }
 

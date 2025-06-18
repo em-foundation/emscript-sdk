@@ -32,7 +32,7 @@ export namespace em$meta {
 const CHAN = 37
 
 export function em$run() {
-    ticker.$$.start(TimeTypes.Secs24p8_initMsecs(250), $cb(tickCb))
+    ticker.$$.start(TimeTypes.Secs30p2_initMsecs(250), $cb(tickCb))
     FiberMgr.run()
 }
 

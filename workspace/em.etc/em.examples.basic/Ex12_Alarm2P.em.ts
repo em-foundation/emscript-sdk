@@ -30,5 +30,5 @@ function blinkFB(a: arg_t) {
     counter += 1
     let msecs = (counter & 0x1) != 0 ? 100 : 5
     AppLed.wink(msecs)
-    alarm.$$.wakeupAligned(TimeTypes.Secs24p8_initMsecs(1_500))
+    alarm.$$.wakeupAligned(TimeTypes.Secs30p2_initMsecs(1_500))
 }

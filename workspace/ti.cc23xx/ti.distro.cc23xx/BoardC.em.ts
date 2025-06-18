@@ -20,7 +20,7 @@ import * as OneShot from '@ti.mcu.cc23xx/OneShotGpt3.em'
 import * as Poller from '@em.mcu/Poller.em'
 import * as RadioDriver from '@ti.radio.cc23xx/RadioDriver.em'
 import * as Rtc from '@ti.mcu.cc23xx/Rtc.em'
-import * as Uptimer from '@ti.mcu.cc23xx/UptimerRtc.em'
+import * as Uptimer from '@em.utils/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
 
 export { OneShot, RadioDriver }
@@ -102,4 +102,5 @@ export function em$configure(): void {
     Poller.OneShot.$$dlg = OneShot
     SysLed.Pin.$$dlg = SysLedPin
     SysLedPin.pin_num.$$val = brd.pins.sysLed
+    Uptimer.Rtc.$$dlg = Rtc
 }

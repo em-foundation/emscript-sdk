@@ -39,10 +39,10 @@ function alarmFB(a: arg_t) {
     ticker.$$._alarm.$$.wakeupAligned(ticker.$$._rate)
 }
 
-Ticker.prototype.start = function (this: Ticker, rate: T.Secs30p2, tick_cb: Callback) {
-    this._rate = rate
+Ticker.prototype.start = function (this: Ticker, rate_qs: T.Secs30p2, tick_cb: Callback) {
+    this._rate = rate_qs
     this._tick_cb = tick_cb
-    this._alarm.$$.wakeupAligned(rate)
+    this._alarm.$$.wakeupAligned(rate_qs)
 }
 
 Ticker.prototype.stop = function (this: Ticker) {

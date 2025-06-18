@@ -20,9 +20,8 @@ import * as OneShot from '@adi.mcu.max326xx/OneShotTmr0.em'
 import * as Poller from '@em.mcu/Poller.em'
 import * as Rtc from '@adi.mcu.max326xx/Rtc.em'
 import * as SysOsc from '@adi.mcu.max326xx/SysOsc.em'
-import * as Uptimer from '@adi.mcu.max326xx/UptimerRtc.em'
+import * as Uptimer from '@em.utils/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
-import * as WakeupTimer from '@adi.mcu.max326xx/WakeupTimerRtc.em'
 
 export { OneShot }
 
@@ -95,5 +94,6 @@ export function em$configure(): void {
     SysLed.active_low.$$val = brd.activeLowLeds
     SysLedPin.pin_num.$$val = brd.pins.sysLed
     SysOsc.use_ERFO.$$val = brd.sysOscSrc == 'ERFO'
+    Uptimer.Rtc.$$dlg = Rtc
     UsCounter.MHZ.$$val = brd.sysOscSrc == 'ERFO' ? 32 : 60
 }

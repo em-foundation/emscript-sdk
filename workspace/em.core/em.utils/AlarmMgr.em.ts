@@ -88,10 +88,10 @@ Alarm.prototype.isActive = function (this: Alarm): bool_t {
     return this._wup_time != 0
 }
 
-Alarm.prototype.wakeup = function (this: Alarm, delta: T.Secs30p2) {
-    setup($ref(this), delta, false)
+Alarm.prototype.wakeup = function (this: Alarm, delta_qs: T.Secs30p2) {
+    setup($ref(this), delta_qs, false)
 }
 
-Alarm.prototype.wakeupAligned = function (this: Alarm, delta: T.Secs30p2) {
-    setup($ref(this), delta, true)
+Alarm.prototype.wakeupAligned = function (this: Alarm, delta_qs: T.Secs30p2) {
+    setup($ref(this), delta_qs, true)
 }

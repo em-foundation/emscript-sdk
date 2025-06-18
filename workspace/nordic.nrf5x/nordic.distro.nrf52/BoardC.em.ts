@@ -19,9 +19,8 @@ import * as OneShot from '@nordic.mcu.nrf52/OneShotTimer0.em'
 import * as Poller from '@em.mcu/Poller.em'
 import * as RadioDriver from '@nordic.radio.nrf52/RadioDriver.em'
 import * as Rtc from '@nordic.mcu.nrf52/Rtc.em'
-import * as Uptimer from '@nordic.mcu.nrf52/UptimerRtc.em'
+import * as Uptimer from '@em.utils/UptimerRtc.em'
 import * as UsCounter from '@em.arch.arm/UsCounterSystick.em'
-// import * as WakeupTimer from '@nordic.mcu.nrf52/WakeupTimerRtc.em'
 
 export { OneShot, RadioDriver }
 
@@ -87,5 +86,6 @@ export function em$configure(): void {
     SysLed.Pin.$$dlg = SysLedPin
     SysLed.active_low.$$val = brd.activeLowLeds
     SysLedPin.pin_num.$$val = brd.pins.sysLed
+    Uptimer.Rtc.$$dlg = Rtc
     UsCounter.MHZ.$$val = 64
 }

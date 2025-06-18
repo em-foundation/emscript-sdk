@@ -46,5 +46,5 @@ function fiberF(_: arg_t) {
     for (const b of pktbuf.$frame(0)) printf`%02x `(b)
     printf`\n`()
     RadioDriver.disable()
-    alarm.$$.wakeup(TimeTypes.Secs24p8_initMsecs(RATE))
+    alarm.$$.wakeup(TimeTypes.Secs30p2_initMsecs(RATE))
 }
