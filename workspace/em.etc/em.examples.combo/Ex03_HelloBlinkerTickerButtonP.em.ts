@@ -51,11 +51,11 @@ export function em$run() {
     printf`\nEx03_HelloBlinkerTickerButtonP program startup\n\n`()
 
     //quick sanity checks
-    if (TimeTypes.Secs30p2_initMsecs(TICKER_APP_PERIOD_MS / MAX_DIVIDED_BY) === 0) {
+    if (TimeTypes.Secs30p2_initMsecs(TICKER_APP_PERIOD_MS / MAX_DIVIDED_BY) == 0) {
         printf`ERROR:  TICKER_APP_PERIOD_MS too short\n`()
         halt()
     }
-    if (TimeTypes.Secs30p2_initMsecs(TICKER_SYS_PERIOD_MS / MAX_DIVIDED_BY) === 0) {
+    if (TimeTypes.Secs30p2_initMsecs(TICKER_SYS_PERIOD_MS / MAX_DIVIDED_BY) == 0) {
         printf`ERROR:  TICKER_SYS_PERIOD_MS too short\n`()
         halt()
     }
