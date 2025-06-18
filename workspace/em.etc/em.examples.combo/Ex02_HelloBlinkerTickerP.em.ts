@@ -9,10 +9,10 @@ import * as TimeTypes from '@em.utils/TimeTypes.em'
 
 // app settings
 const MAX_DIVIDED_BY = 8
-const TICKER_APP_PERIOD_MS = 2000
+const TICKER_APP_PERIOD_MS = 3000
 const TICKER_PRINT_PERIOD_MS = 5000
 const TICKER_RATE_CHANGE_PERIOD_MS = 1 * TimeTypes.SECONDS_PER_MINUTE * TimeTypes.MILLISECONDS_PER_SECOND
-const TICKER_SYS_PERIOD_MS = 1500
+const TICKER_SYS_PERIOD_MS = 2000
 
 // app resources
 const AppLed = $delegate(BoardC.AppLed)
