@@ -19,16 +19,16 @@ const AppLed = $delegate(BoardC.AppLed)
 const SysLed = $delegate(BoardC.SysLed)
 
 const ticker_app = $config<TickerMgr.Obj>()
+const ticker_sys = $config<TickerMgr.Obj>()
 const ticker_print = $config<TickerMgr.Obj>()
 const ticker_rate_change = $config<TickerMgr.Obj>()
-const ticker_sys = $config<TickerMgr.Obj>()
 
 export namespace em$meta {
     export function em$construct() {
         ticker_app.$$val = TickerMgr.em$meta.create()
+        ticker_sys.$$val = TickerMgr.em$meta.create()
         ticker_print.$$val = TickerMgr.em$meta.create()
         ticker_rate_change.$$val = TickerMgr.em$meta.create()
-        ticker_sys.$$val = TickerMgr.em$meta.create()
     }
 }
 
