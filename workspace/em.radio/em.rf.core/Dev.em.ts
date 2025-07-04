@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 export const ADDR_SIZE = 6
 

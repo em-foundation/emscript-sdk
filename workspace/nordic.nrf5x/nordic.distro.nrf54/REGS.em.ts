@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('COMPOSITE')
+import '@$$emscript'
+export const $U = $declare('COMPOSITE')
 
 export function em$generate() {
     let out = $outfile('nordic.distro.nrf54/REGS.hpp')
@@ -10,501 +10,501 @@ export function em$generate() {
 // -------- CLOCK_XO -------- //
 
 export interface CLOCK_XO_t {
-    RESERVED: dim_t<em.$Reg, 2>
-    RUN: em.$Reg
-    STAT: em.$Reg
+    RESERVED: dim_t<$Reg, 2>
+    RUN: $Reg
+    STAT: $Reg
 }
 
 // -------- CLOCK_PLL -------- //
 
 export interface CLOCK_PLL_t {
-    RESERVED: dim_t<em.$Reg, 2>
-    RUN: em.$Reg
-    STAT: em.$Reg
+    RESERVED: dim_t<$Reg, 2>
+    RUN: $Reg
+    STAT: $Reg
 }
 
 // -------- CLOCK_LFCLK -------- //
 
 export interface CLOCK_LFCLK_t {
-    SRC: em.$Reg
-    RESERVED: em.$Reg
-    RUN: em.$Reg
-    STAT: em.$Reg
-    SRCCOPY: em.$Reg
+    SRC: $Reg
+    RESERVED: $Reg
+    RUN: $Reg
+    STAT: $Reg
+    SRCCOPY: $Reg
 }
 
 // -------- CLOCK -------- //
 
 export interface CLOCK_t {
-    TASKS_XOSTART: em.$Reg
-    TASKS_XOSTOP: em.$Reg
-    TASKS_PLLSTART: em.$Reg
-    TASKS_PLLSTOP: em.$Reg
-    TASKS_LFCLKSTART: em.$Reg
-    TASKS_LFCLKSTOP: em.$Reg
-    TASKS_CAL: em.$Reg
-    TASKS_XOTUNE: em.$Reg
-    TASKS_XOTUNEABORT: em.$Reg
-    RESERVED: dim_t<em.$Reg, 23>
-    SUBSCRIBE_XOSTART: em.$Reg
-    SUBSCRIBE_XOSTOP: em.$Reg
-    SUBSCRIBE_PLLSTART: em.$Reg
-    SUBSCRIBE_PLLSTOP: em.$Reg
-    SUBSCRIBE_LFCLKSTART: em.$Reg
-    SUBSCRIBE_LFCLKSTOP: em.$Reg
-    SUBSCRIBE_CAL: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 25>
-    EVENTS_XOSTARTED: em.$Reg
-    EVENTS_PLLSTARTED: em.$Reg
-    EVENTS_LFCLKSTARTED: em.$Reg
-    EVENTS_DONE: em.$Reg
-    EVENTS_XOTUNED: em.$Reg
-    EVENTS_XOTUNEERROR: em.$Reg
-    EVENTS_XOTUNEFAILED: em.$Reg
-    RESERVED2: dim_t<em.$Reg, 121>
-    INTEN: em.$Reg
-    INTENSET: em.$Reg
-    INTENCLR: em.$Reg
-    INTPEND: em.$Reg
-    RESERVED3: dim_t<em.$Reg, 60>
+    TASKS_XOSTART: $Reg
+    TASKS_XOSTOP: $Reg
+    TASKS_PLLSTART: $Reg
+    TASKS_PLLSTOP: $Reg
+    TASKS_LFCLKSTART: $Reg
+    TASKS_LFCLKSTOP: $Reg
+    TASKS_CAL: $Reg
+    TASKS_XOTUNE: $Reg
+    TASKS_XOTUNEABORT: $Reg
+    RESERVED: dim_t<$Reg, 23>
+    SUBSCRIBE_XOSTART: $Reg
+    SUBSCRIBE_XOSTOP: $Reg
+    SUBSCRIBE_PLLSTART: $Reg
+    SUBSCRIBE_PLLSTOP: $Reg
+    SUBSCRIBE_LFCLKSTART: $Reg
+    SUBSCRIBE_LFCLKSTOP: $Reg
+    SUBSCRIBE_CAL: $Reg
+    RESERVED1: dim_t<$Reg, 25>
+    EVENTS_XOSTARTED: $Reg
+    EVENTS_PLLSTARTED: $Reg
+    EVENTS_LFCLKSTARTED: $Reg
+    EVENTS_DONE: $Reg
+    EVENTS_XOTUNED: $Reg
+    EVENTS_XOTUNEERROR: $Reg
+    EVENTS_XOTUNEFAILED: $Reg
+    RESERVED2: dim_t<$Reg, 121>
+    INTEN: $Reg
+    INTENSET: $Reg
+    INTENCLR: $Reg
+    INTPEND: $Reg
+    RESERVED3: dim_t<$Reg, 60>
     XO: CLOCK_XO_t
-    RESERVED4: dim_t<em.$Reg, 4>
+    RESERVED4: dim_t<$Reg, 4>
     PLL: CLOCK_PLL_t
-    RESERVED5: dim_t<em.$Reg, 4>
+    RESERVED5: dim_t<$Reg, 4>
     LFCLK: CLOCK_LFCLK_t
 }
 
 // -------- FICR_INFO -------- //
 
 export interface FICR_INFO_t {
-    CONFIGID: em.$Reg
-    DEVICEID: dim_t<em.$Reg, 2>
-    UUID: dim_t<em.$Reg, 4>
-    PART: em.$Reg
-    VARIANT: em.$Reg
-    PACKAGE: em.$Reg
-    RAM: em.$Reg
-    RRAM: em.$Reg
+    CONFIGID: $Reg
+    DEVICEID: dim_t<$Reg, 2>
+    UUID: dim_t<$Reg, 4>
+    PART: $Reg
+    VARIANT: $Reg
+    PACKAGE: $Reg
+    RAM: $Reg
+    RRAM: $Reg
 }
 
 // -------- FICR_TRIMCNF -------- //
 
 export interface FICR_TRIMCNF_t {
-    ADDR: em.$Reg
-    DATA: em.$Reg
+    ADDR: $Reg
+    DATA: $Reg
 }
 
 // -------- FICR_NFC -------- //
 
 export interface FICR_NFC_t {
-    TAGHEADER0: em.$Reg
-    TAGHEADER1: em.$Reg
-    TAGHEADER2: em.$Reg
-    TAGHEADER3: em.$Reg
+    TAGHEADER0: $Reg
+    TAGHEADER1: $Reg
+    TAGHEADER2: $Reg
+    TAGHEADER3: $Reg
 }
 
 // -------- FICR -------- //
 
 export interface FICR_t {
-    RESERVED: dim_t<em.$Reg, 192>
+    RESERVED: dim_t<$Reg, 192>
     INFO: FICR_INFO_t
-    RESERVED1: dim_t<em.$Reg, 20>
-    ER: dim_t<em.$Reg, 4>
-    IR: dim_t<em.$Reg, 4>
-    DEVICEADDRTYPE: em.$Reg
-    DEVICEADDR: dim_t<em.$Reg, 2>
-    RESERVED2: dim_t<em.$Reg, 21>
+    RESERVED1: dim_t<$Reg, 20>
+    ER: dim_t<$Reg, 4>
+    IR: dim_t<$Reg, 4>
+    DEVICEADDRTYPE: $Reg
+    DEVICEADDR: dim_t<$Reg, 2>
+    RESERVED2: dim_t<$Reg, 21>
     TRIMCNF: dim_t<FICR_TRIMCNF_t, 64>
     NFC: FICR_NFC_t
-    RESERVED3: dim_t<em.$Reg, 4>
-    XOSC32MTRIM: em.$Reg
-    XOSC32KTRIM: em.$Reg
+    RESERVED3: dim_t<$Reg, 4>
+    XOSC32MTRIM: $Reg
+    XOSC32KTRIM: $Reg
 }
 
 // -------- GPIO -------- //
 
 export interface GPIO_t {
-    OUT: em.$Reg
-    OUTSET: em.$Reg
-    OUTCLR: em.$Reg
-    IN: em.$Reg
-    DIR: em.$Reg
-    DIRSET: em.$Reg
-    DIRCLR: em.$Reg
-    RESERVED: em.$Reg
-    LATCH: em.$Reg
-    DETECTMODE: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 22>
-    PIN_CNF: dim_t<em.$Reg, 32>
+    OUT: $Reg
+    OUTSET: $Reg
+    OUTCLR: $Reg
+    IN: $Reg
+    DIR: $Reg
+    DIRSET: $Reg
+    DIRCLR: $Reg
+    RESERVED: $Reg
+    LATCH: $Reg
+    DETECTMODE: $Reg
+    RESERVED1: dim_t<$Reg, 22>
+    PIN_CNF: dim_t<$Reg, 32>
 }
 
 // -------- GPIOTE_EVENTS_PORT -------- //
 
 export interface GPIOTE_EVENTS_PORT_t {
-    NONSECURE: em.$Reg
-    SECURE: em.$Reg
+    NONSECURE: $Reg
+    SECURE: $Reg
 }
 
 // -------- GPIOTE_PUBLISH_PORT -------- //
 
 export interface GPIOTE_PUBLISH_PORT_t {
-    NONSECURE: em.$Reg
-    SECURE: em.$Reg
+    NONSECURE: $Reg
+    SECURE: $Reg
 }
 
 // -------- GPIOTE -------- //
 
 export interface GPIOTE_t {
-    TASKS_OUT: dim_t<em.$Reg, 8>
-    RESERVED: dim_t<em.$Reg, 4>
-    TASKS_SET: dim_t<em.$Reg, 8>
-    RESERVED1: dim_t<em.$Reg, 4>
-    TASKS_CLR: dim_t<em.$Reg, 8>
-    SUBSCRIBE_OUT: dim_t<em.$Reg, 8>
-    RESERVED2: dim_t<em.$Reg, 4>
-    SUBSCRIBE_SET: dim_t<em.$Reg, 8>
-    RESERVED3: dim_t<em.$Reg, 4>
-    SUBSCRIBE_CLR: dim_t<em.$Reg, 8>
-    EVENTS_IN: dim_t<em.$Reg, 8>
-    RESERVED4: dim_t<em.$Reg, 8>
+    TASKS_OUT: dim_t<$Reg, 8>
+    RESERVED: dim_t<$Reg, 4>
+    TASKS_SET: dim_t<$Reg, 8>
+    RESERVED1: dim_t<$Reg, 4>
+    TASKS_CLR: dim_t<$Reg, 8>
+    SUBSCRIBE_OUT: dim_t<$Reg, 8>
+    RESERVED2: dim_t<$Reg, 4>
+    SUBSCRIBE_SET: dim_t<$Reg, 8>
+    RESERVED3: dim_t<$Reg, 4>
+    SUBSCRIBE_CLR: dim_t<$Reg, 8>
+    EVENTS_IN: dim_t<$Reg, 8>
+    RESERVED4: dim_t<$Reg, 8>
     EVENTS_PORT: dim_t<GPIOTE_EVENTS_PORT_t, 1>
-    RESERVED5: dim_t<em.$Reg, 14>
-    PUBLISH_IN: dim_t<em.$Reg, 8>
-    RESERVED6: dim_t<em.$Reg, 8>
+    RESERVED5: dim_t<$Reg, 14>
+    PUBLISH_IN: dim_t<$Reg, 8>
+    RESERVED6: dim_t<$Reg, 8>
     PUBLISH_PORT: dim_t<GPIOTE_PUBLISH_PORT_t, 1>
-    RESERVED7: dim_t<em.$Reg, 79>
-    INTENSET0: em.$Reg
-    INTENCLR0: em.$Reg
-    RESERVED8: dim_t<em.$Reg, 2>
-    INTENSET1: em.$Reg
-    INTENCLR1: em.$Reg
-    RESERVED9: dim_t<em.$Reg, 125>
-    CONFIG: dim_t<em.$Reg, 8>
+    RESERVED7: dim_t<$Reg, 79>
+    INTENSET0: $Reg
+    INTENCLR0: $Reg
+    RESERVED8: dim_t<$Reg, 2>
+    INTENSET1: $Reg
+    INTENCLR1: $Reg
+    RESERVED9: dim_t<$Reg, 125>
+    CONFIG: dim_t<$Reg, 8>
 }
 
 // -------- GRTC_CC -------- //
 
 export interface GRTC_CC_t {
-    CCL: em.$Reg
-    CCH: em.$Reg
-    CCADD: em.$Reg
-    CCEN: em.$Reg
+    CCL: $Reg
+    CCH: $Reg
+    CCADD: $Reg
+    CCEN: $Reg
 }
 
 // -------- GRTC_SYSCOUNTER -------- //
 
 export interface GRTC_SYSCOUNTER_t {
-    SYSCOUNTERL: em.$Reg
-    SYSCOUNTERH: em.$Reg
-    ACTIVE: em.$Reg
-    RESERVED: em.$Reg
+    SYSCOUNTERL: $Reg
+    SYSCOUNTERH: $Reg
+    ACTIVE: $Reg
+    RESERVED: $Reg
 }
 
 // -------- GRTC -------- //
 
 export interface GRTC_t {
-    TASKS_CAPTURE: dim_t<em.$Reg, 12>
-    RESERVED: dim_t<em.$Reg, 12>
-    TASKS_START: em.$Reg
-    TASKS_STOP: em.$Reg
-    TASKS_CLEAR: em.$Reg
-    TASKS_PWMSTART: em.$Reg
-    TASKS_PWMSTOP: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 3>
-    SUBSCRIBE_CAPTURE: dim_t<em.$Reg, 12>
-    RESERVED2: dim_t<em.$Reg, 20>
-    EVENTS_COMPARE: dim_t<em.$Reg, 12>
-    RESERVED3: dim_t<em.$Reg, 13>
-    EVENTS_RTCOMPARESYNC: em.$Reg
-    RESERVED4: em.$Reg
-    EVENTS_PWMPERIODEND: em.$Reg
-    RESERVED5: dim_t<em.$Reg, 4>
-    PUBLISH_COMPARE: dim_t<em.$Reg, 12>
-    RESERVED6: dim_t<em.$Reg, 20>
-    SHORTS: em.$Reg
-    RESERVED7: dim_t<em.$Reg, 63>
-    INTEN0: em.$Reg
-    INTENSET0: em.$Reg
-    INTENCLR0: em.$Reg
-    INTPEND0: em.$Reg
-    INTEN1: em.$Reg
-    INTENSET1: em.$Reg
-    INTENCLR1: em.$Reg
-    INTPEND1: em.$Reg
-    INTEN2: em.$Reg
-    INTENSET2: em.$Reg
-    INTENCLR2: em.$Reg
-    INTPEND2: em.$Reg
-    INTEN3: em.$Reg
-    INTENSET3: em.$Reg
-    INTENCLR3: em.$Reg
-    INTPEND3: em.$Reg
-    RESERVED8: dim_t<em.$Reg, 48>
-    EVTEN: em.$Reg
-    EVTENSET: em.$Reg
-    EVTENCLR: em.$Reg
-    RESERVED9: dim_t<em.$Reg, 65>
-    MODE: em.$Reg
-    RESERVED10: dim_t<em.$Reg, 3>
+    TASKS_CAPTURE: dim_t<$Reg, 12>
+    RESERVED: dim_t<$Reg, 12>
+    TASKS_START: $Reg
+    TASKS_STOP: $Reg
+    TASKS_CLEAR: $Reg
+    TASKS_PWMSTART: $Reg
+    TASKS_PWMSTOP: $Reg
+    RESERVED1: dim_t<$Reg, 3>
+    SUBSCRIBE_CAPTURE: dim_t<$Reg, 12>
+    RESERVED2: dim_t<$Reg, 20>
+    EVENTS_COMPARE: dim_t<$Reg, 12>
+    RESERVED3: dim_t<$Reg, 13>
+    EVENTS_RTCOMPARESYNC: $Reg
+    RESERVED4: $Reg
+    EVENTS_PWMPERIODEND: $Reg
+    RESERVED5: dim_t<$Reg, 4>
+    PUBLISH_COMPARE: dim_t<$Reg, 12>
+    RESERVED6: dim_t<$Reg, 20>
+    SHORTS: $Reg
+    RESERVED7: dim_t<$Reg, 63>
+    INTEN0: $Reg
+    INTENSET0: $Reg
+    INTENCLR0: $Reg
+    INTPEND0: $Reg
+    INTEN1: $Reg
+    INTENSET1: $Reg
+    INTENCLR1: $Reg
+    INTPEND1: $Reg
+    INTEN2: $Reg
+    INTENSET2: $Reg
+    INTENCLR2: $Reg
+    INTPEND2: $Reg
+    INTEN3: $Reg
+    INTENSET3: $Reg
+    INTENCLR3: $Reg
+    INTPEND3: $Reg
+    RESERVED8: dim_t<$Reg, 48>
+    EVTEN: $Reg
+    EVTENSET: $Reg
+    EVTENCLR: $Reg
+    RESERVED9: dim_t<$Reg, 65>
+    MODE: $Reg
+    RESERVED10: dim_t<$Reg, 3>
     CC: dim_t<GRTC_CC_t, 12>
-    RESERVED11: dim_t<em.$Reg, 49>
-    TIMEOUT: em.$Reg
-    INTERVAL: em.$Reg
-    WAKETIME: em.$Reg
-    RESERVED12: dim_t<em.$Reg, 24>
-    PWMCONFIG: em.$Reg
-    CLKOUT: em.$Reg
-    CLKCFG: em.$Reg
-    RESERVED13: em.$Reg
+    RESERVED11: dim_t<$Reg, 49>
+    TIMEOUT: $Reg
+    INTERVAL: $Reg
+    WAKETIME: $Reg
+    RESERVED12: dim_t<$Reg, 24>
+    PWMCONFIG: $Reg
+    CLKOUT: $Reg
+    CLKCFG: $Reg
+    RESERVED13: $Reg
     SYSCOUNTER: dim_t<GRTC_SYSCOUNTER_t, 4>
 }
 
 // -------- MEMCONF_POWER -------- //
 
 export interface MEMCONF_POWER_t {
-    CONTROL: em.$Reg
-    RESERVED: em.$Reg
-    RET: em.$Reg
-    RET2: em.$Reg
+    CONTROL: $Reg
+    RESERVED: $Reg
+    RET: $Reg
+    RET2: $Reg
 }
 
 // -------- MEMCONF -------- //
 
 export interface MEMCONF_t {
-    RESERVED: dim_t<em.$Reg, 320>
+    RESERVED: dim_t<$Reg, 320>
     POWER: dim_t<MEMCONF_POWER_t, 2>
 }
 
 // -------- POWER -------- //
 
 export interface POWER_t {
-    RESERVED: dim_t<em.$Reg, 12>
-    TASKS_CONSTLAT: em.$Reg
-    TASKS_LOWPWR: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 30>
-    SUBSCRIBE_CONSTLAT: em.$Reg
-    SUBSCRIBE_LOWPWR: em.$Reg
-    RESERVED2: dim_t<em.$Reg, 30>
-    EVENTS_POFWARN: em.$Reg
-    EVENTS_SLEEPENTER: em.$Reg
-    EVENTS_SLEEPEXIT: em.$Reg
-    RESERVED3: dim_t<em.$Reg, 30>
-    PUBLISH_SLEEPENTER: em.$Reg
-    PUBLISH_SLEEPEXIT: em.$Reg
-    RESERVED4: dim_t<em.$Reg, 81>
-    INTEN: em.$Reg
-    INTENSET: em.$Reg
-    INTENCLR: em.$Reg
-    RESERVED5: dim_t<em.$Reg, 125>
-    GPREGRET: dim_t<em.$Reg, 2>
-    RESERVED6: dim_t<em.$Reg, 6>
-    CONSTLATSTAT: em.$Reg
+    RESERVED: dim_t<$Reg, 12>
+    TASKS_CONSTLAT: $Reg
+    TASKS_LOWPWR: $Reg
+    RESERVED1: dim_t<$Reg, 30>
+    SUBSCRIBE_CONSTLAT: $Reg
+    SUBSCRIBE_LOWPWR: $Reg
+    RESERVED2: dim_t<$Reg, 30>
+    EVENTS_POFWARN: $Reg
+    EVENTS_SLEEPENTER: $Reg
+    EVENTS_SLEEPEXIT: $Reg
+    RESERVED3: dim_t<$Reg, 30>
+    PUBLISH_SLEEPENTER: $Reg
+    PUBLISH_SLEEPEXIT: $Reg
+    RESERVED4: dim_t<$Reg, 81>
+    INTEN: $Reg
+    INTENSET: $Reg
+    INTENCLR: $Reg
+    RESERVED5: dim_t<$Reg, 125>
+    GPREGRET: dim_t<$Reg, 2>
+    RESERVED6: dim_t<$Reg, 6>
+    CONSTLATSTAT: $Reg
 }
 
 // -------- RADIO_PSEL -------- //
 
 export interface RADIO_PSEL_t {
-    DFEGPIO: dim_t<em.$Reg, 8>
+    DFEGPIO: dim_t<$Reg, 8>
 }
 
 // -------- RADIO_DFEPACKET -------- //
 
 export interface RADIO_DFEPACKET_t {
-    PTR: em.$Reg
-    MAXCNT: em.$Reg
-    AMOUNT: em.$Reg
-    CURRENTAMOUNT: em.$Reg
+    PTR: $Reg
+    MAXCNT: $Reg
+    AMOUNT: $Reg
+    CURRENTAMOUNT: $Reg
 }
 
 // -------- RADIO_CSTONES -------- //
 
 export interface RADIO_CSTONES_t {
-    MODE: em.$Reg
-    NUMSAMPLES: em.$Reg
-    NEXTFREQUENCY: em.$Reg
-    FFOIN: em.$Reg
-    FFOSOURCE: em.$Reg
-    FAEPEER: em.$Reg
-    PHASESHIFT: em.$Reg
-    NUMSAMPLESCOEFF: em.$Reg
-    PCT16: em.$Reg
-    MAGPHASEMEAN: em.$Reg
-    IQRAWMEAN: em.$Reg
-    MAGSTD: em.$Reg
-    CNACC: em.$Reg
-    FFOEST: em.$Reg
-    DOWNSAMPLE: em.$Reg
-    FINETUNENEXT: em.$Reg
-    CFOPHASE: em.$Reg
-    FREQOFFSET: em.$Reg
-    PCT11: em.$Reg
-    LFAENEXT: em.$Reg
+    MODE: $Reg
+    NUMSAMPLES: $Reg
+    NEXTFREQUENCY: $Reg
+    FFOIN: $Reg
+    FFOSOURCE: $Reg
+    FAEPEER: $Reg
+    PHASESHIFT: $Reg
+    NUMSAMPLESCOEFF: $Reg
+    PCT16: $Reg
+    MAGPHASEMEAN: $Reg
+    IQRAWMEAN: $Reg
+    MAGSTD: $Reg
+    CNACC: $Reg
+    FFOEST: $Reg
+    DOWNSAMPLE: $Reg
+    FINETUNENEXT: $Reg
+    CFOPHASE: $Reg
+    FREQOFFSET: $Reg
+    PCT11: $Reg
+    LFAENEXT: $Reg
 }
 
 // -------- RADIO_RTT -------- //
 
 export interface RADIO_RTT_t {
-    CONFIG: em.$Reg
-    SEGMENT01: em.$Reg
-    SEGMENT23: em.$Reg
-    SEGMENT45: em.$Reg
-    SEGMENT67: em.$Reg
+    CONFIG: $Reg
+    SEGMENT01: $Reg
+    SEGMENT23: $Reg
+    SEGMENT45: $Reg
+    SEGMENT67: $Reg
 }
 
 // -------- RADIO -------- //
 
 export interface RADIO_t {
-    TASKS_TXEN: em.$Reg
-    TASKS_RXEN: em.$Reg
-    TASKS_START: em.$Reg
-    TASKS_STOP: em.$Reg
-    TASKS_DISABLE: em.$Reg
-    TASKS_RSSISTART: em.$Reg
-    TASKS_BCSTART: em.$Reg
-    TASKS_BCSTOP: em.$Reg
-    TASKS_EDSTART: em.$Reg
-    TASKS_EDSTOP: em.$Reg
-    TASKS_CCASTART: em.$Reg
-    TASKS_CCASTOP: em.$Reg
-    RESERVED: dim_t<em.$Reg, 29>
-    TASKS_SOFTRESET: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 22>
-    SUBSCRIBE_TXEN: em.$Reg
-    SUBSCRIBE_RXEN: em.$Reg
-    SUBSCRIBE_START: em.$Reg
-    SUBSCRIBE_STOP: em.$Reg
-    SUBSCRIBE_DISABLE: em.$Reg
-    SUBSCRIBE_RSSISTART: em.$Reg
-    SUBSCRIBE_BCSTART: em.$Reg
-    SUBSCRIBE_BCSTOP: em.$Reg
-    SUBSCRIBE_EDSTART: em.$Reg
-    SUBSCRIBE_EDSTOP: em.$Reg
-    SUBSCRIBE_CCASTART: em.$Reg
-    SUBSCRIBE_CCASTOP: em.$Reg
-    RESERVED2: dim_t<em.$Reg, 29>
-    SUBSCRIBE_SOFTRESET: em.$Reg
-    RESERVED3: dim_t<em.$Reg, 22>
-    EVENTS_READY: em.$Reg
-    EVENTS_TXREADY: em.$Reg
-    EVENTS_RXREADY: em.$Reg
-    EVENTS_ADDRESS: em.$Reg
-    EVENTS_FRAMESTART: em.$Reg
-    EVENTS_PAYLOAD: em.$Reg
-    EVENTS_END: em.$Reg
-    EVENTS_PHYEND: em.$Reg
-    EVENTS_DISABLED: em.$Reg
-    EVENTS_DEVMATCH: em.$Reg
-    EVENTS_DEVMISS: em.$Reg
-    EVENTS_CRCOK: em.$Reg
-    EVENTS_CRCERROR: em.$Reg
-    RESERVED4: em.$Reg
-    EVENTS_BCMATCH: em.$Reg
-    EVENTS_EDEND: em.$Reg
-    EVENTS_EDSTOPPED: em.$Reg
-    EVENTS_CCAIDLE: em.$Reg
-    EVENTS_CCABUSY: em.$Reg
-    EVENTS_CCASTOPPED: em.$Reg
-    EVENTS_RATEBOOST: em.$Reg
-    EVENTS_MHRMATCH: em.$Reg
-    EVENTS_SYNC: em.$Reg
-    EVENTS_CTEPRESENT: em.$Reg
-    RESERVED5: dim_t<em.$Reg, 40>
-    PUBLISH_READY: em.$Reg
-    PUBLISH_TXREADY: em.$Reg
-    PUBLISH_RXREADY: em.$Reg
-    PUBLISH_ADDRESS: em.$Reg
-    PUBLISH_FRAMESTART: em.$Reg
-    PUBLISH_PAYLOAD: em.$Reg
-    PUBLISH_END: em.$Reg
-    PUBLISH_PHYEND: em.$Reg
-    PUBLISH_DISABLED: em.$Reg
-    PUBLISH_DEVMATCH: em.$Reg
-    PUBLISH_DEVMISS: em.$Reg
-    PUBLISH_CRCOK: em.$Reg
-    PUBLISH_CRCERROR: em.$Reg
-    RESERVED6: em.$Reg
-    PUBLISH_BCMATCH: em.$Reg
-    PUBLISH_EDEND: em.$Reg
-    PUBLISH_EDSTOPPED: em.$Reg
-    PUBLISH_CCAIDLE: em.$Reg
-    PUBLISH_CCABUSY: em.$Reg
-    PUBLISH_CCASTOPPED: em.$Reg
-    PUBLISH_RATEBOOST: em.$Reg
-    PUBLISH_MHRMATCH: em.$Reg
-    PUBLISH_SYNC: em.$Reg
-    PUBLISH_CTEPRESENT: em.$Reg
-    RESERVED7: dim_t<em.$Reg, 40>
-    SHORTS: em.$Reg
-    RESERVED8: dim_t<em.$Reg, 33>
-    INTENSET00: em.$Reg
-    RESERVED9: em.$Reg
-    INTENCLR00: em.$Reg
-    RESERVED10: dim_t<em.$Reg, 5>
-    INTENSET10: em.$Reg
-    RESERVED11: em.$Reg
-    INTENCLR10: em.$Reg
-    RESERVED12: dim_t<em.$Reg, 19>
-    MODE: em.$Reg
-    RESERVED13: dim_t<em.$Reg, 7>
-    STATE: em.$Reg
-    RESERVED14: dim_t<em.$Reg, 3>
-    EDCTRL: em.$Reg
-    EDSAMPLE: em.$Reg
-    CCACTRL: em.$Reg
-    RESERVED15: em.$Reg
-    DATAWHITE: em.$Reg
-    RESERVED16: dim_t<em.$Reg, 112>
-    TIMING: em.$Reg
-    FREQUENCY: em.$Reg
-    RESERVED17: em.$Reg
-    TXPOWER: em.$Reg
-    TIFS: em.$Reg
-    RSSISAMPLE: em.$Reg
-    RESERVED18: dim_t<em.$Reg, 123>
-    FECONFIG: em.$Reg
-    RESERVED19: dim_t<em.$Reg, 253>
-    DFEMODE: em.$Reg
-    DFESTATUS: em.$Reg
-    RESERVED20: dim_t<em.$Reg, 2>
-    DFECTRL1: em.$Reg
-    DFECTRL2: em.$Reg
-    RESERVED21: dim_t<em.$Reg, 4>
-    SWITCHPATTERN: em.$Reg
-    CLEARPATTERN: em.$Reg
+    TASKS_TXEN: $Reg
+    TASKS_RXEN: $Reg
+    TASKS_START: $Reg
+    TASKS_STOP: $Reg
+    TASKS_DISABLE: $Reg
+    TASKS_RSSISTART: $Reg
+    TASKS_BCSTART: $Reg
+    TASKS_BCSTOP: $Reg
+    TASKS_EDSTART: $Reg
+    TASKS_EDSTOP: $Reg
+    TASKS_CCASTART: $Reg
+    TASKS_CCASTOP: $Reg
+    RESERVED: dim_t<$Reg, 29>
+    TASKS_SOFTRESET: $Reg
+    RESERVED1: dim_t<$Reg, 22>
+    SUBSCRIBE_TXEN: $Reg
+    SUBSCRIBE_RXEN: $Reg
+    SUBSCRIBE_START: $Reg
+    SUBSCRIBE_STOP: $Reg
+    SUBSCRIBE_DISABLE: $Reg
+    SUBSCRIBE_RSSISTART: $Reg
+    SUBSCRIBE_BCSTART: $Reg
+    SUBSCRIBE_BCSTOP: $Reg
+    SUBSCRIBE_EDSTART: $Reg
+    SUBSCRIBE_EDSTOP: $Reg
+    SUBSCRIBE_CCASTART: $Reg
+    SUBSCRIBE_CCASTOP: $Reg
+    RESERVED2: dim_t<$Reg, 29>
+    SUBSCRIBE_SOFTRESET: $Reg
+    RESERVED3: dim_t<$Reg, 22>
+    EVENTS_READY: $Reg
+    EVENTS_TXREADY: $Reg
+    EVENTS_RXREADY: $Reg
+    EVENTS_ADDRESS: $Reg
+    EVENTS_FRAMESTART: $Reg
+    EVENTS_PAYLOAD: $Reg
+    EVENTS_END: $Reg
+    EVENTS_PHYEND: $Reg
+    EVENTS_DISABLED: $Reg
+    EVENTS_DEVMATCH: $Reg
+    EVENTS_DEVMISS: $Reg
+    EVENTS_CRCOK: $Reg
+    EVENTS_CRCERROR: $Reg
+    RESERVED4: $Reg
+    EVENTS_BCMATCH: $Reg
+    EVENTS_EDEND: $Reg
+    EVENTS_EDSTOPPED: $Reg
+    EVENTS_CCAIDLE: $Reg
+    EVENTS_CCABUSY: $Reg
+    EVENTS_CCASTOPPED: $Reg
+    EVENTS_RATEBOOST: $Reg
+    EVENTS_MHRMATCH: $Reg
+    EVENTS_SYNC: $Reg
+    EVENTS_CTEPRESENT: $Reg
+    RESERVED5: dim_t<$Reg, 40>
+    PUBLISH_READY: $Reg
+    PUBLISH_TXREADY: $Reg
+    PUBLISH_RXREADY: $Reg
+    PUBLISH_ADDRESS: $Reg
+    PUBLISH_FRAMESTART: $Reg
+    PUBLISH_PAYLOAD: $Reg
+    PUBLISH_END: $Reg
+    PUBLISH_PHYEND: $Reg
+    PUBLISH_DISABLED: $Reg
+    PUBLISH_DEVMATCH: $Reg
+    PUBLISH_DEVMISS: $Reg
+    PUBLISH_CRCOK: $Reg
+    PUBLISH_CRCERROR: $Reg
+    RESERVED6: $Reg
+    PUBLISH_BCMATCH: $Reg
+    PUBLISH_EDEND: $Reg
+    PUBLISH_EDSTOPPED: $Reg
+    PUBLISH_CCAIDLE: $Reg
+    PUBLISH_CCABUSY: $Reg
+    PUBLISH_CCASTOPPED: $Reg
+    PUBLISH_RATEBOOST: $Reg
+    PUBLISH_MHRMATCH: $Reg
+    PUBLISH_SYNC: $Reg
+    PUBLISH_CTEPRESENT: $Reg
+    RESERVED7: dim_t<$Reg, 40>
+    SHORTS: $Reg
+    RESERVED8: dim_t<$Reg, 33>
+    INTENSET00: $Reg
+    RESERVED9: $Reg
+    INTENCLR00: $Reg
+    RESERVED10: dim_t<$Reg, 5>
+    INTENSET10: $Reg
+    RESERVED11: $Reg
+    INTENCLR10: $Reg
+    RESERVED12: dim_t<$Reg, 19>
+    MODE: $Reg
+    RESERVED13: dim_t<$Reg, 7>
+    STATE: $Reg
+    RESERVED14: dim_t<$Reg, 3>
+    EDCTRL: $Reg
+    EDSAMPLE: $Reg
+    CCACTRL: $Reg
+    RESERVED15: $Reg
+    DATAWHITE: $Reg
+    RESERVED16: dim_t<$Reg, 112>
+    TIMING: $Reg
+    FREQUENCY: $Reg
+    RESERVED17: $Reg
+    TXPOWER: $Reg
+    TIFS: $Reg
+    RSSISAMPLE: $Reg
+    RESERVED18: dim_t<$Reg, 123>
+    FECONFIG: $Reg
+    RESERVED19: dim_t<$Reg, 253>
+    DFEMODE: $Reg
+    DFESTATUS: $Reg
+    RESERVED20: dim_t<$Reg, 2>
+    DFECTRL1: $Reg
+    DFECTRL2: $Reg
+    RESERVED21: dim_t<$Reg, 4>
+    SWITCHPATTERN: $Reg
+    CLEARPATTERN: $Reg
     PSEL: RADIO_PSEL_t
     DFEPACKET: RADIO_DFEPACKET_t
-    RESERVED22: dim_t<em.$Reg, 43>
-    CRCSTATUS: em.$Reg
-    RXMATCH: em.$Reg
-    RXCRC: em.$Reg
-    DAI: em.$Reg
-    PDUSTAT: em.$Reg
-    PCNF0: em.$Reg
-    RESERVED23: em.$Reg
-    PCNF1: em.$Reg
-    BASE0: em.$Reg
-    BASE1: em.$Reg
-    PREFIX0: em.$Reg
-    PREFIX1: em.$Reg
-    TXADDRESS: em.$Reg
-    RXADDRESSES: em.$Reg
-    CRCCNF: em.$Reg
-    CRCPOLY: em.$Reg
-    CRCINIT: em.$Reg
-    DAB: dim_t<em.$Reg, 8>
-    DAP: dim_t<em.$Reg, 8>
-    DACNF: em.$Reg
-    BCC: em.$Reg
-    RESERVED24: dim_t<em.$Reg, 3>
-    CTESTATUS: em.$Reg
-    RESERVED25: dim_t<em.$Reg, 3>
-    MHRMATCHCONF: em.$Reg
-    MHRMATCHMASK: em.$Reg
-    SFD: em.$Reg
-    CTEINLINECONF: em.$Reg
-    RESERVED26: dim_t<em.$Reg, 3>
-    PACKETPTR: em.$Reg
-    RESERVED27: dim_t<em.$Reg, 75>
+    RESERVED22: dim_t<$Reg, 43>
+    CRCSTATUS: $Reg
+    RXMATCH: $Reg
+    RXCRC: $Reg
+    DAI: $Reg
+    PDUSTAT: $Reg
+    PCNF0: $Reg
+    RESERVED23: $Reg
+    PCNF1: $Reg
+    BASE0: $Reg
+    BASE1: $Reg
+    PREFIX0: $Reg
+    PREFIX1: $Reg
+    TXADDRESS: $Reg
+    RXADDRESSES: $Reg
+    CRCCNF: $Reg
+    CRCPOLY: $Reg
+    CRCINIT: $Reg
+    DAB: dim_t<$Reg, 8>
+    DAP: dim_t<$Reg, 8>
+    DACNF: $Reg
+    BCC: $Reg
+    RESERVED24: dim_t<$Reg, 3>
+    CTESTATUS: $Reg
+    RESERVED25: dim_t<$Reg, 3>
+    MHRMATCHCONF: $Reg
+    MHRMATCHMASK: $Reg
+    SFD: $Reg
+    CTEINLINECONF: $Reg
+    RESERVED26: dim_t<$Reg, 3>
+    PACKETPTR: $Reg
+    RESERVED27: dim_t<$Reg, 75>
     CSTONES: RADIO_CSTONES_t
     RTT: RADIO_RTT_t
 }
@@ -512,136 +512,136 @@ export interface RADIO_t {
 // -------- REGULATORS_VREGMAIN -------- //
 
 export interface REGULATORS_VREGMAIN_t {
-    DCDCEN: em.$Reg
-    INDUCTORDET: em.$Reg
+    DCDCEN: $Reg
+    INDUCTORDET: $Reg
 }
 
 // -------- REGULATORS -------- //
 
 export interface REGULATORS_t {
-    RESERVED: dim_t<em.$Reg, 320>
-    SYSTEMOFF: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 11>
-    POFCON: em.$Reg
-    POFSTAT: em.$Reg
-    RESERVED2: dim_t<em.$Reg, 50>
+    RESERVED: dim_t<$Reg, 320>
+    SYSTEMOFF: $Reg
+    RESERVED1: dim_t<$Reg, 11>
+    POFCON: $Reg
+    POFSTAT: $Reg
+    RESERVED2: dim_t<$Reg, 50>
     VREGMAIN: REGULATORS_VREGMAIN_t
 }
 
 // -------- RESET -------- //
 
 export interface RESET_t {
-    RESERVED: dim_t<em.$Reg, 384>
-    RESETREAS: em.$Reg
+    RESERVED: dim_t<$Reg, 384>
+    RESETREAS: $Reg
 }
 
 // -------- RRAMC_BUFSTATUS -------- //
 
 export interface RRAMC_BUFSTATUS_t {
-    RESERVED: dim_t<em.$Reg, 2>
-    WRITEBUFEMPTY: em.$Reg
+    RESERVED: dim_t<$Reg, 2>
+    WRITEBUFEMPTY: $Reg
 }
 
 // -------- RRAMC_ECC -------- //
 
 export interface RRAMC_ECC_t {
-    ERRORADDR: em.$Reg
+    ERRORADDR: $Reg
 }
 
 // -------- RRAMC_POWER -------- //
 
 export interface RRAMC_POWER_t {
-    CONFIG: em.$Reg
-    RESERVED: em.$Reg
-    LOWPOWERCONFIG: em.$Reg
+    CONFIG: $Reg
+    RESERVED: $Reg
+    LOWPOWERCONFIG: $Reg
 }
 
 // -------- RRAMC_ERASE -------- //
 
 export interface RRAMC_ERASE_t {
-    ERASEALL: em.$Reg
+    ERASEALL: $Reg
 }
 
 // -------- RRAMC_REGION -------- //
 
 export interface RRAMC_REGION_t {
-    ADDRESS: em.$Reg
-    CONFIG: em.$Reg
+    ADDRESS: $Reg
+    CONFIG: $Reg
 }
 
 // -------- RRAMC -------- //
 
 export interface RRAMC_t {
-    TASKS_WAKEUP: em.$Reg
-    RESERVED: em.$Reg
-    TASKS_COMMITWRITEBUF: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 29>
-    SUBSCRIBE_WAKEUP: em.$Reg
-    RESERVED2: em.$Reg
-    SUBSCRIBE_COMMITWRITEBUF: em.$Reg
-    RESERVED3: dim_t<em.$Reg, 29>
-    EVENTS_WOKENUP: em.$Reg
-    EVENTS_READY: em.$Reg
-    EVENTS_READYNEXT: em.$Reg
-    EVENTS_ACCESSERROR: em.$Reg
-    RESERVED4: dim_t<em.$Reg, 28>
-    PUBLISH_WOKENUP: em.$Reg
-    RESERVED5: dim_t<em.$Reg, 95>
-    INTEN: em.$Reg
-    INTENSET: em.$Reg
-    INTENCLR: em.$Reg
-    INTPEND: em.$Reg
-    RESERVED6: dim_t<em.$Reg, 60>
-    READY: em.$Reg
-    READYNEXT: em.$Reg
-    ACCESSERRORADDR: em.$Reg
-    RESERVED7: em.$Reg
+    TASKS_WAKEUP: $Reg
+    RESERVED: $Reg
+    TASKS_COMMITWRITEBUF: $Reg
+    RESERVED1: dim_t<$Reg, 29>
+    SUBSCRIBE_WAKEUP: $Reg
+    RESERVED2: $Reg
+    SUBSCRIBE_COMMITWRITEBUF: $Reg
+    RESERVED3: dim_t<$Reg, 29>
+    EVENTS_WOKENUP: $Reg
+    EVENTS_READY: $Reg
+    EVENTS_READYNEXT: $Reg
+    EVENTS_ACCESSERROR: $Reg
+    RESERVED4: dim_t<$Reg, 28>
+    PUBLISH_WOKENUP: $Reg
+    RESERVED5: dim_t<$Reg, 95>
+    INTEN: $Reg
+    INTENSET: $Reg
+    INTENCLR: $Reg
+    INTPEND: $Reg
+    RESERVED6: dim_t<$Reg, 60>
+    READY: $Reg
+    READYNEXT: $Reg
+    ACCESSERRORADDR: $Reg
+    RESERVED7: $Reg
     BUFSTATUS: RRAMC_BUFSTATUS_t
-    RESERVED8: em.$Reg
+    RESERVED8: $Reg
     ECC: RRAMC_ECC_t
-    RESERVED9: dim_t<em.$Reg, 55>
-    CONFIG: em.$Reg
-    RESERVED10: dim_t<em.$Reg, 2>
-    READYNEXTTIMEOUT: em.$Reg
+    RESERVED9: dim_t<$Reg, 55>
+    CONFIG: $Reg
+    RESERVED10: dim_t<$Reg, 2>
+    READYNEXTTIMEOUT: $Reg
     POWER: RRAMC_POWER_t
-    RESERVED11: dim_t<em.$Reg, 9>
+    RESERVED11: dim_t<$Reg, 9>
     ERASE: RRAMC_ERASE_t
-    RESERVED12: dim_t<em.$Reg, 3>
+    RESERVED12: dim_t<$Reg, 3>
     REGION: dim_t<RRAMC_REGION_t, 5>
 }
 
 // -------- TAMPC_ACTIVESHIELD -------- //
 
 export interface TAMPC_ACTIVESHIELD_t {
-    CHEN: em.$Reg
+    CHEN: $Reg
 }
 
 // -------- TAMPC_PROTECT_DOMAIN_DBGEN -------- //
 
 export interface TAMPC_PROTECT_DOMAIN_DBGEN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_DOMAIN_NIDEN -------- //
 
 export interface TAMPC_PROTECT_DOMAIN_NIDEN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_DOMAIN_SPIDEN -------- //
 
 export interface TAMPC_PROTECT_DOMAIN_SPIDEN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_DOMAIN_SPNIDEN -------- //
 
 export interface TAMPC_PROTECT_DOMAIN_SPNIDEN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_DOMAIN -------- //
@@ -656,79 +656,79 @@ export interface TAMPC_PROTECT_DOMAIN_t {
 // -------- TAMPC_PROTECT_AP_DBGEN -------- //
 
 export interface TAMPC_PROTECT_AP_DBGEN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_AP -------- //
 
 export interface TAMPC_PROTECT_AP_t {
     DBGEN: TAMPC_PROTECT_AP_DBGEN_t
-    RESERVED: dim_t<em.$Reg, 2>
+    RESERVED: dim_t<$Reg, 2>
 }
 
 // -------- TAMPC_PROTECT_ACTIVESHIELD -------- //
 
 export interface TAMPC_PROTECT_ACTIVESHIELD_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_CRACENTAMP -------- //
 
 export interface TAMPC_PROTECT_CRACENTAMP_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_GLITCHSLOWDOMAIN -------- //
 
 export interface TAMPC_PROTECT_GLITCHSLOWDOMAIN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_GLITCHFASTDOMAIN -------- //
 
 export interface TAMPC_PROTECT_GLITCHFASTDOMAIN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_EXTRESETEN -------- //
 
 export interface TAMPC_PROTECT_EXTRESETEN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_INTRESETEN -------- //
 
 export interface TAMPC_PROTECT_INTRESETEN_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT_ERASEPROTECT -------- //
 
 export interface TAMPC_PROTECT_ERASEPROTECT_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
 }
 
 // -------- TAMPC_PROTECT -------- //
 
 export interface TAMPC_PROTECT_t {
     DOMAIN: dim_t<TAMPC_PROTECT_DOMAIN_t, 1>
-    RESERVED: dim_t<em.$Reg, 120>
+    RESERVED: dim_t<$Reg, 120>
     AP: dim_t<TAMPC_PROTECT_AP_t, 1>
-    RESERVED1: dim_t<em.$Reg, 124>
+    RESERVED1: dim_t<$Reg, 124>
     ACTIVESHIELD: TAMPC_PROTECT_ACTIVESHIELD_t
-    RESERVED2: dim_t<em.$Reg, 12>
+    RESERVED2: dim_t<$Reg, 12>
     CRACENTAMP: TAMPC_PROTECT_CRACENTAMP_t
     GLITCHSLOWDOMAIN: TAMPC_PROTECT_GLITCHSLOWDOMAIN_t
     GLITCHFASTDOMAIN: TAMPC_PROTECT_GLITCHFASTDOMAIN_t
-    RESERVED3: dim_t<em.$Reg, 8>
+    RESERVED3: dim_t<$Reg, 8>
     EXTRESETEN: TAMPC_PROTECT_EXTRESETEN_t
     INTRESETEN: TAMPC_PROTECT_INTRESETEN_t
     ERASEPROTECT: TAMPC_PROTECT_ERASEPROTECT_t
@@ -737,72 +737,72 @@ export interface TAMPC_PROTECT_t {
 // -------- TAMPC -------- //
 
 export interface TAMPC_t {
-    RESERVED: dim_t<em.$Reg, 64>
-    EVENTS_TAMPER: em.$Reg
-    EVENTS_WRITEERROR: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 126>
-    INTEN: em.$Reg
-    INTENSET: em.$Reg
-    INTENCLR: em.$Reg
-    INTPEND: em.$Reg
-    RESERVED2: dim_t<em.$Reg, 60>
-    STATUS: em.$Reg
+    RESERVED: dim_t<$Reg, 64>
+    EVENTS_TAMPER: $Reg
+    EVENTS_WRITEERROR: $Reg
+    RESERVED1: dim_t<$Reg, 126>
+    INTEN: $Reg
+    INTENSET: $Reg
+    INTENCLR: $Reg
+    INTPEND: $Reg
+    RESERVED2: dim_t<$Reg, 60>
+    STATUS: $Reg
     ACTIVESHIELD: TAMPC_ACTIVESHIELD_t
-    RESERVED3: dim_t<em.$Reg, 62>
+    RESERVED3: dim_t<$Reg, 62>
     PROTECT: TAMPC_PROTECT_t
 }
 
 // -------- TIMER -------- //
 
 export interface TIMER_t {
-    TASKS_START: em.$Reg
-    TASKS_STOP: em.$Reg
-    TASKS_COUNT: em.$Reg
-    TASKS_CLEAR: em.$Reg
-    RESERVED: dim_t<em.$Reg, 12>
-    TASKS_CAPTURE: dim_t<em.$Reg, 8>
-    RESERVED1: dim_t<em.$Reg, 8>
-    SUBSCRIBE_START: em.$Reg
-    SUBSCRIBE_STOP: em.$Reg
-    SUBSCRIBE_COUNT: em.$Reg
-    SUBSCRIBE_CLEAR: em.$Reg
-    RESERVED2: dim_t<em.$Reg, 12>
-    SUBSCRIBE_CAPTURE: dim_t<em.$Reg, 8>
-    RESERVED3: dim_t<em.$Reg, 24>
-    EVENTS_COMPARE: dim_t<em.$Reg, 8>
-    RESERVED4: dim_t<em.$Reg, 24>
-    PUBLISH_COMPARE: dim_t<em.$Reg, 8>
-    RESERVED5: dim_t<em.$Reg, 8>
-    SHORTS: em.$Reg
-    RESERVED6: dim_t<em.$Reg, 63>
-    INTEN: em.$Reg
-    INTENSET: em.$Reg
-    INTENCLR: em.$Reg
-    RESERVED7: dim_t<em.$Reg, 126>
-    MODE: em.$Reg
-    BITMODE: em.$Reg
-    RESERVED8: em.$Reg
-    PRESCALER: em.$Reg
-    RESERVED9: dim_t<em.$Reg, 11>
-    CC: dim_t<em.$Reg, 8>
-    RESERVED10: dim_t<em.$Reg, 8>
-    ONESHOTEN: dim_t<em.$Reg, 8>
+    TASKS_START: $Reg
+    TASKS_STOP: $Reg
+    TASKS_COUNT: $Reg
+    TASKS_CLEAR: $Reg
+    RESERVED: dim_t<$Reg, 12>
+    TASKS_CAPTURE: dim_t<$Reg, 8>
+    RESERVED1: dim_t<$Reg, 8>
+    SUBSCRIBE_START: $Reg
+    SUBSCRIBE_STOP: $Reg
+    SUBSCRIBE_COUNT: $Reg
+    SUBSCRIBE_CLEAR: $Reg
+    RESERVED2: dim_t<$Reg, 12>
+    SUBSCRIBE_CAPTURE: dim_t<$Reg, 8>
+    RESERVED3: dim_t<$Reg, 24>
+    EVENTS_COMPARE: dim_t<$Reg, 8>
+    RESERVED4: dim_t<$Reg, 24>
+    PUBLISH_COMPARE: dim_t<$Reg, 8>
+    RESERVED5: dim_t<$Reg, 8>
+    SHORTS: $Reg
+    RESERVED6: dim_t<$Reg, 63>
+    INTEN: $Reg
+    INTENSET: $Reg
+    INTENCLR: $Reg
+    RESERVED7: dim_t<$Reg, 126>
+    MODE: $Reg
+    BITMODE: $Reg
+    RESERVED8: $Reg
+    PRESCALER: $Reg
+    RESERVED9: dim_t<$Reg, 11>
+    CC: dim_t<$Reg, 8>
+    RESERVED10: dim_t<$Reg, 8>
+    ONESHOTEN: dim_t<$Reg, 8>
 }
 
 // -------- UARTE_TASKS_DMA_RX -------- //
 
 export interface UARTE_TASKS_DMA_RX_t {
-    START: em.$Reg
-    STOP: em.$Reg
-    ENABLEMATCH: dim_t<em.$Reg, 4>
-    DISABLEMATCH: dim_t<em.$Reg, 4>
+    START: $Reg
+    STOP: $Reg
+    ENABLEMATCH: dim_t<$Reg, 4>
+    DISABLEMATCH: dim_t<$Reg, 4>
 }
 
 // -------- UARTE_TASKS_DMA_TX -------- //
 
 export interface UARTE_TASKS_DMA_TX_t {
-    START: em.$Reg
-    STOP: em.$Reg
+    START: $Reg
+    STOP: $Reg
 }
 
 // -------- UARTE_TASKS_DMA -------- //
@@ -815,17 +815,17 @@ export interface UARTE_TASKS_DMA_t {
 // -------- UARTE_SUBSCRIBE_DMA_RX -------- //
 
 export interface UARTE_SUBSCRIBE_DMA_RX_t {
-    START: em.$Reg
-    STOP: em.$Reg
-    ENABLEMATCH: dim_t<em.$Reg, 4>
-    DISABLEMATCH: dim_t<em.$Reg, 4>
+    START: $Reg
+    STOP: $Reg
+    ENABLEMATCH: dim_t<$Reg, 4>
+    DISABLEMATCH: dim_t<$Reg, 4>
 }
 
 // -------- UARTE_SUBSCRIBE_DMA_TX -------- //
 
 export interface UARTE_SUBSCRIBE_DMA_TX_t {
-    START: em.$Reg
-    STOP: em.$Reg
+    START: $Reg
+    STOP: $Reg
 }
 
 // -------- UARTE_SUBSCRIBE_DMA -------- //
@@ -838,18 +838,18 @@ export interface UARTE_SUBSCRIBE_DMA_t {
 // -------- UARTE_EVENTS_DMA_RX -------- //
 
 export interface UARTE_EVENTS_DMA_RX_t {
-    END: em.$Reg
-    READY: em.$Reg
-    BUSERROR: em.$Reg
-    MATCH: dim_t<em.$Reg, 4>
+    END: $Reg
+    READY: $Reg
+    BUSERROR: $Reg
+    MATCH: dim_t<$Reg, 4>
 }
 
 // -------- UARTE_EVENTS_DMA_TX -------- //
 
 export interface UARTE_EVENTS_DMA_TX_t {
-    END: em.$Reg
-    READY: em.$Reg
-    BUSERROR: em.$Reg
+    END: $Reg
+    READY: $Reg
+    BUSERROR: $Reg
 }
 
 // -------- UARTE_EVENTS_DMA -------- //
@@ -862,18 +862,18 @@ export interface UARTE_EVENTS_DMA_t {
 // -------- UARTE_PUBLISH_DMA_RX -------- //
 
 export interface UARTE_PUBLISH_DMA_RX_t {
-    END: em.$Reg
-    READY: em.$Reg
-    BUSERROR: em.$Reg
-    MATCH: dim_t<em.$Reg, 4>
+    END: $Reg
+    READY: $Reg
+    BUSERROR: $Reg
+    MATCH: dim_t<$Reg, 4>
 }
 
 // -------- UARTE_PUBLISH_DMA_TX -------- //
 
 export interface UARTE_PUBLISH_DMA_TX_t {
-    END: em.$Reg
-    READY: em.$Reg
-    BUSERROR: em.$Reg
+    END: $Reg
+    READY: $Reg
+    BUSERROR: $Reg
 }
 
 // -------- UARTE_PUBLISH_DMA -------- //
@@ -886,42 +886,42 @@ export interface UARTE_PUBLISH_DMA_t {
 // -------- UARTE_PSEL -------- //
 
 export interface UARTE_PSEL_t {
-    TXD: em.$Reg
-    CTS: em.$Reg
-    RXD: em.$Reg
-    RTS: em.$Reg
+    TXD: $Reg
+    CTS: $Reg
+    RXD: $Reg
+    RTS: $Reg
 }
 
 // -------- UARTE_DMA_RX_MATCH -------- //
 
 export interface UARTE_DMA_RX_MATCH_t {
-    CONFIG: em.$Reg
-    CANDIDATE: dim_t<em.$Reg, 4>
+    CONFIG: $Reg
+    CANDIDATE: dim_t<$Reg, 4>
 }
 
 // -------- UARTE_DMA_RX -------- //
 
 export interface UARTE_DMA_RX_t {
-    RESERVED: em.$Reg
-    PTR: em.$Reg
-    MAXCNT: em.$Reg
-    AMOUNT: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 3>
-    TERMINATEONBUSERROR: em.$Reg
-    BUSERRORADDRESS: em.$Reg
+    RESERVED: $Reg
+    PTR: $Reg
+    MAXCNT: $Reg
+    AMOUNT: $Reg
+    RESERVED1: dim_t<$Reg, 3>
+    TERMINATEONBUSERROR: $Reg
+    BUSERRORADDRESS: $Reg
     MATCH: UARTE_DMA_RX_MATCH_t
 }
 
 // -------- UARTE_DMA_TX -------- //
 
 export interface UARTE_DMA_TX_t {
-    RESERVED: em.$Reg
-    PTR: em.$Reg
-    MAXCNT: em.$Reg
-    AMOUNT: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 3>
-    TERMINATEONBUSERROR: em.$Reg
-    BUSERRORADDRESS: em.$Reg
+    RESERVED: $Reg
+    PTR: $Reg
+    MAXCNT: $Reg
+    AMOUNT: $Reg
+    RESERVED1: dim_t<$Reg, 3>
+    TERMINATEONBUSERROR: $Reg
+    BUSERRORADDRESS: $Reg
 }
 
 // -------- UARTE_DMA -------- //
@@ -934,62 +934,62 @@ export interface UARTE_DMA_t {
 // -------- UARTE -------- //
 
 export interface UARTE_t {
-    RESERVED: dim_t<em.$Reg, 7>
-    TASKS_FLUSHRX: em.$Reg
-    RESERVED1: dim_t<em.$Reg, 2>
+    RESERVED: dim_t<$Reg, 7>
+    TASKS_FLUSHRX: $Reg
+    RESERVED1: dim_t<$Reg, 2>
     TASKS_DMA: UARTE_TASKS_DMA_t
-    RESERVED2: dim_t<em.$Reg, 17>
-    SUBSCRIBE_FLUSHRX: em.$Reg
-    RESERVED3: dim_t<em.$Reg, 2>
+    RESERVED2: dim_t<$Reg, 17>
+    SUBSCRIBE_FLUSHRX: $Reg
+    RESERVED3: dim_t<$Reg, 2>
     SUBSCRIBE_DMA: UARTE_SUBSCRIBE_DMA_t
-    RESERVED4: dim_t<em.$Reg, 10>
-    EVENTS_CTS: em.$Reg
-    EVENTS_NCTS: em.$Reg
-    RESERVED5: em.$Reg
-    EVENTS_TXDRDY: em.$Reg
-    EVENTS_RXDRDY: em.$Reg
-    EVENTS_ERROR: em.$Reg
-    RESERVED6: dim_t<em.$Reg, 3>
-    EVENTS_RXTO: em.$Reg
-    RESERVED7: dim_t<em.$Reg, 2>
-    EVENTS_TXSTOPPED: em.$Reg
-    RESERVED8: dim_t<em.$Reg, 6>
+    RESERVED4: dim_t<$Reg, 10>
+    EVENTS_CTS: $Reg
+    EVENTS_NCTS: $Reg
+    RESERVED5: $Reg
+    EVENTS_TXDRDY: $Reg
+    EVENTS_RXDRDY: $Reg
+    EVENTS_ERROR: $Reg
+    RESERVED6: dim_t<$Reg, 3>
+    EVENTS_RXTO: $Reg
+    RESERVED7: dim_t<$Reg, 2>
+    EVENTS_TXSTOPPED: $Reg
+    RESERVED8: dim_t<$Reg, 6>
     EVENTS_DMA: UARTE_EVENTS_DMA_t
-    EVENTS_FRAMETIMEOUT: em.$Reg
-    RESERVED9: dim_t<em.$Reg, 2>
-    PUBLISH_CTS: em.$Reg
-    PUBLISH_NCTS: em.$Reg
-    RESERVED10: em.$Reg
-    PUBLISH_TXDRDY: em.$Reg
-    PUBLISH_RXDRDY: em.$Reg
-    PUBLISH_ERROR: em.$Reg
-    RESERVED11: dim_t<em.$Reg, 3>
-    PUBLISH_RXTO: em.$Reg
-    RESERVED12: dim_t<em.$Reg, 2>
-    PUBLISH_TXSTOPPED: em.$Reg
-    RESERVED13: dim_t<em.$Reg, 6>
+    EVENTS_FRAMETIMEOUT: $Reg
+    RESERVED9: dim_t<$Reg, 2>
+    PUBLISH_CTS: $Reg
+    PUBLISH_NCTS: $Reg
+    RESERVED10: $Reg
+    PUBLISH_TXDRDY: $Reg
+    PUBLISH_RXDRDY: $Reg
+    PUBLISH_ERROR: $Reg
+    RESERVED11: dim_t<$Reg, 3>
+    PUBLISH_RXTO: $Reg
+    RESERVED12: dim_t<$Reg, 2>
+    PUBLISH_TXSTOPPED: $Reg
+    RESERVED13: dim_t<$Reg, 6>
     PUBLISH_DMA: UARTE_PUBLISH_DMA_t
-    PUBLISH_FRAMETIMEOUT: em.$Reg
-    RESERVED14: dim_t<em.$Reg, 2>
-    SHORTS: em.$Reg
-    RESERVED15: dim_t<em.$Reg, 63>
-    INTEN: em.$Reg
-    INTENSET: em.$Reg
-    INTENCLR: em.$Reg
-    RESERVED16: dim_t<em.$Reg, 93>
-    ERRORSRC: em.$Reg
-    RESERVED17: dim_t<em.$Reg, 31>
-    ENABLE: em.$Reg
-    RESERVED18: dim_t<em.$Reg, 8>
-    BAUDRATE: em.$Reg
-    RESERVED19: dim_t<em.$Reg, 17>
-    CONFIG: em.$Reg
-    RESERVED20: em.$Reg
-    ADDRESS: em.$Reg
-    FRAMETIMEOUT: em.$Reg
-    RESERVED21: dim_t<em.$Reg, 34>
+    PUBLISH_FRAMETIMEOUT: $Reg
+    RESERVED14: dim_t<$Reg, 2>
+    SHORTS: $Reg
+    RESERVED15: dim_t<$Reg, 63>
+    INTEN: $Reg
+    INTENSET: $Reg
+    INTENCLR: $Reg
+    RESERVED16: dim_t<$Reg, 93>
+    ERRORSRC: $Reg
+    RESERVED17: dim_t<$Reg, 31>
+    ENABLE: $Reg
+    RESERVED18: dim_t<$Reg, 8>
+    BAUDRATE: $Reg
+    RESERVED19: dim_t<$Reg, 17>
+    CONFIG: $Reg
+    RESERVED20: $Reg
+    ADDRESS: $Reg
+    FRAMETIMEOUT: $Reg
+    RESERVED21: dim_t<$Reg, 34>
     PSEL: UARTE_PSEL_t
-    RESERVED22: dim_t<em.$Reg, 59>
+    RESERVED22: dim_t<$Reg, 59>
     DMA: UARTE_DMA_t
 }
 

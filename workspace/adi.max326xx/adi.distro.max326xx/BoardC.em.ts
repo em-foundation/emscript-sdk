@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('COMPOSITE')
+import '@$$emscript'
+export const $U = $declare('COMPOSITE')
 
 import * as AlarmMgr from '@em.utils/AlarmMgr.em'
 import * as BoardController from '@em.utils/BoardController.em'
@@ -57,7 +57,7 @@ export const DEFAULTS = {
 }
 
 export function em$configure(): void {
-    if (em.isBareMetal()) return
+    if ($isbare()) return
     const brd = $board(DEFAULTS)
     const ConsoleUart = brd.useLpUart ? ConsoleUart3 : ConsoleUart0
     $using(BoardController)

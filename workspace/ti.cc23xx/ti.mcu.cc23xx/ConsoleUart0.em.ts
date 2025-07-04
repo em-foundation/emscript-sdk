@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE', ConsoleUartI)
+import '@$$emscript'
+export const $U = $declare('MODULE', ConsoleUartI)
 
 import * as ConsoleUartI from '@em.hal/ConsoleUartI.em'
 import * as GpioI from '@em.hal/GpioI.em'

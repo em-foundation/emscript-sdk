@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as Crc from '@em.benchmark.coremark/Crc.em'
 import * as ListBench from '@em.benchmark.coremark/ListBench.em'

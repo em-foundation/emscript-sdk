@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 const chan_off_map = $table<u8>()
 

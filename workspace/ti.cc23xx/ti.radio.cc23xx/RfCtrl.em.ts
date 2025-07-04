@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as $R from '@ti.distro.cc23xx/REGS.em'
 
@@ -20,7 +20,7 @@ export function disable() {
     $R.LRFDRFE.ENABLE.$h = 0
     $R.LRFDRFE.PDREQ.$h = 0
     //
-    em.$reg16[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_ATSTREF] &= <u16>~$R.LRFDRFE32_ATSTREF_BIAS_M
+    $reg16[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_ATSTREF] &= <u16>~$R.LRFDRFE32_ATSTREF_BIAS_M
 }
 
 export function enableClocks() {
@@ -41,7 +41,7 @@ export function enableClocks() {
 }
 
 export function enableImages() {
-    em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_MSGBOX] = 0
+    $reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_MSGBOX] = 0
     $R.LRFDPBE.INIT.$$ = $R.LRFDPBE_INIT_MDMF_M | $R.LRFDPBE_INIT_TOPSM_M
     $R.LRFDPBE.ENABLE.$$ = $R.LRFDPBE_ENABLE_MDMF_M | $R.LRFDPBE_ENABLE_TOPSM_M
     $R.LRFDMDM.INIT.$$ = $R.LRFDMDM_INIT_TXRXFIFO_M | $R.LRFDMDM_INIT_TOPSM_M

@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as BusyWaitI from '@em.hal/BusyWaitI.em'
 import * as ConsoleUartI from '@em.hal/ConsoleUartI.em'

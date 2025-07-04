@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $T = em.$declare('TEMPLATE')
+import '@$$emscript'
+export const $T = $declare('TEMPLATE')
 
 import * as $R from '@ti.distro.cc23xx/REGS.em'
 
@@ -8,7 +8,7 @@ import * as EdgeI from '@em.hal/EdgeI.em'
 import * as GpioI from '@em.hal/GpioI.em'
 
 export namespace em$template {
-    export const $U = em.$declare('MODULE', EdgeI)
+    export const $U = $declare('MODULE', EdgeI)
 
     export const Pin = $proxy<GpioI.$I>()
     export const pin_num = $config<i16>()

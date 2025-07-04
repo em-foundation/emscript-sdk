@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE', OneShotI)
+import '@$$emscript'
+export const $U = $declare('MODULE', OneShotI)
 
 import * as OneShotI from '@em.hal/OneShotI.em'
 

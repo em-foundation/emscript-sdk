@@ -50,7 +50,7 @@ for (const file of Fs.readdirSync('./inc')) {
             meta.genTitle(`${tname} TYPE`)
             meta.print('export interface %1_t {\n%+', segs[0])
         }
-        meta.print('%t%1: em.$Reg // offset %2\n', segs[1], m[2])
+        meta.print('%t%1: $Reg // offset %2\n', segs[1], m[2])
     }
     for (const ln of src_lines) {
         const m = ln.match(/^#define (\w+)\s+(\w+)/)

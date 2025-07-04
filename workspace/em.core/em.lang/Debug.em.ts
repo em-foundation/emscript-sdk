@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as Common from '@em.mcu/Common.em'
 import * as GpioI from '@em.hal/GpioI.em'

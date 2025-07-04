@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as Dev from '@em.rf.core/Dev.em'
 import * as Poller from '@em.mcu/Poller.em'

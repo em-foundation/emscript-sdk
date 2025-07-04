@@ -13,7 +13,7 @@ function genPeri(peri: any, periCls: string) {
     const regArr = peri.registers[0].register as Array<any>
     for (const reg of regArr) {
         const regName = reg.name[0] as string
-        meta.print('%t%1: em.$Reg\n', regName)
+        meta.print('%t%1: $Reg\n', regName)
     }
     meta.print('%-}\n')
     for (const reg of regArr) {

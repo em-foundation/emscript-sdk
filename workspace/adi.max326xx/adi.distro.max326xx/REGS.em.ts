@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('COMPOSITE')
+import '@$$emscript'
+export const $U = $declare('COMPOSITE')
 
 export function em$generate() {
     let out = $outfile('adi.distro.max326xx/REGS.hpp')
@@ -10,27 +10,27 @@ export function em$generate() {
 // -------- PERIPHERAL GCR -------- //
 
 export interface GCR_t {
-    SYSCTRL: em.$Reg
-    RST0: em.$Reg
-    CLKCTRL: em.$Reg
-    PM: em.$Reg
-    PCLKDIV: em.$Reg
-    PCLKDIS0: em.$Reg
-    MEMCTRL: em.$Reg
-    MEMZ: em.$Reg
-    SYSST: em.$Reg
-    RST1: em.$Reg
-    PCLKDIS1: em.$Reg
-    EVENTEN: em.$Reg
-    REVISION: em.$Reg
-    SYSIE: em.$Reg
-    ECCERR: em.$Reg
-    ECCCED: em.$Reg
-    ECCIE: em.$Reg
-    ECCADDR: em.$Reg
-    BTLELDOCTRL: em.$Reg
-    BTLELDODLY: em.$Reg
-    GPR: em.$Reg
+    SYSCTRL: $Reg
+    RST0: $Reg
+    CLKCTRL: $Reg
+    PM: $Reg
+    PCLKDIV: $Reg
+    PCLKDIS0: $Reg
+    MEMCTRL: $Reg
+    MEMZ: $Reg
+    SYSST: $Reg
+    RST1: $Reg
+    PCLKDIS1: $Reg
+    EVENTEN: $Reg
+    REVISION: $Reg
+    SYSIE: $Reg
+    ECCERR: $Reg
+    ECCCED: $Reg
+    ECCIE: $Reg
+    ECCADDR: $Reg
+    BTLELDOCTRL: $Reg
+    BTLELDODLY: $Reg
+    GPR: $Reg
 }
 
 // -------- REGISTER SYSCTRL -------- //
@@ -819,42 +819,42 @@ General Purpose Register.*/
 // -------- PERIPHERAL GPIO -------- //
 
 export interface GPIO_t {
-    EN0: em.$Reg
-    EN0_SET: em.$Reg
-    EN0_CLR: em.$Reg
-    OUTEN: em.$Reg
-    OUTEN_SET: em.$Reg
-    OUTEN_CLR: em.$Reg
-    OUT: em.$Reg
-    OUT_SET: em.$Reg
-    OUT_CLR: em.$Reg
-    IN: em.$Reg
-    INTMODE: em.$Reg
-    INTPOL: em.$Reg
-    INEN: em.$Reg
-    INTEN: em.$Reg
-    INTEN_SET: em.$Reg
-    INTEN_CLR: em.$Reg
-    INTFL: em.$Reg
-    INTFL_CLR: em.$Reg
-    WKEN: em.$Reg
-    WKEN_SET: em.$Reg
-    WKEN_CLR: em.$Reg
-    DUALEDGE: em.$Reg
-    PADCTRL0: em.$Reg
-    PADCTRL1: em.$Reg
-    EN1: em.$Reg
-    EN1_SET: em.$Reg
-    EN1_CLR: em.$Reg
-    EN2: em.$Reg
-    EN2_SET: em.$Reg
-    EN2_CLR: em.$Reg
-    HYSEN: em.$Reg
-    SRSEL: em.$Reg
-    DS0: em.$Reg
-    DS1: em.$Reg
-    PS: em.$Reg
-    VSSEL: em.$Reg
+    EN0: $Reg
+    EN0_SET: $Reg
+    EN0_CLR: $Reg
+    OUTEN: $Reg
+    OUTEN_SET: $Reg
+    OUTEN_CLR: $Reg
+    OUT: $Reg
+    OUT_SET: $Reg
+    OUT_CLR: $Reg
+    IN: $Reg
+    INTMODE: $Reg
+    INTPOL: $Reg
+    INEN: $Reg
+    INTEN: $Reg
+    INTEN_SET: $Reg
+    INTEN_CLR: $Reg
+    INTFL: $Reg
+    INTFL_CLR: $Reg
+    WKEN: $Reg
+    WKEN_SET: $Reg
+    WKEN_CLR: $Reg
+    DUALEDGE: $Reg
+    PADCTRL0: $Reg
+    PADCTRL1: $Reg
+    EN1: $Reg
+    EN1_SET: $Reg
+    EN1_CLR: $Reg
+    EN2: $Reg
+    EN2_SET: $Reg
+    EN2_CLR: $Reg
+    HYSEN: $Reg
+    SRSEL: $Reg
+    DS0: $Reg
+    DS1: $Reg
+    PS: $Reg
+    VSSEL: $Reg
 }
 
 // -------- REGISTER EN0 -------- //
@@ -1256,10 +1256,10 @@ export const F_GPIO_VSSEL_ALL = 0xffffffff << F_GPIO_VSSEL_ALL_POS
 // -------- PERIPHERAL ICC -------- //
 
 export interface ICC_t {
-    INFO: em.$Reg
-    SZ: em.$Reg
-    CTRL: em.$Reg
-    INVALIDATE: em.$Reg
+    INFO: $Reg
+    SZ: $Reg
+    CTRL: $Reg
+    INVALIDATE: $Reg
 }
 
 // -------- REGISTER INFO -------- //
@@ -1325,8 +1325,8 @@ export const F_ICC_INVALIDATE_INVALID = 0xffffffff << F_ICC_INVALIDATE_INVALID_P
 // -------- PERIPHERAL LPGCR -------- //
 
 export interface LPGCR_t {
-    RST: em.$Reg
-    PCLKDIS: em.$Reg
+    RST: $Reg
+    PCLKDIS: $Reg
 }
 
 // -------- REGISTER RST -------- //
@@ -1398,12 +1398,12 @@ export const F_LPGCR_PCLKDIS_LPCOMP = 0x1 << F_LPGCR_PCLKDIS_LPCOMP_POS
 // -------- PERIPHERAL MCR -------- //
 
 export interface MCR_t {
-    ECCEN: em.$Reg
-    IPO_MTRIM: em.$Reg
-    OUTEN: em.$Reg
-    CMP_CTRL: em.$Reg
-    CTRL: em.$Reg
-    GPIO3_CTRL: em.$Reg
+    ECCEN: $Reg
+    IPO_MTRIM: $Reg
+    OUTEN: $Reg
+    CMP_CTRL: $Reg
+    CTRL: $Reg
+    GPIO3_CTRL: $Reg
 }
 
 // -------- REGISTER ECCEN -------- //
@@ -1531,20 +1531,20 @@ export const F_MCR_GPIO3_CTRL_P31_IN = 0x1 << F_MCR_GPIO3_CTRL_P31_IN_POS
 // -------- PERIPHERAL PWRSEQ -------- //
 
 export interface PWRSEQ_t {
-    LPCN: em.$Reg
-    LPWKST0: em.$Reg
-    LPWKEN0: em.$Reg
-    LPWKST1: em.$Reg
-    LPWKEN1: em.$Reg
-    LPWKST2: em.$Reg
-    LPWKEN2: em.$Reg
-    LPWKST3: em.$Reg
-    LPWKEN3: em.$Reg
-    LPPWST: em.$Reg
-    LPPWEN: em.$Reg
-    VBTLEPD: em.$Reg
-    GP0: em.$Reg
-    GP1: em.$Reg
+    LPCN: $Reg
+    LPWKST0: $Reg
+    LPWKEN0: $Reg
+    LPWKST1: $Reg
+    LPWKEN1: $Reg
+    LPWKST2: $Reg
+    LPWKEN2: $Reg
+    LPWKST3: $Reg
+    LPWKEN3: $Reg
+    LPPWST: $Reg
+    LPPWEN: $Reg
+    VBTLEPD: $Reg
+    GP0: $Reg
+    GP1: $Reg
 }
 
 // -------- REGISTER LPCN -------- //
@@ -1776,13 +1776,13 @@ General Purpose Register 1*/
 // -------- PERIPHERAL RTC -------- //
 
 export interface RTC_t {
-    SEC: em.$Reg
-    SSEC: em.$Reg
-    TODA: em.$Reg
-    SSECA: em.$Reg
-    CTRL: em.$Reg
-    TRIM: em.$Reg
-    OSCCTRL: em.$Reg
+    SEC: $Reg
+    SSEC: $Reg
+    TODA: $Reg
+    SSECA: $Reg
+    CTRL: $Reg
+    TRIM: $Reg
+    OSCCTRL: $Reg
 }
 
 // -------- REGISTER SEC -------- //
@@ -1951,26 +1951,26 @@ export const F_RTC_OSCCTRL_SQW_32K = 0x1 << F_RTC_OSCCTRL_SQW_32K_POS
 // -------- PERIPHERAL SIMO -------- //
 
 export interface SIMO_t {
-    VREGO_A: em.$Reg
-    VREGO_B: em.$Reg
-    VREGO_C: em.$Reg
-    VREGO_D: em.$Reg
-    IPKA: em.$Reg
-    IPKB: em.$Reg
-    MAXTON: em.$Reg
-    ILOAD_A: em.$Reg
-    ILOAD_B: em.$Reg
-    ILOAD_C: em.$Reg
-    ILOAD_D: em.$Reg
-    BUCK_ALERT_THR_A: em.$Reg
-    BUCK_ALERT_THR_B: em.$Reg
-    BUCK_ALERT_THR_C: em.$Reg
-    BUCK_ALERT_THR_D: em.$Reg
-    BUCK_OUT_READY: em.$Reg
-    ZERO_CROSS_CAL_A: em.$Reg
-    ZERO_CROSS_CAL_B: em.$Reg
-    ZERO_CROSS_CAL_C: em.$Reg
-    ZERO_CROSS_CAL_D: em.$Reg
+    VREGO_A: $Reg
+    VREGO_B: $Reg
+    VREGO_C: $Reg
+    VREGO_D: $Reg
+    IPKA: $Reg
+    IPKB: $Reg
+    MAXTON: $Reg
+    ILOAD_A: $Reg
+    ILOAD_B: $Reg
+    ILOAD_C: $Reg
+    ILOAD_D: $Reg
+    BUCK_ALERT_THR_A: $Reg
+    BUCK_ALERT_THR_B: $Reg
+    BUCK_ALERT_THR_C: $Reg
+    BUCK_ALERT_THR_D: $Reg
+    BUCK_OUT_READY: $Reg
+    ZERO_CROSS_CAL_A: $Reg
+    ZERO_CROSS_CAL_B: $Reg
+    ZERO_CROSS_CAL_C: $Reg
+    ZERO_CROSS_CAL_D: $Reg
 }
 
 // -------- REGISTER VREGO_A -------- //
@@ -2212,14 +2212,14 @@ export const F_SIMO_ZERO_CROSS_CAL_D_ZXCALD = 0xf << F_SIMO_ZERO_CROSS_CAL_D_ZXC
 // -------- PERIPHERAL TMR -------- //
 
 export interface TMR_t {
-    CNT: em.$Reg
-    CMP: em.$Reg
-    PWM: em.$Reg
-    INTFL: em.$Reg
-    CTRL0: em.$Reg
-    NOLCMP: em.$Reg
-    CTRL1: em.$Reg
-    WKFL: em.$Reg
+    CNT: $Reg
+    CMP: $Reg
+    PWM: $Reg
+    INTFL: $Reg
+    CTRL0: $Reg
+    NOLCMP: $Reg
+    CTRL1: $Reg
+    WKFL: $Reg
 }
 
 // -------- REGISTER CNT -------- //
@@ -2584,18 +2584,18 @@ export const F_TMR_WKFL_B = 0x1 << F_TMR_WKFL_B_POS
 // -------- PERIPHERAL UART -------- //
 
 export interface UART_t {
-    CTRL: em.$Reg
-    STATUS: em.$Reg
-    INT_EN: em.$Reg
-    INT_FL: em.$Reg
-    CLKDIV: em.$Reg
-    OSR: em.$Reg
-    TXPEEK: em.$Reg
-    PNR: em.$Reg
-    FIFO: em.$Reg
-    DMA: em.$Reg
-    WKEN: em.$Reg
-    WKFL: em.$Reg
+    CTRL: $Reg
+    STATUS: $Reg
+    INT_EN: $Reg
+    INT_FL: $Reg
+    CLKDIV: $Reg
+    OSR: $Reg
+    TXPEEK: $Reg
+    PNR: $Reg
+    FIFO: $Reg
+    DMA: $Reg
+    WKEN: $Reg
+    WKFL: $Reg
 }
 
 // -------- REGISTER CTRL -------- //
@@ -2897,10 +2897,10 @@ export const F_UART_WKFL_RX_THD = 0x1 << F_UART_WKFL_RX_THD_POS
 // -------- PERIPHERAL WDT -------- //
 
 export interface WDT_t {
-    CTRL: em.$Reg
-    RST: em.$Reg
-    CLKSEL: em.$Reg
-    CNT: em.$Reg
+    CTRL: $Reg
+    RST: $Reg
+    CLKSEL: $Reg
+    CNT: $Reg
 }
 
 // -------- REGISTER CTRL -------- //
@@ -3158,14 +3158,14 @@ export const F_WDT_CNT_COUNT = 0xffffffff << F_WDT_CNT_COUNT_POS
 // -------- PERIPHERAL WUT -------- //
 
 export interface WUT_t {
-    CNT: em.$Reg
-    CMP: em.$Reg
-    INTR: em.$Reg
-    CTRL: em.$Reg
-    NOLCMP: em.$Reg
-    PRESET: em.$Reg
-    RELOAD: em.$Reg
-    SNAPSHOT: em.$Reg
+    CNT: $Reg
+    CMP: $Reg
+    INTR: $Reg
+    CTRL: $Reg
+    NOLCMP: $Reg
+    PRESET: $Reg
+    RELOAD: $Reg
+    SNAPSHOT: $Reg
 }
 
 // -------- REGISTER CNT -------- //

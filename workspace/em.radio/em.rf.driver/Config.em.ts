@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 export enum Phy {
     NONE, BLE_1M, PROP_1M, PROP_250K,

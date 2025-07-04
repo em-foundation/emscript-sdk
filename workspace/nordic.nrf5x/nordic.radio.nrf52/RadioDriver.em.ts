@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE', RadioDriverI)
+import '@$$emscript'
+export const $U = $declare('MODULE', RadioDriverI)
 
 import * as $R from '@nordic.distro.nrf52/REGS.em'
 

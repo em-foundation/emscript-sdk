@@ -80,7 +80,7 @@ function scanFields(): Array<[string, string, string]> {
         const m = ln?.match(/(\w+)\s+(\w+)\s+(\w+)(\[(\d+)\])?;/)
         if (!m) continue
         const fname = m[3]
-        const ftype = (m[2] == 'uint32_t') ? 'em.$Reg' : m[2].replace('NRF_', '').replace('_Type', '_t')
+        const ftype = (m[2] == 'uint32_t') ? '$Reg' : m[2].replace('NRF_', '').replace('_Type', '_t')
         const fdim = m[5] ?? ''
         res.push([fname, ftype, fdim])
     }

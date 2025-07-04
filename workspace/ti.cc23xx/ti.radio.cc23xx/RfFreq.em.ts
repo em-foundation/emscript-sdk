@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as $R from '@ti.distro.cc23xx/REGS.em'
 
@@ -97,27 +97,27 @@ export function program(frequency: u32) {
     const synthFrequency = frequency - 1_000_000 // TODO: generalize for different PHYs & RX/TX
     const synthFrequencyCompensated = scaleFreqWithHFXTOffset(synthFrequency)
     const frequencyDiv2_16 = (synthFrequency + (1 << 15)) >> 16
-    em.$reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_DIVIDEND] = 1 << 31
-    em.$reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_DIVISOR] = frequencyDiv2_16
-    em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_K5] = <u16>frequencyDiv2_16
-    let precalSetting = em.$reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_PRE3_PRE2]
+    $reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_DIVIDEND] = 1 << 31
+    $reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_DIVISOR] = frequencyDiv2_16
+    $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_K5] = <u16>frequencyDiv2_16
+    let precalSetting = $reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_PRE3_PRE2]
     const coarsePrecal = (precalSetting & $R.LRFDRFE32_PRE3_PRE2_CRSCALDIV_M) >> $R.LRFDRFE32_PRE3_PRE2_CRSCALDIV_S
     const midPrecal = (precalSetting & ($R.LRFDRFE32_PRE3_PRE2_MIDCALDIVMSB_M | $R.LRFDRFE32_PRE3_PRE2_MIDCALDIVLSB_M)) >> $R.LRFDRFE_PRE2_MIDCALDIVLSB_S
     const calMCoarse = findCalM(synthFrequency, coarsePrecal)
     const calMMid = (coarsePrecal == midPrecal) ? calMCoarse : findCalM(synthFrequency, midPrecal)
-    em.$reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_CALMMID_CALMCRS] = (calMCoarse << $R.LRFDRFE32_CALMMID_CALMCRS_CALMCRS_VAL_S) |
+    $reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_CALMMID_CALMCRS] = (calMCoarse << $R.LRFDRFE32_CALMMID_CALMCRS_CALMCRS_VAL_S) |
         (calMMid << $R.LRFDRFE32_CALMMID_CALMCRS_CALMMID_VAL_S)
-    precalSetting = em.$reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_PRE1_PRE0]
+    precalSetting = $reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_PRE1_PRE0]
     const precal0 = (precalSetting & $R.LRFDRFE32_PRE1_PRE0_PLLDIV0_M) >> $R.LRFDRFE32_PRE1_PRE0_PLLDIV0_S
     const precal1 = (precalSetting & $R.LRFDRFE32_PRE1_PRE0_PLLDIV1_M) >> $R.LRFDRFE32_PRE1_PRE0_PLLDIV1_S
     const pllMBase = programPQ(findPllMBase(synthFrequency))
     const pllMBaseCompensated = (synthFrequencyCompensated == synthFrequency) ? pllMBase : findPllMBase(synthFrequencyCompensated)
-    em.$reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_PLLM0] = ((pllMBaseCompensated * precal0) << $R.LRFDRFE32_PLLM0_VAL_S)
-    em.$reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_PLLM1] = ((pllMBaseCompensated * precal1) << $R.LRFDRFE32_PLLM1_VAL_S)
-    while ((em.$reg32[$R.LRFDRFE_BASE + $R.LRFDRFE_O_DIVSTA] & $R.LRFDRFE_DIVSTA_STAT_M) != 0) { }
-    const invSynthFreq = em.$reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_QUOTIENT]
-    em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_RXIF] = <u16>findFoff(0, invSynthFreq) // rxFreqOff
-    em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_TXIF] = <u16>findFoff(1_000_000, invSynthFreq) // txFreqOff
+    $reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_PLLM0] = ((pllMBaseCompensated * precal0) << $R.LRFDRFE32_PLLM0_VAL_S)
+    $reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_PLLM1] = ((pllMBaseCompensated * precal1) << $R.LRFDRFE32_PLLM1_VAL_S)
+    while (($reg32[$R.LRFDRFE_BASE + $R.LRFDRFE_O_DIVSTA] & $R.LRFDRFE_DIVSTA_STAT_M) != 0) { }
+    const invSynthFreq = $reg32[$R.LRFDRFE32_BASE + $R.LRFDRFE32_O_QUOTIENT]
+    $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_RXIF] = <u16>findFoff(0, invSynthFreq) // rxFreqOff
+    $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_TXIF] = <u16>findFoff(1_000_000, invSynthFreq) // txFreqOff
     programCMixN(1_000_000, invSynthFreq) // rxIntFreq
     switch (Config.getPhy()) {
         case Config.Phy.BLE_1M:
@@ -188,8 +188,8 @@ function programPQ(pllMBase: u32): u32 {
         }
         demFracP >>= lshft5
     }
-    em.$reg32[$R.LRFDMDM32_BASE + $R.LRFDMDM32_O_DEMFRAC1_DEMFRAC0] = demFracP
-    em.$reg32[$R.LRFDMDM32_BASE + $R.LRFDMDM32_O_DEMFRAC3_DEMFRAC2] = demFracQ
+    $reg32[$R.LRFDMDM32_BASE + $R.LRFDMDM32_O_DEMFRAC1_DEMFRAC0] = demFracP
+    $reg32[$R.LRFDMDM32_BASE + $R.LRFDMDM32_O_DEMFRAC3_DEMFRAC2] = demFracQ
     return pllMBaseRounded
 }
 
@@ -215,7 +215,7 @@ function programShape(shape: Shape, invSynthFreq: u32) {
     }
     for (const i of $range(NUM_TAPS / 4)) {
         const off = <u32>($R.LRFDRFE32_O_DTX1_DTX0 + (i * 4))
-        em.$reg32[$R.LRFDRFE32_BASE + off] = e$`filterCoeff.w[i]`
+        $reg32[$R.LRFDRFE32_BASE + off] = e$`filterCoeff.w[i]`
     }
     if (shapeGain > 3) shapeGain = 3
     $R.LRFDRFE.MOD0.$$ = ($R.LRFDRFE.MOD0.$$ & ~$R.LRFDRFE_MOD0_SHPGAIN_M) | (shapeGain << $R.LRFDRFE_MOD0_SHPGAIN_S)

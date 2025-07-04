@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE', UsCounterI)
+import '@$$emscript'
+export const $U = $declare('MODULE', UsCounterI)
 
 import * as UsCounterI from '@em.hal/UsCounterI.em'
 

@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('INTERFACE')
+import '@$$emscript'
+export const $U = $declare('INTERFACE')
 
 import * as T from '@em.utils/TimeTypes.em'
 

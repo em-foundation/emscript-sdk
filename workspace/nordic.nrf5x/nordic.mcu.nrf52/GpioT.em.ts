@@ -1,12 +1,12 @@
-import em from '@$$emscript'
-export const $T = em.$declare('TEMPLATE')
+import '@$$emscript'
+export const $T = $declare('TEMPLATE')
 
 import * as $R from '@nordic.distro.nrf52/REGS.em'
 
 import * as GpioI from '@em.hal/GpioI.em'
 
 export namespace em$template {
-    export const $U = em.$declare('MODULE', GpioI)
+    export const $U = $declare('MODULE', GpioI)
 
     export const pin_num = $config<i16>(-1)
 

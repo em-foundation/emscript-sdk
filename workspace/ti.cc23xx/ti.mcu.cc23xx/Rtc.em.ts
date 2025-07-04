@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE', RtcI)
+import '@$$emscript'
+export const $U = $declare('MODULE', RtcI)
 
 import * as $R from '@ti.distro.cc23xx/REGS.em'
 

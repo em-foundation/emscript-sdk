@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE', UptimerI)
+import '@$$emscript'
+export const $U = $declare('MODULE', UptimerI)
 
 import * as UptimerI from '@em.hal/UptimerI.em'
 import * as TimeTypes from '@em.utils/TimeTypes.em'

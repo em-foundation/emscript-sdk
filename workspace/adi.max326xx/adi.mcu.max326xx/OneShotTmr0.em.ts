@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE', OneShotI)
+import '@$$emscript'
+export const $U = $declare('MODULE', OneShotI)
 
 import * as $R from '@adi.distro.max326xx/REGS.em'
 

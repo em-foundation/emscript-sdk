@@ -36,7 +36,7 @@ namespace em {
         return deepAssign(res, bobj)
     }
 
-    export function isBareMetal(): boolean {
+    export function $isbare(): boolean {
         const brd: string = $property('em.lang.BoardKind', '')
         return brd == '<bare-metal>'
     }
@@ -1009,6 +1009,7 @@ declare global {
     type text_t = em.text_t
     type volatile_t<T> = em.volatile_t<T>
     type $$<T> = em.$$<T>
+    type $Reg = em.$Reg
     const $: typeof em.$
     const $bkpt: typeof em.$bkpt
     const $board: typeof em.$board
@@ -1016,16 +1017,20 @@ declare global {
     const $cb$null: typeof em.$cb$null
     const $clone: typeof em.$clone
     const $config: typeof em.$config
+    const $declare: typeof em.$declare
     const $default: typeof em.$default
     const $delegate: typeof em.$delegate
     const $frame: typeof em.$frame
     const $implements: typeof em.$implements
+    const $isbare: typeof em.$isbare
     const $null: any
     const $outfile: typeof em.$outfile
     const $property: typeof em.$property
     const $proxy: typeof em.$proxy
     const $range: typeof em.$range
     const $ref: typeof em.$ref
+    const $reg16: typeof em.$reg16
+    const $reg32: typeof em.$reg32
     const $sizeof: typeof em.$sizeof
     const $sprintf: typeof sprintf
     const $struct: typeof em.$struct
@@ -1040,6 +1045,7 @@ declare global {
     const t$: typeof em.t$
     const $$tdefs: Map<string, string>
     const $$units: Map<string, any>
+    const __$declare: typeof em.__$declare
 }
 
 Object.assign(globalThis, {
@@ -1050,10 +1056,12 @@ Object.assign(globalThis, {
     $cb$null: em.$cb$null,
     $clone: em.$clone,
     $config: em.$config,
+    $declare: em.$declare,
     $default: em.$default,
     $delegate: em.$delegate,
     $frame: em.$frame,
     $implements: em.$implements,
+    $isbare: em.$isbare,
     $null: null as any,
     $outfile: em.$outfile,
     $property: em.$property,
@@ -1072,6 +1080,7 @@ Object.assign(globalThis, {
     c$: em.c$,
     e$: em.e$,
     t$: em.t$,
+    __$declare: em.__$declare,
 })
 
 export default em

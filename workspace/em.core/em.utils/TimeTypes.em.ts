@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 export const HOURS_PER_DAY = 24
 export const MINUTES_PER_HOUR = 60

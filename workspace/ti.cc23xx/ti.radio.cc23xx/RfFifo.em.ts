@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as $R from '@ti.distro.cc23xx/REGS.em'
 
@@ -27,10 +27,10 @@ export function prepareTX() {
 
 export function readPkt(pkt: frame_t<u8>): u8 {
     let addr = <u32>($R.LRFD_BUFRAM_BASE + <u32>(($R.LRFDPBE.FCFG3.$$ << 2)))
-    var word = em.$reg32[addr]
+    var word = $reg32[addr]
     // printf`w = %08x\n`(word)
     addr += 4
-    word = em.$reg32[addr]
+    word = $reg32[addr]
     // printf`w = %08x\n`(word)
     addr += 4
     word >>= 16
@@ -41,7 +41,7 @@ export function readPkt(pkt: frame_t<u8>): u8 {
     for (const i of $range(sz)) {
         if (cnt == 0) {
             cnt = 4
-            word = em.$reg32[addr]
+            word = $reg32[addr]
             // em.print("w[{d}] = {x:0>8}\n", .{ i, word })
             addr += 4
         }
@@ -59,7 +59,7 @@ export function writePkt(pkt: frame_t<u8>) {
     const sz = <u8>pkt.$len
     let word = <u32>(0x02030000 | (sz + 4))
     let addr = <u32>($R.LRFD_BUFRAM_BASE + ($R.LRFDPBE.FCFG1.$$ << 2))
-    em.$reg32[addr] = word
+    $reg32[addr] = word
     // printf`[%08x] = %08x\n`(addr, word)
     addr += 4
     word = <u32>0x00000001
@@ -69,7 +69,7 @@ export function writePkt(pkt: frame_t<u8>) {
         if (mask == 0) {
             mask = 0x000000ff
             shift = 0
-            em.$reg32[addr] = word
+            $reg32[addr] = word
             // printf`[%08x] = %08x\n`(addr, word)
             addr += 4
             word = 0x00000000
@@ -78,7 +78,7 @@ export function writePkt(pkt: frame_t<u8>) {
         mask <<= 8
         shift += 8
     }
-    em.$reg32[addr] = word
+    $reg32[addr] = word
     // printf`[%08x] = %08x\n`(addr, word)
     writeFifoPtr(addr + 4, ($R.LRFDPBE_BASE + $R.LRFDPBE_O_TXFWP))
 
@@ -86,11 +86,11 @@ export function writePkt(pkt: frame_t<u8>) {
 
 function writeFifoPtr(value: u32, regAddr: u32) {
     const key = Common.GlobalInterrupts.disable()
-    em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD] = <u16>((($R.LRFDPBE_BASE + $R.LRFDPBE_O_FSTAT) & 0x0FFF) >> 2)
+    $reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD] = <u16>((($R.LRFDPBE_BASE + $R.LRFDPBE_O_FSTAT) & 0x0FFF) >> 2)
     // delay
-    em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD]
-    em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD]
-    em.$reg32[regAddr] = value
-    em.$reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD] = <u16>((($R.LRFDPBE_BASE + $R.LRFDPBE_O_FCMD) & 0x0FFF) >> 2)
+    $reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD]
+    $reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD]
+    $reg32[regAddr] = value
+    $reg16[$R.LRFD_BUFRAM_BASE + $R.PBE_COMMON_RAM_O_FIFOCMDADD] = <u16>((($R.LRFDPBE_BASE + $R.LRFDPBE_O_FCMD) & 0x0FFF) >> 2)
     Common.GlobalInterrupts.restore(key)
 }

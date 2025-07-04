@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $T = em.$declare('TEMPLATE')
+import '@$$emscript'
+export const $T = $declare('TEMPLATE')
 
 import * as ButtonI from '@em.hal/ButtonI.em'
 import * as EdgeI from '@em.hal/EdgeI.em'
@@ -7,7 +7,7 @@ import * as FiberMgr from '@em.utils/FiberMgr.em'
 import * as Poller from '@em.mcu/Poller.em'
 
 export namespace em$template {
-    export const $U = em.$declare('MODULE', ButtonI)
+    export const $U = $declare('MODULE', ButtonI)
 
     export const Edge = $proxy<EdgeI.$I>()
 

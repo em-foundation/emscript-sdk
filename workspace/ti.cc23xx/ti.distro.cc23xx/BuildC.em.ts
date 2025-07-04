@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('COMPOSITE')
+import '@$$emscript'
+export const $U = $declare('COMPOSITE')
 
 import * as ArmStartupC from '@em.arch.arm/StartupC.em'
 import * as BoardC from '@ti.distro.cc23xx/BoardC.em'
@@ -41,7 +41,7 @@ export function em$configure() {
     $using(REGS)
     $using(StartupC)
     $using(TargC)
-    IntrVec.IsrDefault.$$dlg = em.isBareMetal() ? IsrEmpty : IsrDebug
+    IntrVec.IsrDefault.$$dlg = $isbare() ? IsrEmpty : IsrDebug
     for (let name of NVIC_INTRS) IntrVec.em$meta.addIntr(name)
 }
 

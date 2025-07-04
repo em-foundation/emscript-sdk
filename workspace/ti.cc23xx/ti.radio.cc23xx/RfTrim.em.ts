@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as $R from '@ti.distro.cc23xx/REGS.em'
 
@@ -35,7 +35,7 @@ export function apply() {
     $R.LRFDRFE.IFADCALDO.$$ |= e$`LRF_TRIMS->trim2.ifadcAldo`
     $R.LRFDRFE.IFADCDLDO.$$ |= e$`LRF_TRIMS->trim2.ifadcDldo`
     $R.LRFDMDM.DEMIQMC0.$$ |= e$`LRF_TRIMS->trim4.demIQMC0`
-    em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_IFAMPRFLDODEFAULT] = em.$reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_IFAMPRFLDO] & <u16>$R.LRFDRFE_IFAMPRFLDO_TRIM_M
+    $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_IFAMPRFLDODEFAULT] = $reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_IFAMPRFLDO] & <u16>$R.LRFDRFE_IFAMPRFLDO_TRIM_M
     // common: bwIndex = 0, bwIndexDither = 1
     $R.LRFDRFE.IFADCQUANT.$$ |= e$`LRF_TRIMS->trimVariant[0].ifadcQuant`
     $R.LRFDRFE.IFADC0.$$ |= e$`LRF_TRIMS->trimVariant[0].ifadc0`
@@ -46,8 +46,8 @@ export function apply() {
         (e$`LRF_TRIMS->trimVariant[1].ifadc0` & ($R.LRFDRFE_IFADC0_DITHEREN_M | $R.LRFDRFE_IFADC0_DITHERTRIM_M))
 
     // temperature
-    em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_DIVLDOF] &= ~(<u16>$R.RFE_COMMON_RAM_DIVLDOF_VOUTTRIM_M)
-    em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_DIVLDOI] &= ~(<u16>$R.RFE_COMMON_RAM_DIVLDOI_VOUTTRIM_M)
+    $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_DIVLDOF] &= ~(<u16>$R.RFE_COMMON_RAM_DIVLDOF_VOUTTRIM_M)
+    $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_DIVLDOI] &= ~(<u16>$R.RFE_COMMON_RAM_DIVLDOI_VOUTTRIM_M)
     $R.LRFDRFE.TDCLDO.$$ &= ~$R.LRFDRFE_TDCLDO_VOUTTRIM_M
     $R.LRFDRFE.DCO.$$ &= ~$R.LRFDRFE_DCO_TAILRESTRIM_M
     temperatureCompensateTrim()
@@ -103,8 +103,8 @@ function temperatureCompensateTrim() {
     divLdoVoutTrim += divLdoTempOffset
     const DIV_ONES = ($R.LRFDRFE_DIVLDO_VOUTTRIM_ONES >> $R.LRFDRFE_DIVLDO_VOUTTRIM_S)
     if (divLdoVoutTrim > DIV_ONES) divLdoVoutTrim = DIV_ONES
-    em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_DIVLDOF] |= (divLdoVoutTrim ^ 0x40) << $R.RFE_COMMON_RAM_DIVLDOF_VOUTTRIM_S
-    divLdoVoutTrim += em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_DIVLDOIOFF]
+    $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_DIVLDOF] |= (divLdoVoutTrim ^ 0x40) << $R.RFE_COMMON_RAM_DIVLDOF_VOUTTRIM_S
+    divLdoVoutTrim += $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_DIVLDOIOFF]
     if (divLdoVoutTrim > DIV_ONES) divLdoVoutTrim = DIV_ONES
     let tdcLdoVoutTrim: u32 = e$`LRF_TRIMS->trim1.tdcLdo.voutTrim`
     if (tdcLdoTempOffset > 0) {
@@ -114,27 +114,27 @@ function temperatureCompensateTrim() {
         if (tdcLdoVoutTrim > TDC_ONES) tdcLdoVoutTrim = TDC_ONES
         tdcLdoVoutTrim ^= 0x40
     }
-    em.$reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_TDCLDO] |= (tdcLdoVoutTrim << $R.LRFDRFE_TDCLDO_VOUTTRIM_S)
+    $reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_TDCLDO] |= (tdcLdoVoutTrim << $R.LRFDRFE_TDCLDO_VOUTTRIM_S)
     let rtrim: u32 = e$`LRF_TRIMS->trim2.dco.tailresTrim`
     if (rtrim < DEFAULT_RTRIM_MAX) {
         rtrim += rtrimTempOffset
-        rtrim += em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_RTRIMOFF]
+        rtrim += $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_RTRIMOFF]
         if (rtrim > DEFAULT_RTRIM_MAX) rtrim = DEFAULT_RTRIM_MAX
     }
-    const minRtrim: u32 = em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_RTRIMMIN]
+    const minRtrim: u32 = $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_RTRIMMIN]
     if (rtrim < minRtrim) rtrim = minRtrim
-    em.$reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_DCO] |= (rtrim << $R.LRFDRFE_DCO_TAILRESTRIM_S)
+    $reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_DCO] |= (rtrim << $R.LRFDRFE_DCO_TAILRESTRIM_S)
     let rssiOffset: i32 = <i32>e$`LRF_TRIMS->trim4.rssiOffset`
     if (e$`LRF_TRIMS->revision` == 4 && rssiOffset <= -4) rssiOffset += 5
     rssiOffset += rssiTempOffset
-    rssiOffset += em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_PHYRSSIOFFSET]
-    em.$reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_RSSIOFFSET] = rssiOffset
+    rssiOffset += $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_PHYRSSIOFFSET]
+    $reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_RSSIOFFSET] = rssiOffset
     /// **** quick hack
-    em.$reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_RSSIOFFSET] = 0x57
+    $reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_RSSIOFFSET] = 0x57
     /// ****
-    const spare0Val: u32 = em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_SPARE0SHADOW]
-    em.$reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_SPARE0] = spare0Val
-    let spare1Val: u32 = em.$reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_SPARE1SHADOW]
+    const spare0Val: u32 = $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_SPARE0SHADOW]
+    $reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_SPARE0] = spare0Val
+    let spare1Val: u32 = $reg16[$R.LRFD_RFERAM_BASE + $R.RFE_COMMON_RAM_O_SPARE1SHADOW]
     if (agcValOffset != 0) {
         let agcVal: i32 = ((spare1Val & RFE_SPARE1_AGC_VALUE_BM) >> RFE_SPARE1_AGC_VALUE)
         agcVal += agcValOffset
@@ -143,9 +143,9 @@ function temperatureCompensateTrim() {
         if (agcVal > sval) agcVal = sval
         spare1Val = (spare1Val & ~RFE_SPARE1_AGC_VALUE_BM) | <u32>(agcVal << RFE_SPARE1_AGC_VALUE)
     }
-    em.$reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_SPARE1] = spare1Val
+    $reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_SPARE1] = spare1Val
     /// **** quick hack
-    em.$reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_SPARE1] = 0x2E
+    $reg16[$R.LRFDRFE_BASE + $R.LRFDRFE_O_SPARE1] = 0x2E
 }
 
 export function em$run() {

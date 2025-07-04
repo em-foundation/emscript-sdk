@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 export const MODE_STOP = 0x00000000
 export const MODE_BASIC = 0x00000001

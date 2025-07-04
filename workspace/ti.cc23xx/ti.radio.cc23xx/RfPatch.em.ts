@@ -1,5 +1,5 @@
-import em from '@$$emscript'
-export const $U = em.$declare('MODULE')
+import '@$$emscript'
+export const $U = $declare('MODULE')
 
 import * as $R from '@ti.distro.cc23xx/REGS.em'
 
@@ -627,7 +627,7 @@ export function loadAll() {
 
 function loadPatch(dsta: u32, src: frame_t<u32>) {
     for (const w of src) {
-        em.$reg32[dsta] = w.$$
+        $reg32[dsta] = w.$$
         dsta += 4
     }
 }
