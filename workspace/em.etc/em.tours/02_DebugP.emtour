@@ -1,0 +1,127 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;02&thinsp;&ndash;&thinsp;real-time debug
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex03_DebugP.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]BlinkerDbgP.em &ndash; welcome}
+
+        The {[cu]BlinkerDbgP} program introduces some elementary debug capabilities available within the EM platform.
+
+        Building upon {[cd]printf} &ndash; still vital for debugging live code &ndash; EM offers capabilities with far less overhead.
+
+        In practice, some of these lightweight mechanisms can remain _embedded_ within deployed EM applications.
+
+        
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]BlinkerDbgP.em &ndash; build + load}
+
+        As presently configured, {[cu]BlinkerDbgP} will start toggling {[cx]appLed} &ndash; not unlike the {[cu]BlinkerP} program seen earlier.
+
+        Midway through execution, however, {[cu]BlinkerDbgP} will abruptly terminate &ndash; leaving {[cx]sysLed} flashing rapidly.
+
+        To fully grasp the EM features used by {[cu]BlinkerDbgP}, view the real-time  program trace found {[le,https://docs.openem.org/using/using-02/#tour-02-real-time-debug]here}.
+
+  - cmds:
+      - mark 1 A 20
+      - mark 1 B 22
+      - mark 1 C 24
+      - mark 1 D 25
+    focus: [1,1]
+    text: |
+
+        {[ht,$details]BlinkerDbgP.em &ndash; details}
+
+        <div class="em-bmlist">
+
+        {[bm,A]} This rather concise and distinguished EM statement asserts the (active-low) {[cx]dbgD} pin on your board.
+
+        {[bm,B]} This EM debug statement de-asserts {[cx]dbgD}, allowing us to easily measure the time consumed by {[cf]wait}.
+
+        {[bm,C]} {[cu]BlinkerDbgP} skips the remaining debug code when the {[cn]dbgFlag} {[ck]config} parameter tests {[ck]false}.
+
+        {[bm,D]} Using a {[cd]fail} statement, {[cu]BlinkerDbgP} explicitly aborts the program when this condition tests {[ck]true}.
+
+        </div>
+
+  - cmds:
+      - mark 1 E 26
+      - mark 1 F 28
+      - mark 1 G 29
+    focus: [1,8]
+    text: |
+
+        {[ht,$details]BlinkerDbgP.em &ndash; more details}
+
+        <div class="em-bmlist">
+
+        {[bm,E]} This EM debug statement outputs the (2-byte) bi&shy;nary value of {[cn]cnt} in a very efficient manner.
+
+        {[bm,F]} This EM statement likewise outputs the (1-byte) {[cn]bits11} value, defined as the lower 2-bits of {[cn]cnt}.
+
+        {[bm,G]} With {[cn]bits11} ranging from {[ce]0&ndash;3}, this statement would toggle your board's {[cx]dbgC} pin {[ce]1&ndash;4} times.
+
+        </div>
+
+        In general, the statement {[cd]%%[_p_:_e_]} toggles debug pin {[cd]_p_} exactly {[ce]_e_+1} times, where {[cd]_e_} defaults to {[ce]0} if absent.
+
+  - cmds:
+      - mark 1 H 30
+      - mark 1 I 33
+    focus: [1,8]
+    text: |
+
+        {[ht,$details]BlinkerDbgP.em &ndash; still more details}
+
+        <div class="em-bmlist">
+
+        {[bm,H]} EM's {[cd]printf} implements a "practical" subset of the standard C/C++ function, emphasizing efficiency.
+
+        {[bm,I]} Using a {[cd]halt} statement, {[cu]BlinkerDbgP} gracefully ter&shy;minates execution at this point in time.
+
+        </div>
+
+        EM {[cd]fail} / {[cd]halt} statements (like {[cd]printf}) serve a more practical role when (say) unit testing a module.
+
+        Compared with {[cd]printf}, {[cd]%%[>_e_]} statements have mini&shy;mal (and determinstic) run-time overhead.
+
+        EM's {[cd]%%[_p_&hellip;]} debug statements incur even less overhead (&le; 1&mu;s), ideal for factory&thinsp;/&thinsp;field testing.
+
+        As they say &ndash; _test what you fly, fly what you test_.
+
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]BlinkerDbgP.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-02-real-time-debug]here}.
+
+        {[bi,task_alt]} Clone {[cu]BlinkerDbgP} into your personal bundle.
+
+        {[bi,sentiment_satisfied]} If you have a Saleae, just go wild in these tours&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]BlinkerDbgP.em &ndash; next steps}
+
+        The remaining tours in this series make minimal use of {[cd]%%[_p_]} statements, and don't use {[cd]printf} at all.
+
+        But do clone any modules of interest into your personal bundle &ndash; and add all the debug code you wish.
+
+        With that, let's move on to **Tour&thinsp;03** and learn about the threading model supported by the EM runtime.
+

@@ -1,0 +1,129 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;04&thinsp;&ndash;&thinsp;button handlers
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex05_Button1P.em.ts
+  - em.core:em.hal/EdgeI.em.ts
+  - em.core:em.hal/GpioI.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]Button1P.em &ndash; introduction}
+
+        The {[cu]Button1P} program illustrates the handling of incom&shy;ing events that awaken the MCU when sleeping.
+
+        In this case, pressing a button will source the event; the program will then blink an LED in response.
+
+        Since {[cu]Button1P} does _not_ use fibers, the program direct&shy;ly calls lower-level functions seen earlier in {[cu]FiberMgr}.
+
+        Subsequent tours will explore alternative implementa&shy;tions which do, in fact, leverage opaque {[ct]Fiber} objects.
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]Button1P.em &ndash; build + load}
+
+        Once execution begins &ndash; indicated by two quick blinks of the {[cx]sysLed} &ndash; {[cu]BlinkyP} awaits incoming events.
+
+        In response to pressing the board's {[cx]appBut}, {[cu]Button1P} will blink the board's {[cx]appLed} exactly once.
+
+        Since the program has no "debounce" logic, a single button press may in fact trigger muliple LED blinks.
+
+        Note that {[cx]appLed} blinks _immediately_ upon press&shy;ing {[cx]appBut} &ndash; even if you hold the button down indefnitely.
+
+        
+
+  - cmds:
+      - mark 1 A 7
+      - mark 1 B 15
+      - mark 1 C 20
+    focus: [1,1]
+    text: |
+
+        {[ht,$details]Button1P.em &ndash; details}
+
+        <div class="em-bmlist">
+
+        {[bm,A]} The distro's {[cu]McuC} composite exports {[cu]AppButEdge}, used to manage incoming button events.
+
+        {[bm,A]} {[cu]AppButEdge} implements the {[cn]em.hal}/{[cu]EdgeI} inter&shy;face, which we'll view later in this tour.
+
+        {[bm,B]} {[cu]Button1P} declares a private {[cf]handler} function, called asyn&shy;chronously upon pressing {[cx]appBut}.
+
+        {[bm,C]} Binding of the {[cf]handler} function to {[cu]AppButEdge} must occur at build-time.
+
+        </div>
+
+  - cmds:
+      - mark 1 D 26
+      - mark 1 E 32
+      - mark 1 F 33
+      - mark 1 G 39
+    focus: [1,23]
+    text: |
+
+        {[ht,$details]Button1P.em &ndash; more details}
+
+        <div class="em-bmlist">
+
+        {[bm,D]} {[cu]Button1P} initializes other aspects of {[cu]AppButEdge} at startup, including detection of falling edges.
+
+        {[bm,E]} After enabing interrupts in general, {[cu]Button1P} en&shy;ables detection of (falling) {[cx]appBut} edges.
+
+        {[bm,F]} Once the program has prepared to receive incoming button events, the MCU can enter low-power sleep.
+
+        {[bm,G]} A button press then triggers a call to {[cf]handler}, which clears detection setup before blinking the LED.
+
+        {[bm,G]} Upon returning from {[cf]handler}, {[cu]Blinky1P} executes the next iteration of the {[ck]for} loop within {[cf]em$run}.
+
+        </div>
+
+  - cmds:
+      - open 2
+    focus: [2,1]
+    text: |
+
+        {[ht,$peek]EdgeI.em &ndash; quick peek}
+
+        The {[cu]EdgeI} interface (which {[cu]AppButEdge} imple&shy;ments) declares features seen earlier in {[cu]Button1P}.
+
+        Note that {[cu]GpioEdgeI} extends the more rudimentary {[cu]GpioI} interface &ndash; adding features for edge-detection.
+
+  - cmds:
+      - open 3
+    focus: [3,1]
+    text: |
+
+        {[ht,$peek]GpioI.em &ndash; quick peek}
+
+        The {[cu]GpioI} interface specifies basic functions for work&shy;ing with GPIO pins found in the underlying MCU.
+
+        Besides supporting {[cx]appBut}, EM uses these functions with other hardware GPIOs &ndash; {[cx]appLed}, {[cx]sysDbgA}, etc.
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]Button1P.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-03-button-handlers]here}.
+
+        {[bi,task_alt]} Clone {[cu]Button1P} into your personal bundle.
+
+        {[bi,task_alt]} Use {[cf]setDetectRisingEdge} and see what happens.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]Button1P.em &ndash; next steps}
+
+        Applying what we've already covered, **Tour&thinsp;05** essen&shy;tially re-implements the {[cu]Button1P} program using fibers.

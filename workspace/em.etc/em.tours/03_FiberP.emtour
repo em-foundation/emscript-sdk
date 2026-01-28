@@ -1,0 +1,183 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;03&thinsp;&ndash;&thinsp;threading with fibers
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex04_FiberP.em.ts
+  - em.core:em.utils/FiberMgr.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]FiberP.em &ndash; welcome}
+
+        The {[cu]FiberP} program introduces _fibers_ &ndash; a very light&shy;weight threading model supported by the EM runtime.
+
+        The {[cn]em.utils}/{[cu]FiberMgr} module (which we'll visit short&shy;ly) publicizes features used by the {[cu]FiberP} client.
+
+        While {[cu]FiberP} also blinks an LED five times, its imple&shy;men&shy;tation lacks an overt {[ck]for} loop &ndash; unlike {[cu]BlinkerP}.
+
+        Rather, the {[cu]FiberP} program relies on a sort of "reactive call&shy;back" function triggered under software control.
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]FiberP.em &ndash; build + load}
+
+        Looking at the {[cx]OUTPUT} panel, you'll notice that the pro&shy;gram image consumes &asymp;&thinsp;1.6 KB of memory.
+
+        By contrast, {[cu]BlinkerP} consumed &le;&thinsp;1.2 KB &ndash; implying that EM fibers incur only modest overhead in practice.
+
+        Once execution begins, {[cu]FiberP} blinks the board's {[cx]appLed} five times before halting execution.
+
+        As ever, you can re-run the program by simply pressing the board's {[cx]RESET} button.
+
+
+  - cmds:
+      - mark 1 A 7
+      - mark 1 B 13
+      - mark 1 C 15
+      - mark 1 D 22
+    focus: [1,1]
+    text: |
+
+        {[ht,$details]FiberP.em &ndash; details}
+
+        <div class="em-bmlist">
+
+        {[bm,A]} The {[cu]FiberMgr} module exhibits an "object factory" design pattern used elsewhere in the EM runtime.
+
+        {[bm,B]} The {[ct]FiberBodyFxn} type defines the signature of the private function {[cf]blinkFB}, implemented by {[cu]FiberP}.
+
+        {[bm,C]} {[cu]FiberMgr}.{[ct]Fiber}{[cx]&}&thinsp; specifies an "opaque" type refer&shy;ence held in the private {[cn]blinkF} config.
+
+        {[bm,D]} To optimize _run-time_ efficiency, {[cu]FiberMgr} clients must create all opaque {[ct]Fiber} objects at _build-time_.  
+
+
+        </div> 
+
+    
+  - cmds:
+      - open 2
+      - mark 2 A 8
+      - mark 2 B 10
+      - mark 2 C 32
+    focus: [2,6]
+    text: |
+
+        {[ht,$details]FiberMgr.em &ndash; details}
+
+        <div class="em-bmlist">
+
+        {[bm,A]} A {[ct]FiberBodyFxn} represents a "callback" function as&shy;sociated with each opaque {[ct]Fiber} object.
+
+        {[bm,A]} While publicized to its clients, {[cu]FiberMgr} also uses {[ct]FiberBodyFxn} within its private implementation.
+
+        {[bm,B]} An {[ck]opaque} EM type in general declares a set of public methods applicable to objects of this type.
+
+        {[bm,B]} Note that {[ct]Fiber} methods declared as {[ck]host} func&shy;tions can only execute at program build-time.
+
+        {[bm,C]} The private section of {[cu]FiberMgr} defines the internal representation of the opaque {[ct]Fiber} type.
+
+        </div>
+
+  - cmds:
+      - mark 1 D 22
+      - mark 1 E 26
+      - mark 1 F 27
+      - mark 1 G 30
+      - mark 1 H 37
+    focus: [1,20]
+    text: |
+
+        {[ht,$details]FiberP.em &ndash; more details}
+        
+        <div class="em-bmlist">
+
+        {[bm,D]} {[cu]FiberMgr}.{[cf]createH} allocates&thinsp;/&thinsp;initializes the {[cn]blinkF} fiber at build-time, binding {[cf]blinkFB} as its callback.
+
+        {[bm,E]} The {[cf]post} method marks our opaque {[cn]blinkF} {[ct]Fiber} as "ready-to-run" at the next scheduling point.
+
+        {[bm,F]} Calling {[cu]FiberMgr}.{[cf]run} at the end of the program's {[cf]em$run} intrinsic starts dispatching {[ct]Fiber} objects.
+
+        {[bm,G]} The {[cu]FiberMgr} scheduler executes the {[cf]blinkFB} func&shy;tion bound to our "ready-to-run" {[cn]blinkF} object.
+
+        {[bm,H]} Unless {[cf]blinkFB} explicitly halts, calling {[cf]post} marks {[cn]blinkF} as "ready-to-run" and starts the next cycle.
+
+        </div>
+
+  - cmds:
+      - mark 2 D 49
+      - mark 2 E 55
+      - mark 2 F 66
+      - mark 2 G 72
+    focus: [2,49]
+    text: |
+
+        {[ht,$details]FiberMgr.em &ndash; more details}
+
+        <div class="em-bmlist">
+
+        {[bm,D]} At build-time, {[cf]createH} calls {[cf]initH} to initialize a {[ct]Fiber} object allocated within a static array.
+
+        {[bm,E]} At run-time, {[cf]dispatch} calls the {[ct]FiberBodyFxn} of each {[ct]Fiber} object found on {[cn]readyList}.
+
+        {[bm,F]} The public {[cf]run} function in turn calls {[cf]dispatch}, which returns when {[cn]readyList} tests empty.
+
+        {[bm,G]} With no more {[ct]Fiber} objects to dispatch, {[cu]Idle}.{[cf]exec} then puts the MCU into a low-power "sleep" mode.
+
+        </div>
+
+  - cmds:
+      - mark 2 G 76
+      - mark 2 H 82
+    focus: [2,75]
+    text: |
+
+        {[ht,$details]FiberMgr.em &ndash; still more details}
+
+        Functions defined over opaque types can access their current instance object via an implicit {[cn]this} parameter.
+
+        <div class="em-bmlist">
+
+        {[bm,G]} {[ct]Fiber}.{[cf]initH} initiailizes the current object's three internal fields (accessed via {[cn]this}) at build-time.
+
+        {[bm,H]} {[ct]Fiber}.{[cf]post} effectively adds the current object to the private {[cn]fiberList} at run-time.
+
+        </div>
+
+        Note that {[cu]FiberMgr} leverages another mod&shy;ule that sim&shy;ilarly manages opaque types &ndash; {[cn]em.utils}/{[cu]ListMgr}.
+
+  - cmds: [
+        -nop
+    ]
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]FiberP.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-03-threading-with-fibers]here}.
+
+        {[bi,task_alt]} Clone {[cu]FiberP} into your personal bundle.
+
+        {[bi,task_alt]} Also clone {[cu]FiberMgr} into your personal bundle.
+
+        {[bi,task_alt]} Trace execution {[cu]FiberMgr}.{[cf]dispatch} using {[cd]printf}.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]FiberP.em &ndash; next steps}
+
+        {[cu]FiberP} remains active until it reaches {[cd]halt}; and the MCU never suspends execution via {[cu]Idle}.{[cf]exec}.
+
+        Moving on to **Tour&thinsp;04**, we'll now see the MCU entering sleep &ndash; awaiting an incoming button-press event.
+
+        

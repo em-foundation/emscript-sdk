@@ -35,14 +35,25 @@ export function startup(): void {
     if (!use_sram) {
         e$`NRF_APPLICATION_ICACHE_S->ENABLE = 1`
         $R.MEMCONF.POWER[0].CONTROL.$$ = 0x1 // retain 32K sram
+        $R.MEMCONF.POWER[0].RET.$$ = 0x1
+        $R.MEMCONF.POWER[0].RET2.$$ = 0x1
+
     } else {
         $R.MEMCONF.POWER[0].CONTROL.$$ = 0x3 // retain 64K sram
+        $R.MEMCONF.POWER[0].RET.$$ = 0x3
+        $R.MEMCONF.POWER[0].RET2.$$ = 0x3
     }
     $R.MEMCONF.POWER[1].CONTROL.$$ = 0x0
+    $R.MEMCONF.POWER[1].RET.$$ = 0x0
+    $R.MEMCONF.POWER[1].RET2.$$ = 0x0
     $R.CLOCK.LFCLK.SRC.$$ = $R.CLOCK_LFCLK_SRC_SRC_LFXO
     $R.CLOCK.TASKS_LFCLKSTART.$$ = 1
     Debug.startup()
     $['%%a:'](2)
+}
+
+export function isWarm(): bool_t {
+    return false
 }
 
 function unprotect() {

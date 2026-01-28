@@ -34,10 +34,10 @@ export namespace em$meta {
 
 //>> ---- em$targ ---- <<//
 
-const DEBUG = false
+const DBG_FLG = false
 
 function dispatch(cur_time: T.Secs30p2) {
-    if (DEBUG) printf`dis: cur = %08x\n`(cur_time)
+    if (DBG_FLG) printf`dis: cur = %08x\n`(cur_time)
     Rtc.disable()
     let nxt_alarm = <Obj>$null
     let max_wup_time = ~(<T.Secs30p2>0)
@@ -72,7 +72,7 @@ function setup(alarm: Obj, delta: T.Secs30p2, aligned: bool_t) {
     }
     alarm.$$._thresh = Rtc.toThresh(wup_time)
     alarm.$$._wup_time = wup_time
-    if (DEBUG) printf`set: cur = %08x, wup = %08x, thr = %08x\n`(cur_time, wup_time, alarm.$$._thresh)
+    if (DBG_FLG) printf`set: cur = %08x, wup = %08x, thr = %08x\n`(cur_time, wup_time, alarm.$$._thresh)
     dispatch(cur_time)
 }
 

@@ -1,0 +1,175 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;06&thinsp;&ndash;&thinsp;button objects
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex07_Button3P.em.ts
+  - em.core:em.hal/ButtonI.em.ts
+  - em.etc.gen/ti.distro.cc23xx/BoardC__AppBut.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]Button3P.em &ndash; welcome}
+
+        Unlike {[cu]Button1P} and {[cu]Button2P}, the {[cu]Button3P} program in&shy;cludes functionality to debounce button events.
+
+        The program can also distinguish "long" button presses, and will blink a different LED accordingly.
+
+        Finally, {[cu]Button3P} introduces some new platform capa&shy;bilities that further streamline the program's design.
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]Button3P.em &ndash; build + load}
+
+        While &asymp;&thinsp;300 bytes larger than {[cu]Button2P}, explore the en&shy;hanced features of {[cu]Button3P} once execution begins.
+
+        You'll first see fewer glitches when quickly pressing or releasing {[cx]appBut} &ndash; one press, one short {[cx]appLed} blink.
+
+        But when you press {[cx]appBut} for at least four sec&shy;onds, {[cu]Button3P} responds with a longer blink of {[cx]sysLed}.
+
+  - cmds:
+        - mark 1 A 4
+        - mark 1 B 15
+        - mark 1 C 20
+        - mark 1 D 26
+
+    focus: [1,1]
+    text: |
+
+        {[ht,$details]Button3P.em &ndash; details}
+
+        <div class="em-bmlist">
+
+        {[bm,A]} The {[cu]AppBut} module configured and exported by {[cu]BoardC} implements the {[cn]em.hal}/{[cu]ButtonI} interface.
+
+        {[bm,B]} The program declares {[cf]onPressedCB}, called by {[cu]AppBut} upon pressing the button.
+
+        {[bm,C]} Binding the {[cf]onPressedCB} callback to {[cu]AppBut} occurs at _run-time_, enabling greater flexibility.
+
+        {[bm,D]} To detect a "long" press, {[cu]Button3P} uses {[cf]isPressed} to test the current state of the button.
+
+        </div>
+
+  - cmds:
+        - open 2
+    focus: [2,1]
+    text: |
+
+        {[ht,$look]ButtonI.em &ndash; longer look}
+
+        {[cu]Button3P} uses {[cf]onPressed} in its simplest form &ndash; binding a callback just once, with default duration parameters.
+
+        {[cu]ButtonI} implementations will ignore presses shorter than {[cn]minDurationMs}, eliminating HW glitches.
+
+        The {[cn]cb} callback executes immediately upon releasing the button, or after {[cn]maxDurationMs} have passed.
+
+        The value of {[cn]maxDurationMs} effectively defines a "long" press, since {[cf]isPressed} would continue testing {[ck]true}.
+
+        Finally, passing {[ck]null} for the {[cn]cb} parameter of {[cf]onPressed} _disables_ detection of button presses.
+
+  - cmds:
+      - open 3
+      - mark 3 A 2
+      - mark 3 B 7
+      - mark 3 C 11
+      - mark 3 D 13
+    focus: [3,1]
+    text: |
+
+        {[ht,$details]BoardC__AppBut.em &ndash; details}
+
+        {[cu]BoardC} uses the {[cn]em.utils}/{[cu]ButtonT} template to syn&shy;thesize its exported {[cu]AppBut} module at build-time.
+
+        <div class="em-bmlist">
+
+        {[bm,A]} This synthesized module lives in the same pack&shy;age as {[cu]BoardC} &ndash; matching the binding of {[cn]em$distro}. 
+
+        {[bm,B]} The implementation of {[cu]BoardC__AppBut} relies upon the portable {[cn]em.mcu}/{[cu]Poller} to mark time.
+
+        {[bm,C]} The synthesized {[cu]BoardC__AppLed} module imple&shy;ments the {[cu]ButtonI} interface we've viewed earlier. 
+        
+        {[bm,D]} For added generality, {[cu]BoardC__AppBut} uses {[cu]Edge} to proxy access to underlying GPIO hardware. 
+
+        </div>
+
+  - cmds:
+      - mark 3 E 30
+      - mark 3 F 37
+      - mark 3 G 41
+    focus: [3,29]
+    text: |
+
+        {[ht,$details]BoardC__AppBut.em &ndash; more details}
+
+        The synthesized {[cu]BoardC_AppBut} module generalizes the design of our earlier fiber-based {[cu]Button2P} program.
+
+        Whereas {[cu]Button2P} directly imports {[cu]AppButEdge} from {[cu]BoardC}, {[cu]BoardC__AppBut} uses its {[cn]Edge} proxy:
+
+        <div class="em-bmlist">
+
+        {[bm,E]} to bind a detection handler at build-time;
+
+        {[bm,F]} to setup the GPIO hardware at run-time; and
+
+        {[bm,G]} to acknowledge incoming events within the handler.
+
+        </div>
+
+  - cmds:
+      - mark 3 H 45
+      - mark 3 I 49
+      - mark 3 J 51
+      - mark 3 K 60
+    focus: [3,40]
+    text: |
+
+        {[ht,$details]BoardC__AppBut.em &ndash; still more details}
+
+        <div class="em-bmlist">
+
+        {[bm,K]} Starting with the public {[cf]onPressed} function, its im&shy;plementation enables&thinsp;/&thinsp;disables detection via {[cu]Edge}.
+
+        {[bm,K]} The {[cf]onPressed} function also retains its parameter values in corresponding private variables.
+
+        {[bm,H]} Readied by {[cf]buttonHandler} when {[cu]Edge} has fallen, this {[ct]FiberBodyFxn} implements debounce logic.
+
+        {[bm,I]} Testing every {[cn]minDur} millisecs, {[cf]debounceFB} returns if {[cf]isPressed} fails the first time around.
+
+        {[bm,J]} Pressed for at least {[cn]minDur}, {[cf]debouncFB} calls {[cn]curCb} when {[cf]isPressed} fails or else {[cn]maxDur} has passed.
+
+        </div>
+
+        We'll explore {[cu]Poller}.{[cf]pause} in an upcoming tour.
+
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]Button3P.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-06-button-objects]here}.
+
+        {[bi,task_alt]} Clone {[cu]Button3P} into your personal bundle.
+
+        {[bi,task_alt]} Verify that {[cu]ButtonP} correctly handles short glitches.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]Button3P.em &ndash; next steps}
+
+        Having finished a set of examples that process in&shy;coming button events, we'll now pivot to MCU timer events.
+
+        **Tour&thinsp;07** starts by handling timer events directly in the program &ndash; without the use of fibers.

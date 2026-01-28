@@ -17,6 +17,10 @@ export function em$reset(): void {
 }
 
 export function em$ready(): void {
+    if (Common.Mcu.isWarm()) {
+        Common.Idle.wakeup()
+        return
+    }
     Led.off()
     blink(2, BLINK_RATE)
     if (ready_delay_usecs) {

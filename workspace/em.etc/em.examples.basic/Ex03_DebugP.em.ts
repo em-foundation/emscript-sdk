@@ -18,7 +18,7 @@ export function em$run() {
         $['%%d-']
         AppLed.toggle()
         if (!dbg_flag) continue
-        if (cnt > (min_cnt + max_cnt) / 2) halt()
+        if (cnt > (min_cnt + max_cnt) / 2) fail()
         let bits11 = <u8>(cnt & 0x3)
         $['%%c:'](bits11)
         $['%%>'](bits11)

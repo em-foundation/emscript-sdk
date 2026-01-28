@@ -1,7 +1,7 @@
 title: Using EM•Script&ensp;&rarr;&ensp;Tour&thinsp;01&thinsp;&ndash;&thinsp;guided tours
 $dev: false
 files:
-  - em.core:em.examples.basic/Ex01_HelloP.em.ts
+  - em.etc:em.examples.basic/Ex01_HelloP.em.ts
   - em.core:em.hal/ConsoleUartI.em.ts
   - em.core:em.lang/Console.em.ts
 

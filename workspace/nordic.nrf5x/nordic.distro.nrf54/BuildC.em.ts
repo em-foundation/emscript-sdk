@@ -305,7 +305,11 @@ export function em$generate() {
     })
     let opt = $property('em.build.Optimize', 'Oz')
     let tools = $property('em.build.ToolsHome', '')
-    let libflav = opt == 'Oz' ? 'small' : 'balanced'
+    let fpu = $property('em.build.FPU', '')
+    let fpuabi = fpu ? 'hard' : 'soft'
+    let fpudef = fpu ? '1' : '0'
+    let libarch = fpu ? 'v8mml_fpv5_sp_d16_hard' : 'v6m'
+    let libflav = opt == 'Oz' && !fpu ? 'small' : 'balanced'
     let out = $outfile('build.sh', 0o755)
     out.addFrag(`
         |-> #!/bin/sh
@@ -333,6 +337,8 @@ export function em$generate() {
         |->     -D__EM_MCU_null__ \\
         |->     -D__EM_LANG__=1 \\
         |->     -D__GNUC__ \\
+        |->     -D__FPU_PRESENT=${fpudef} \\
+        |->     -D__FPU_USED=${fpudef} \\
         |->     --std=c++14 \\
         |->     -triple thumbv6m-none-eabi \\
         |->     -target-cpu cortex-m33 \\
@@ -347,7 +353,7 @@ export function em$generate() {
         |->     -Wno-c99-designator \\
         |->     -Wno-c++20-designator \\
         |->     -Wpointer-to-int-cast \\
-        |->     -target-feature +strict-align -msoft-float -target-abi aapcs -mfloat-abi soft -fno-signed-char -fnative-half-type -fnative-half-arguments-and-returns \\
+        |->     -target-feature +strict-align -mfloat-abi ${fpuabi} -target-abi aapcs -fno-signed-char -fnative-half-type -fnative-half-arguments-and-returns \\
         |-> "
         |-> 
         |-> CINCS="\\
@@ -366,8 +372,8 @@ export function em$generate() {
         |-> "
         |-> 
         |-> LIBS="
-        |->     $TOOLS/lib/libc_v6m_t_le_eabi_${libflav}.a \\
-        |->     $TOOLS/lib/strops_v6m_t_le_eabi_${libflav}.a \\
+        |->     $TOOLS/lib/libc_${libarch}_t_le_eabi_${libflav}.a \\
+        |->     $TOOLS/lib/strops_${libarch}_t_le_eabi_${libflav}.a \\
         |-> "
         |-> 
         |-> $CC -c $CFLAGS $CINCS $COPTS -x c++ main.cpp -o $OUT/main.obj

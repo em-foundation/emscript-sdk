@@ -4,6 +4,8 @@
 #include <cstring>
 #include <stddef.h>
 #include <stdint.h>
+#include <math.h>
+
 
 namespace std {
     typedef decltype(nullptr) nullptr_t;
@@ -14,6 +16,8 @@ static void em__fail();
 static void em__halt();
 
 namespace em {
+
+    using f32 = float;
 
     using i8 = int8_t;
     using i16 = int16_t;

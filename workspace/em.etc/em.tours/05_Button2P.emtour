@@ -1,0 +1,109 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;05&thinsp;&ndash;&thinsp;button fibers
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex06_Button2P.em.ts
+  - em.etc:em.examples.basic/Ex05_Button1P.em.ts
+
+steps:
+  - cmds:
+    - open 1
+    focus: [1,1]
+    text: |
+
+      {[ht,$start]Button2P.em &ndash; welcome}
+
+      Like the {[cu]Button1P} program toured earlier, {[cu]Button2P} blinks {[cx]appLed} once upon detecting an {[cx]appBut} edge.
+
+      Unlike {[cu]Button1P}, however, {[cu]Button2P} uses a {[ct]Fiber} object to better handle incoming button events.
+
+      Besides simplifying {[cu]Button2P}, this design enables more lengthy responses to incoming events.
+
+  - cmds:
+    - build 1 -l
+    focus: [1,1]
+    text: |
+
+      {[ht,$build]Button2P.em &ndash; build + load}
+
+      Looking at the {[cx]OUTPUT} panel, notice that the {[cu]Button2P} program image consumes &asymp;&thinsp;1.6 KB of memory.
+
+      By comparision, the {[cu]Button1P} program toured earlier used only &asymp;&thinsp;150 fewer bytes of memory.
+
+      Otherwise, the {[cu]Button1P} and {[cu]Button2P} programs per&shy;form identically &ndash; press {[cx]appBut} to blink {[cx]appLed}.
+
+  - cmds:
+    - mark 1 A 20
+    - mark 1 B 26
+    focus: [1,1]
+    text: |
+
+      {[ht,$details]Button2P.em &ndash; details}
+
+      <div class="em-bmlist">
+
+      {[bm,A]} The program declares a private {[ct]Fiber} object and {[ct]FiberBodyFxn}, in addition to {[cf]handler}.
+
+      {[bm,B]} The program binds {[cf]blinkFB} to the {[cn]blinkF} object, after similarly binding {[cf]handler} to {[cu]AppButEdge}.
+
+      </div>
+
+  - cmds:
+    - mark 1 C 37
+    - mark 1 D 51
+    focus: [1,29]
+    text: |
+
+      {[ht,$details]Button2P.em &ndash; more details}
+
+      <div class="em-bmlist">
+
+      {[bm,C]} After initializing aspects of {[cu]AppButEdge} at run-time, control passes to the {[cu]FiberMgr} dispatch loop.
+
+      {[bm,D]} Pressing {[cx]appBut} triggers {[cf]handler}, readying {[cn]blinkF} whose {[cf]blinkFB} callback finally blinks {[cx]appLed}.
+
+      </div>
+
+      Note that {[cf]blinkFB} executes _after_ the {[cf]handler} function returns from processing the underlying GPIO interrupt.
+
+  - cmds:
+    - open 2
+    focus: [2,19]
+    text: |
+
+      {[ht,$look]Button1P.em &ndash; review}
+
+      Reviewing {[cu]Button1P}, note how {[cf]handler} blinks {[cu]AppLed} _before_ returning to the program's scheduling loop.
+
+      In fact, {[cf]handler} runs with all interrupts _disabled_ &ndash; until this routine eventually returns.
+
+      Said another way, this design disables interrupts for &ge;&thinsp;5 ms &ndash; precluding timely response to other events.
+
+      To correct this problem, {[cf]handler} could set a "blink-the-LED" flag &ndash; tested in the program's scheduling loop.
+
+      In the limit, however, this approach increases program complexity while only mimicing the design of {[cu]FiberMgr}.
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]Button2P.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-05-button-fibers]here}.
+
+        {[bi,task_alt]} Clone {[cu]Button2P} into your personal bundle.
+
+        {[bi,task_alt]} See how much {[cd]%%[_p_]} statements impact code size.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+      {[ht,$steps]Button2P.em &ndash; next steps}
+
+      Both {[cu]Button2} as well as the earlier {[cu]Button1} program have no logic to handle "glitches" on the {[cx]appBut} pin.
+
+      **Tour&thinsp;06** introduces an implementation of an abstract {[cu]ButtonI} interface that mitigates this deficiency.
+
+      

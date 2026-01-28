@@ -1,0 +1,109 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;07&thinsp;&ndash;&thinsp;timer handlers
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex08_OneShot1P.em.ts
+  - em.core:em.hal/OneShotI.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]OneShot1P.em &ndash; welcome}
+
+        The {[cu]OneShot1P} program illustrates the handling of in&shy;coming timer events that awaken the MCU.
+
+        In response to these events &ndash; programmed to occur at a specific time interval &ndash; {[cu]OneShot1P} will blink an LED.
+
+        Like the {[cu]Button1P} program toured earlier, {[cu]OneShot1P} uses a lower-level handler in lieu of a fiber object.
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]OneShot1P.em &ndash; build + load}
+
+        After building and loading completes, {[cu]OneShot1P} blinks {[cx]appLed} five times before halting.
+
+        The blinks themselves occur every 100ms, as {[cu]OneShot1P} programmatically controls at run-time.
+
+  - cmds:
+      - mark 1 A 7
+      - mark 1 B 15
+      - mark 1 C 17
+    focus: [1,1]
+    text: |
+
+        {[ht,$details]OneShot1P.em &ndash; details}
+
+        <div class="em-bmlist">
+
+        {[bm,A]} The distro's {[cu]McuC} composite exports {[cu]OneShot}, which manages millisecond-resolution timer events.
+
+        {[bm,A]} {[cu]OneShot} inherits the {[cn]em.hal}/{[cu]OneShotI} interface, which we'll view later in this tour.
+
+        {[bm,B]} {[cu]OneShot1P} declares a private {[cf]handler} function, called when the current wakeup time has passed.
+
+        {[bm,C]} {[cu]OneShot1P} also declares a private {[cn]done} flag, used to coordinate the main program loop with {[cf]handler}.
+
+        </div>
+
+  - cmds:
+      - mark 1 D 29
+      - mark 1 E 38
+    focus: [1,21]
+    text: |
+
+        {[ht,$details]OneShot1P.em &ndash; more details}
+
+        <div class="em-bmlist">
+
+        {[bm,D]} {[cu]OneShot1P} enables the timer at run-time, specifying the number of millisecs before the wakeup event.
+
+        {[bm,D]} The 2nd parameter of {[cf]enable} specifies a {[ct]Handler} function, which {[cu]OneShotMill} calls upon expiration.
+
+        {[bm,E]} The locally-defined {[cf]handler} routine simply sets a private {[cn]done} flag &ndash; checked within {[cf]em$run}.
+
+        </div>
+
+        Note that {[cu]OneShot1P} declares {[cn]flag} as {[ck]volatile} &ndash; ef&shy;fectively synchronizing access to this private variable.
+
+  - cmds:
+      - open 2
+    focus: [2,1]
+    text: |
+
+        {[ht,$peek]OneShotI.em &ndash; quick peek}
+
+        This interface should require little explanation, based on what you've already seen in the {[cu]OneShot1P} program.
+
+        Do note the optional {[cn]arg} paramater of {[cf]enable} &ndash; which defaults to {[ck]null} when not supplied.
+
+        A later tour in this series will illustrate a practical use-case for this optional parameter.
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]OneShot1P.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-07-timer-handlers]here}.
+
+        {[bi,task_alt]} Clone {[cu]OneShot1P} into your personal bundle.
+
+        {[bi,task_alt]} Refactor {[cf]em$run} to delay _before_ blinking {[cx]appLed}.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]OneShot1P.em &ndash; next steps}
+
+        Like the {[cu]Button1P}&thinsp;&rarr;&thinsp;{[cu]Button2P} transformation seen ear&shy;lier, **Tour&thinsp;08** re-implements {[cu]OneShot1P} using fibers.
+        
+

@@ -1,0 +1,80 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;08&thinsp;&ndash;&thinsp;timer fibers
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex09_OneShot2P.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]OneShot2P.em &ndash; welcome}
+
+        Like {[cu]OneShot1p}, the {[cu]OneShot2P} program uses a timer with millisecond-resolution to blink an LED.
+
+        And like {[cu]Button2P} toured earlier, {[cu]OneShot2P} uses fibers to better manage its res&shy;ponse to events.
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]OneShot2P.em &ndash; build + load}
+
+        Once built and loaded, the {[cu]OneShot2P} program blinks {[cx]appLed} five times at a 100&thinsp;ms rate.
+
+        Looking at the {[cx]OUTPUT} panel, the {[cu]OneShot2P} image size only increases &asymp;&thinsp;100 bytes compared with {[cu]OneShot1P}.  
+
+  - cmds:
+      - mark 1 A 19
+      - mark 1 B 25
+      - mark 1 C 29
+      - mark 1 D 39
+      - mark 1 E 44
+    focus: [1,16]
+    text: |
+
+        {[ht,$details]OneShot2P.em &ndash; details}
+
+        Reinforcing a {[cu]FiberMgr} design pattern used earlier in {[cu]Button2P}, the {[cu]OneShot2P} program proceeds to:
+
+        <div class="em-bmlist">
+
+        {[bm,A]} declare an opaque {[ct]Fiber} object, {[cn]blinkF};
+
+        {[bm,B]} bind {[cn]blinkF} to the {[cf]blinkFB} function at build-time;
+
+        {[bm,C]} ready {[cn]blinkF} and start the {[cu]FiberMgr} dispatcher;
+
+        {[bm,D]} enable {[cu]OneShotMilli} when {[cf]blinkFB} runs; and
+
+        {[bm,E]} ready {[cn]blinkF} again when handling a timer event.
+
+        </div>
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]OneShot2P.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-08-timer-fibers]here}.
+
+        {[bi,task_alt]} Clone {[cu]OneShot2P} into your personal bundle.
+
+        {[bi,task_alt]} Using {[cd]printf}, trace the dispatcher inside {[cu]FiberMgr}.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]OneShot2P.em &ndash; next steps}
+
+        The {[cu]OneShot1P} and {[cu]OneShot2P} programs use a _con&shy;crete_ {[cu]OneShotMilli} module to initiate a timed delay.
+
+        **Tour&thinsp;09** introduces higher-level timer services which in&shy;ternally proxy the _abstract_ {[cu]OneShotMilliI} interface.
+

@@ -48,7 +48,6 @@ function dispatch() {
 }
 
 export function run() {
-    Common.Idle.wakeup()
     Common.GlobalInterrupts.enable()
     while (true) {
         Common.GlobalInterrupts.disable()

@@ -1,0 +1,126 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;12&thinsp;&ndash;&thinsp;cyclic tickers
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex13_TickerP.em.ts
+  - em.core:em.utils/TickerMgr.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]TickerP.em &ndash; welcome}
+
+        {[cn]TickerP} introduces {[cn]em.utils}/{[cu]TickerMgr}, which gener&shy;al&shy;izes the cyclic nature of our earlier {[cu]Alarm2P} program.
+
+        {[cu]TickerMgr} also reinforces an important EM design pat&shy;tern seen in prev&shy;ious tours of {[cu]AlarmMgr} and {[cu]FiberMgr}.
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]TickerP.em &ndash; build + load}
+
+        Once execution begins, {[cu]TickerP} will wink {[cx]appLed} _and_ {[cx]sysLed} at different rates &ndash; 1s and 1.5s respectively.
+
+        Hard to perceive visually, you should consult the Saleae logic capture to best appreciate the pattern.
+
+  - cmds:
+      - mark 1 A 14
+      - mark 1 B 22
+      - mark 1 C 27
+    focus: [1,12]
+    text: |
+
+        {[ht,$details]TickerP.em &ndash; details}
+
+        <div class="em-bmlist">
+
+        {[bm,A]} {[cu]TickerP} declares a pair of {[ct]TickCallback} functions and {[ct]Ticker} objects associated with {[cu]TickerMgr}.
+
+        {[bm,B]} Note that {[cu]TickerP} creates opaque {[ct]Ticker} ob&shy;jects _without_ binding other parameters at build-time.
+
+        {[bm,C]} For more flexibility, {[ct]Ticker}.{[cf]start} enables run-time binding of cycle-time as well as a {[ct]TickCallback}.
+
+        </div>
+
+        Needless to say, the function definitions of {[cf]appTickCb} and {[cf]sysTickCb} should require little explanation.
+
+  - cmds:
+      - open 2
+      - mark 2 A 6
+      - mark 2 B 22
+    focus: [2,3]
+    text: |
+
+        {[ht,$details]TickerMgr.em &ndash; details}
+
+        The design of the {[cu]TickerMgr} module shares many traits seen previously inside {[cu]AlarmMgr} and {[cu]FiberMgr}.   
+
+        <div class="em-bmlist">
+
+        {[bm,A]} The public portion of {[cu]TickerMgr} declares the types and functions used by our {[cu]TickerP} client program.
+
+        {[bm,B]} The private portion of {[cu]TickerMgr} defines the repre&shy;sentation of an opaque {[ct]Ticker} object.
+
+        {[bm,B]} {[cu]TickerMgr} declares a private {[ct]FiberBodyFxn} plus a static array holding newly-created {[ct]Ticker} objects.
+
+        </div>
+
+        Note that {[cn]rate256} represents the {[ct]Ticker} cycle-time in sub-seconds with 8-bits of resolution.
+
+  - cmds:
+      - mark 2 C 37
+      - mark 2 D 43
+      - mark 2 E 48
+      - mark 2 F 55
+    focus: [2,36]
+    text: |
+
+        {[ht,$details]TickerMgr.em &ndash; more details}
+
+        <div class="em-bmlist">
+
+        {[bm,C]} As expected, {[cf]createH} calls {[ct]Ticker}.{[cf]initH} af&shy;ter extending {[cn]tickerTab} with another {[ct]Ticker} object.
+
+        {[bm,D]} The {[ct]Ticker}.{[cf]initH} method in turn populates this new {[ct]Ticker} object with other opaque references.
+
+        {[bm,D]} Note how {[cf]initH} binds this {[ct]Ticker} as the {[cn]arg} value passed to the {[cf]alarmFb} {[ct]FiberBodyFxn} at run-time.
+
+        {[bm,E]} Triggered upon cycle completion, {[cf]alarmFB} casts {[cn]arg} to a {[ct]Fiber}, calls its {[cn]tickCb}, and restarts the cycle.
+
+        {[bm,F]} After storing its parameters, {[ct]Ticker}.{[cf]start} initi&shy;ates the _first_ wakeup cycle; {[cf]alarmFB} initiates the rest.
+
+        </div>
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]TickerP.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-12-cyclic-tickers]here}.
+
+        {[bi,task_alt]} Clone {[cu]TickerP} into your personal bundle.
+
+        {[bi,task_alt]} Also clone {[cu]TickerMgr} into your personal bundle.
+
+        {[bi,task_alt]} Trace the {[cu]TickerMgr}&thinsp;&rarr;&thinsp;{[cu]AlarmMgr}&thinsp;&rarr;&thinsp;{[cu]FiberMgr} flow.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]TickerP.em &ndash; next steps}
+
+        Congratulations &ndash; you've completed a series of tours covering fundamentals of the EM language runtime.
+
+        But the journey to increase your knowledge of EM has really just begun.
+
+        With that, let's return to {[le,https://docs.openem.org/intro/to-4/#learning-more-em]Learning more EM} and start charting your own path forward.
+

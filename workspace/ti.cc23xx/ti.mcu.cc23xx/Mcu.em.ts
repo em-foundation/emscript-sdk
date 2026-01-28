@@ -14,6 +14,10 @@ export namespace em$meta {
     }
 }
 
+export function isWarm(): bool_t {
+    return false
+}
+
 export function startup(): void {
     Debug.startup()
     $['%%a:'](2)

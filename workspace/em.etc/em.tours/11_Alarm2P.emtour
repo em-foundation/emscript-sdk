@@ -1,0 +1,142 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;11&thinsp;&ndash;&thinsp;aligned wakeups
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex12_Alarm2P.em.ts
+  - em.core:em.utils/AlarmMgr.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]Alarm2P.em &ndash; welcome}
+
+        The {[cu]Alarm2P} program employs an important feature of {[cu]AlarmMgr} &ndash; _aligning_ wakeups to future time windows.
+
+        This feature enables {[cu]AlarmP} to precisely wakeup every 1.5 secs &ndash; despite its varying active duty-cycle.
+
+        
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]Alarm2P.em &ndash; build + load}
+
+        Once execution begins, {[cu]Alarm2P} alternately performs long- and short-winks of {[cx]appLed} every 1.5 secs.
+
+        To fully appreciate the wakeup alignment, you should consult the corresponding Saleae logic capture.
+
+  - cmds:
+      - mark 1 A 35
+      - mark 1 B 40
+    focus: [1,15]
+    text: |
+
+        {[ht,$details]Alarm2P.em &ndash; details}
+
+        {[cu]Alarm2P} largely resembles the {[cu]Alarm1P} program from the last tour, with only minor differences.
+
+        <div class="em-bmlist">
+
+        {[bm,A]} {[cu]Alarm2P} uses the parity of its private {[cn]counter} to al&shy;ternately wink the LED for different durations.
+
+        {[bm,B]} {[cu]Alarm2P} passes the duration of the current time-window to the {[ct]Alarm}.{[cf]wakeupAt} method.
+
+        </div>
+
+  - cmds:
+      - open 2
+      - mark 2 A 52
+      - mark 2 B 55
+      - mark 2 C 58
+    focus: [2,50]
+    text: |
+
+        {[ht,$details]AlarmMgr.em &ndash; details}
+
+        {[cu]AlarmMgr} schedules the next wakeup within its {[cf]update} function, with {[cn]deltaTicks} denoting elapsed time.
+
+        <div class="em-bmlist">
+
+        {[bm,A]} {[cu]WakeupTimer}.{[cf]disable} ensures {[cf]update} executes atom&shy;ically &ndash; without intervening timer events.
+
+        {[bm,B]} This form of EM {[ck]for} loop successively binds the local variable {[cn]a} to each element of {[cn]alarmTab}.
+
+        {[bm,C]} Skipping inactive alarms, {[cf]update} readies {[cn]a}.{[cn]fiber} if decrementing {[cn]a}.{[cn]ticks} signals timer expiration.
+
+        </div>
+
+  - cmds:
+      - mark 2 D 60
+      - mark 2 E 65
+      - mark 2 F 67
+    focus: [2,50]
+    text: |
+
+        {[ht,$details]AlarmMgr.em &ndash; more details}
+
+        The {[cf]update}&thinsp;{[ck]for} loop also locates the alarm {[cn]a} with the fewest number of ticks remaining before its expiration.
+
+        <div class="em-bmlist">
+
+        {[bm,D]} Comparing {[cn]a}.{[cn]ticks} with the largest value seen, the local variables {[cn]nxtAlarm} and {[cn]maxTicks} may change.
+
+        {[bm,E]} The {[cf]update} function returns when {[cn]nxtAlarm} re&shy;mains {[ck]null}, since {[cf]update} found no active alarms.
+
+        {[bm,F]} Otherwise, {[cf]update} calls {[cu]WakeupTimer}.{[cf]enable} with a threshold obtained in {[ct]Alarm}.{[cf]setup}  (found below).
+
+        </div>
+
+        Note how {[cf]wakeupHandler} uses the private {[cn]curAlarm} vari&shy;able when calling {[cf]update} upon timer expiration.
+
+  - cmds:
+      - mark 2 G 101
+      - mark 2 H 102
+      - mark 2 I 104
+    focus: [2,82]
+    text: |
+
+        {[ht,$details]AlarmMgr.em &ndash; still more details}
+
+        We'll turn now to {[ct]Alarm}.{[cf]wakeupAt} and the role played by {[cn]em.mcu}/{[cu]EpochTime} in its implementation.
+
+        Internally, {[cu]EpochTime} can retrieve _uptime_ &ndash; the number of sub-seconds since the MCU's current reset epoch.
+
+        <div class="em-bmlist">
+
+        {[bm,G]}  {[cu]EpochTime}.{[cf]getCurrent} returns a 64-bit "time-of-day" with at least 8-bits of sub-second resolution.
+
+        {[bm,H]} {[cu]WakeupTimer} then reduces {[cn]etSecs} and {[cn]etSubs} to a 32-bit {[cn]etTicks} value, with (obviously) less range.
+
+        {[bm,I]} After converting {[cn]secs256}, {[cf]wakeupAt} reduces {[cn]ticks} to align wakeup with the _end_ of the time window.
+
+        </div>
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]Alarm2P.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-11-aligned-wakeups]here}.
+
+        {[bi,task_alt]} Clone {[cu]Alarm2P} into your personal bundle.
+
+        {[bi,task_alt]} Explore {[cu]AlarmMgr}.{[cf]update} by adding debug code.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]Alarm2P.em &ndash; next steps}
+
+        With {[cu]AlarmMgr} as a base, we can build a range of high&shy;er-level modules that encapsulate time management.
+                
+        **Tour&thinsp;12** focuses on one (of many) such modules &ndash; and serves as a springboard for further design exploration.
+

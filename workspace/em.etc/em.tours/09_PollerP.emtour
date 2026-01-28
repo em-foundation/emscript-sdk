@@ -1,0 +1,152 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;09&thinsp;&ndash;&thinsp;timer service
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex10_PollerP.em.ts
+  - em.core:em.hal/PollerI.em.ts
+  - em.core:em.mcu/Poller.em.ts
+  - em.core:em.utils/PollerAux.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]PollerP.em &ndash; welcome}
+
+        The {[cu]PollerP} program introduces {[cn]em.mcu}/{[cu]Poller}, which provides a portable function to pause execution.
+
+        {[cu]PollerP} also introduces a new function for "winking" an LED &ndash; which itself uses {[cn]em.mcu}/{[cu]Poller} internally.
+
+        Recall that the {[cu]AppBut} implementation viewed previ&shy;ously also uses {[cn]em.mcu}/{[cu]Poller} in a similar manner.
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]PollerP.em &ndash; build + load}
+
+        Once executing, the {[cu]PollerP} program performs a series of "winks" that turn {[cx]appLed} on&thinsp;/&thinsp;off for 5ms.
+        
+        Spaced 200ms apart, {[cu]PollerP} winks the LED five times before halting.
+        
+
+  - cmds:
+      - mark 1 A 7
+      - mark 1 B 17
+      - mark 1 C 18
+    focus: [1,1]
+    text: |
+
+        {[ht,$details]PollerP.em &ndash; details}
+
+        <div class="em-bmlist">
+
+        {[bm,A]} As with {[cu]Common}, composites in the {[cn]em$distro} pack&shy;age configure the portable {[cn]em.mcu}/{[cu]Poller} module.
+
+        {[bm,B]} {[cu]Poller}.{[cf]pause} idles the MCU for a given number of milliseconds, returning to the caller when active.
+
+        {[bm,C]} The {[cf]wink} function turns {[cu]AppLed} on&thinsp;/&thinsp;off just once for a given number of milliseconds.
+
+        </div>
+
+  - cmds:
+      - open 2
+    focus: [2,1]
+    text: |
+
+        {[ht,$peek]PollerI.em &ndash; quick peek}
+
+        The {[cn]em.mcu}/{[cu]Poller} module inherits the {[cu]PollerI} in&shy;terface, which abstracts periodic testing for a condition.
+
+        {[cu]PollerI}.{[cf]poll} calls its {[cn]fxn} parameter at most {[cn]count} times, idling for {[cn]rateMs} milliseconds between each call.
+
+        When {[cf]fxn} tests {[ck]true} or {[cn]count} attempts have oc&shy;cured, {[cu]PollerI}.{[cf]poll} returns the number of tries remaining.
+
+  - cmds:
+      - open 3
+    focus: [3,1]
+    text: |
+
+        {[ht,$look]Poller.em &ndash; longer look}
+
+        The {[cn]em.mcu}/{[cu]Poller} module inherits the {[cu]PollerI} in&shy;terface viewed at the previous stop on this tour.
+
+        Note how the body of {[cf]pause} (our func&shy;tion of inte&shy;rest) relies upon the more general {[cu]PollerI}.{[cf]poll} function.
+
+        Also note how {[cu]Poller} delegates to its {[cu]Impl} proxy &ndash; an auxiliary implementation of the {[cu]PollerI} interface.
+
+        {[cu]Poller} in fact embodies a general design-pattern of ex&shy;tending _and_ implementing interfaces using delegates.
+
+  - cmds:
+      - open 4
+      - mark 4 A 10
+      - mark 4 B 12
+      - mark 4 C 19
+    focus: [4,1]
+    text: |
+
+        {[ht,$details]PollerAux.em &ndash; details}
+
+        The {[cu]PollerAux} module implements a portable {[cu]PollerI} delegate using elements toured earlier in {[cu]Button1P}.
+
+        <div class="em-bmlist">
+
+        {[bm,A]} For flexibility, {[cu]PollerAux} accesses an underlying millisecond-resolution timer via its {[cu]OneShot} proxy.
+
+        {[bm,B]} If {[ck]true}, the {[cn]pauseOnly} config parameter enables a more optimized implementation of {[cu]PollerI}.{[cf]poll}.
+
+        {[bm,C]} {[cu]PollerAux} uses a private {[cn]doneFlag} variable to syn&shy;chronize its internal functions.
+
+        </div>
+
+  - cmds:
+      - mark 4 D 24
+      - mark 4 E 30
+      - mark 4 F 38
+      - mark 4 G 43
+    focus: [4,23]
+    text: |
+
+        {[ht,$details]PollerAux.em &ndash; more details}
+
+        <div class="em-bmlist">
+
+        {[bm,D]} The internal {[cu]OneShot}.{[ct]Handler} function sets {[cn]doneFlag} upon expiration of the underlying timer.
+
+        {[bm,E]} The private {[cf]pause} function calls {[cu]OneShot}.{[cf]enable}, clearing {[cn]doneFlag} before hand.
+
+        {[bm,E]} {[cf]pause} then idles the MCU, awaiting indication from {[cn]doneFlag} of an incoming timer event.
+
+        {[bm,F]} The optmized implementation of {[cu]ButtonI}.{[cf]poll} ef&shy;fectively ignores its {[cn]count} and {[cn]fxn} parameters.
+
+        {[bm,G]} In general, {[cf]poll} invokes the private {[cf]pause} rou&shy;tine {[cn]count} times while testing the result of calling {[cn]fxn}.
+
+        </div>
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]PollerP.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-09-timer-service]here}.
+
+        {[bi,task_alt]} Clone {[cu]PollerP} into your personal bundle.
+
+        {[bi,task_alt]} Also clone {[cu]PollerAux}, and add some debug code.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]PollerP.em &ndash; next steps}
+
+        With a series of {[cu]OneShotMilli} examples behind us, we'll now focus on timers with a much greater range.
+
+        **Tour&thinsp;10** introduces {[cu]AlarmMgr} &ndash; an EM runtime module that places the MCU into "deep-sleep" until wakeup.
+

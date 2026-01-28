@@ -529,6 +529,7 @@ namespace em {
     // #region
 
     export type bool_t = boolean & { __bool?: never }
+    export type f32 = number & { __f32?: never }
     export type i8 = number & { __i8?: never }
     export type i16 = number & { __i16?: never }
     export type i32 = number & { __i32?: never }
@@ -540,6 +541,7 @@ namespace em {
 
     export type arg_t =
         | bool_t
+        | f32
         | i8
         | i16
         | i32
@@ -993,6 +995,7 @@ declare global {
     type cb_t<A extends any[] = []> = em.cb_t<A>
     type dim_t<T, N extends number> = em.dim_t<T, N>
     type frame_t<T> = em.frame_t<T>
+    type f32 = em.f32
     type index_t<T> = em.index_t<T>
     type i8 = em.i8
     type i16 = em.i16

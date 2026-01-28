@@ -1,0 +1,165 @@
+title: Using EM&ensp;&rarr;&ensp;Tour&thinsp;10&thinsp;&ndash;&thinsp;wakeup alarms
+$dev: false
+files:
+  - em.etc:em.examples.basic/Ex11_Alarm1P.em.ts
+  - em.core:em.hal/RtcI.em.ts
+  - em.core:em.utils/AlarmMgr.em.ts
+
+steps:
+
+  - cmds:
+      - open 1
+    focus: [1,1]
+    text: |
+
+        {[ht,$start]Alarm1P.em &ndash; welcome}
+
+        Earlier tours focused on millisecond-resolution timers, typically used to idle the MCU for shorter durations.
+
+        The {[cu]Alarm1P} program introduces the {[cu]AlarmMgr} utility module &ndash; used for much longer periods of deep-sleep.
+
+        With durations specified in (sub-)seconds, {[cu]AlarmMgr} would enable the MCU to hibernate for years at a time.
+
+        In practice, {[cu]AlarmMgr} wakeups typically occur more fre&shy;quently &ndash; say, every two minutes or once an hour.
+
+  - cmds:
+      - build 1 -l
+    focus: [1,1]
+    text: |
+
+        {[ht,$build]Alarm1P.em &ndash; build + load}
+
+        Since this program never explicitly halts, {[cu]Alarm1P} will continuously wink {[cx]appLed} once execution begins.
+
+        Depending upon a private counter's parity, {[cu]Alarm1P} al&shy;ter&shy;nate&shy;ly sleeps for either 2 seconds or 750 millisecs.
+
+  - cmds:
+      - mark 1 A 15
+      - mark 1 B 24
+      - mark 1 C 36
+    focus: [1,11]
+    text: |
+
+        {[ht,$details]Alarm1P.em &ndash; details}
+
+        The {[cu]Alarm1P} program uses {[cu]AlarmMgr} in a manner simi&shy;lar to how its uses {[cu]FiberMgr}:
+
+        <div class="em-bmlist">
+
+        {[bm,A]} The private {[cn]alarm} config holds a reference to an opaque {[cu]AlarmMgr}.{[ct]Alarm} object.
+
+        {[bm,B]} {[cu]AlarmMgr}.{[cf]createH} allocates&thinsp;/&thinsp;initializes an {[ct]Alarm} at build-time, binding it to a similarly created {[ct]Fiber}.
+
+        {[bm,C]} At run-time, the {[cf]blinkFB} fiber function passes an alternating pair of time values to {[ct]Alarm}.{[cf]wakeup}.
+        
+        </div>
+
+        The {[ct]Alarm}.{[cf]wakeup} parameter has 8-bits of sub-second resolution &ndash; meaning that a value of 256 equals 1&thinsp;s.
+
+  - cmds:
+      - open 2
+    focus: [2,1]
+    text: |
+
+        {[ht,$look]RtcI.em &ndash; longer look}
+
+        The implementation of {[cn]em.mcu}/{[cu]AlarmMgr} &ndash; which we'll visit next &ndash; builds upon an {[cn]em.hal}/{[cu]RtcI} proxy.
+
+        {[cu]RtcI} abstracts the behavior of a free-running wakeup-timer &ndash; sometimes termed a _real-time clock_.
+
+        Conceptually, a {[cu]RtcI} has an internal counter that can source events when crossing a threshold.
+
+        Helping {[cf]enable}, {[cu]RtcI} offers func&shy;tions for con&shy;verting different time formats into a timer threshold.
+
+  - cmds:
+      - open 3
+      - mark 3 A 12
+      - mark 3 B 26
+    focus: [3,1]
+    text: |
+
+        {[ht,$details]AlarmMgr.em &ndash; details}
+
+        Turning to {[cu]AlarmMgr}, we'll focus on the implementation of features viewed earlier in our {[cu]Alarm1P} program.
+
+        <div class="em-bmlist">
+
+        {[bm,A]} {[ct]Alarm} declares public functions applicable to objects of this opaque type &ndash; similar to {[cu]FiberMgr}.
+
+        {[bm,B]} The {[cu]AlarmMgr}.{[cf]createH} function allocates&thinsp;/&thinsp;initial&shy;izes {[ct]Alarm} objects at build-time &ndash; also like {[cu]FiberMgr}.
+
+        </div>
+
+        We'll cover the imported {[cu]EpochTime} module &ndash; used in implementing {[ct]Alarm}.{[cf]wakeupAt} &ndash; in the next tour.
+
+
+  - cmds:
+      - mark 3 C 34
+      - mark 3 D 40
+      - mark 3 E 45
+    focus: [3,30]
+    text: |
+
+        {[ht,$details]AlarmMgr.em &ndash; more details}
+
+        <div class="em-bmlist">
+
+        {[bm,C]} Besides storing a {[ct]Fiber} plus internal state vari&shy;ables, {[ct]Alarm} declares a private method used below.
+
+        {[bm,D]} The declaration of {[cn]alarmTab} (populated at build-time) uses a special array type we'll examine later.
+
+        {[bm,E]} Like {[cu]FiberMgr}, {[cf]createH} extends {[cn]alarmTab} before returning a newly-initialized {[ct]Alarm}.
+
+        </div>
+
+  - cmds:
+      - mark 3 F 74
+      - mark 3 G 88
+      - mark 3 H 94
+    focus: [3,74]
+    text: |
+
+        {[ht,$details]AlarmMgr.em &ndash; still more details}
+
+        <div class="em-bmlist">
+
+        {[bm,F]} The build-time {[ct]Alarm}.{[cf]initH} method resets the pri&shy;vate {[cn]ticks} variable, used heavily at run-time.
+
+        {[bm,G]} The public {[cf]wakeup} and {[cf]wakeupAt} methods each call the more general (and private) {[cf]setup} method.
+
+        {[bm,G]} Using the {[cu]WakeupTimer} proxy, {[cf]setup} converts its {[cn]ticks} parameter into an internal timer threshold.
+
+        {[bm,G]} {[ct]Alarm}.{[cf]setup} then retains these values in this object's private {[cn]thresh} and {[cn]ticks} variables.
+        
+        {[bm,H]} {[ct]Alarm}.{[cf]wakeup} simply calls the {[cf]setup} method, using {[cu]WakeupTimer} to again convert time formats. 
+        
+        </div>
+
+        The next tour will explain the private {[cf]update} function.
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$extra]Alarm1P.em &ndash; extra credit}
+
+        {[bi,task_alt]} Study the logic capture(s) found {[le,https://docs.openem.org/using/using-02/#tour-10-wakeup-alarms]here}.
+
+        {[bi,task_alt]} Clone {[cu]Alarm1P} into your personal bundle.
+
+        {[bi,task_alt]} Also clone {[cu]AlarmMgr} into your personal bundle.
+
+        {[bi,task_alt]} Output {[cn]this}.{[cn]thresh} inside {[cu]AlarmMgr}.{[cf]setup}.
+
+        {[bi,sentiment_satisfied]} Happy coding&thinsp;!!!
+
+  - cmds: []
+    focus: [1,1]
+    text: |
+
+        {[ht,$steps]Alarm1P.em &ndash; next steps}
+
+        Embedded system not only sleep _for_ a period of time, but sometimes must awaken _at_ a particular time.
+
+        **Tour&thinsp;11** dives into {[ct]Alarm}.{[cf]wakeupAt} whose implementa&shy;tion relies upon a global notion of "wall-clock" time.
+
